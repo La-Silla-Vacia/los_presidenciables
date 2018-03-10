@@ -2,7 +2,6 @@
   <div :class="[$style.container, {[$style.loading]: loading}]">
     <LoadScreen v-if="loading" />
     <div v-else :class="$style.inner">
-      <h2 :class="$style.title">Hello los_presidenciables!</h2>
       <Graphic />
     </div>
   </div>
@@ -84,9 +83,19 @@
     max-width: 713px;
   }
 
+  .news {
+    padding-left: 0;
+  }
+
+  .article-main-body {
+    padding-left: 0;
+  }
+
   @media (min-width: 1200px) {
     .article-content.col-sm-12.col-md-8 {
-      width: 85%;
+      width: 100%;
+      margin-left: 0;
+      padding-left: 0;
     }
   }
 

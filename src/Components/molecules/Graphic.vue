@@ -1,20 +1,21 @@
 <template>
   <div :class="$style.container">
-    <button
-        v-for="item in items"
-        :class="$style.circle"
-        :key="item.name"
-        :style="{width: 10, height: 10}"
-        @click="handleClick(item.name)">
-      {{item.name}}
-    </button>
+    <Header
+      chapters={this.chapters}
+      activeChapter={this.state.chapter}
+      callback={this.setChapter}
+    />
   </div>
 </template>
 
 <script>
+  import Header from './Header'
+
   export default {
     name: 'Graphic',
-    components: {},
+    components: {
+      Header
+    },
     mounted () {
     },
     methods: {},

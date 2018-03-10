@@ -3,11 +3,24 @@ import * as types from '../mutation-types'
 
 const state = {
   site: {},
-  loaded: false
+  loaded: false,
+  chapter: 'LO QUE PROPONEN'
 }
 
 const getters = {
   getItems: () => (uid, collection = state.site) => {
+    return collection
+  },
+  getChapters: () => (uid, collection = state.site) => {
+    return [
+      'LO QUE PROPONEN',
+      'LA MAQUINARIA QUE TIENEN',
+      'LO QUE HAN GASTADO',
+      'CÓMO LOS BUSCAN',
+      'TEST DE CARACTER',
+    ]
+  },
+  getActiveChapter: () => (uid, collection = state.chapter) => {
     return collection
   },
   isLoaded: () => (url, loaded = state.loaded) => {
@@ -33,6 +46,9 @@ const mutations = {
   [types.RECEIVE_SITE] (state, { site, loaded }) {
     state.loaded = loaded
     state.site = site
+  },
+  [types.RECEIVE_CHAPTER] (state, { chapter }) {
+    state.chapter = chapter
   }
 }
 
