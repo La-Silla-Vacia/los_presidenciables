@@ -34,7 +34,10 @@ module.exports = {
       }
     }),
     new ExtractTextPlugin({filename: './styles.css'})
-  ]
+  ],
+  watchOptions: {
+    poll: true
+  }
 }
 
 if (process.env.NODE_ENV === 'development') {

@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.root">
+  <div :class="[$style.root, {[$style[type]]: type}]">
     <slot />
   </div>
 </template>
@@ -9,7 +9,8 @@
     name: 'Container',
     props: [
       'isButton',
-    ],
+      'type'
+    ]
   }
 </script>
 
@@ -24,6 +25,14 @@
     padding: 40px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 18px;
+    grid-column-gap: 18px;
+    max-height: $max-content-height;
+    overflow: auto;
+  }
+
+  .sidebar {
+    padding: 0;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: 1fr;
   }
 </style>

@@ -1,12 +1,12 @@
-import Vue from 'vue'
-import * as types from '../mutation-types'
+import Vue from "vue"
+import * as types from "../mutation-types"
 
 const state = {
   site: {},
   loaded: false,
   themes: {},
   questions: [],
-  chapter: 'LO QUE PROPONEN',
+  chapter: "LO QUE PROPONEN",
   candidates: [],
   settings: {}
 }
@@ -17,11 +17,11 @@ const getters = {
   },
   getChapters: () => (uid, collection = state.site) => {
     return [
-      'LO QUE PROPONEN',
-      'LA MAQUINARIA QUE TIENEN',
-      'LO QUE HAN GASTADO',
-      'CÓMO LOS BUSCAN',
-      'TEST DE CARACTER',
+      "LO QUE PROPONEN",
+      "LA MAQUINARIA QUE TIENEN",
+      "LO QUE HAN GASTADO",
+      "CÓMO LOS BUSCAN",
+      "TEST DE CARACTER"
     ]
   },
   getThemes: () => (uid, collection = state.themes) => {
@@ -41,13 +41,50 @@ const getters = {
   getCandidates: () => (uid, collection = state.candidates) => {
     return collection
   },
+  getCandidateByUid: () => (uid, collection = state.candidates) => {
+    let result
+    for (let i = 0; i < collection.length; i += 1) {
+      if (collection[i].id === uid) result = collection[i]
+    }
+    return result
+  },
   getAnswerByCandidate: (state, getters) => (candidate, collection = state.themes) => {
     const currentTheme = collection.active
     const question = getters.getQuestionByTheme(currentTheme)
     const result = question.answers.filter((answer) => {
-      if (answer.candidate === candidate) return true;
+      if (answer.candidate === candidate) return true
     })
     return result[0]
+  },
+  getAnswersByCandidate: (state, getters) => (candidate, collection = state.questions) => {
+    const result = []
+    for (let i = 0; i < collection.length; i += 1) {
+      const question = collection[i]
+      let obj = {theme: question.theme, answers: []}
+
+      // check if the theme already exists
+      let resIndex = 0
+      const res = result.filter((item, index) => {
+        if (item.theme === question.theme) {
+          resIndex = index
+          return true
+        }
+      })
+
+      for (let j = 0; j < question.answers.length; j += 1) {
+        const answer = question.answers[j]
+        if (answer.candidate === candidate) {
+          obj.answers.push(answer)
+        }
+      }
+
+      if (res.length) {
+        result[resIndex].answers.concat(obj.answers)
+      } else {
+        result.push(obj)
+      }
+    }
+    return result
   },
   getActiveChapter: () => (uid, collection = state.chapter) => {
     return collection
@@ -61,10 +98,10 @@ const getters = {
 }
 
 const actions = {
-  fetchContent () {
+  fetchContent() {
     Vue.http.get(getters.getDataUri()).then((response) => {
       const data = JSON.parse(response.bodyText)
-      this.commit(types.RECEIVE_SITE, { site: data, loaded: true })
+      this.commit(types.RECEIVE_SITE, {site: data, loaded: true})
     }, (error) => {
       console.log(error.statusText)
     })
@@ -72,7 +109,7 @@ const actions = {
 }
 
 const mutations = {
-  [types.RECEIVE_SITE] (state, { site, loaded, theme }) {
+  [types.RECEIVE_SITE](state, {site, loaded, theme}) {
     state.loaded = loaded || state.loaded
     state.themes = {
       active: theme || site.themes[0] || state.themes.active,
@@ -81,14 +118,14 @@ const mutations = {
     state.questions = site ? site.questions : state.questions
     state.candidates = site ? site.candidates : state.candidates
   },
-  [types.RECEIVE_SETTINGS] (state, { settings }) {
+  [types.RECEIVE_SETTINGS](state, {settings}) {
     state.settings = settings
   },
-  [types.RECEIVE_CHAPTER] (state, { chapter }) {
+  [types.RECEIVE_CHAPTER](state, {chapter}) {
     state.chapter = chapter
   },
-  [types.RECEIVE_THEME] (state, { theme }) {
-    console.log('bier')
+  [types.RECEIVE_THEME](state, {theme}) {
+    console.log("bier")
     state.site.themes.active = theme
   }
 }

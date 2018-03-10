@@ -1,7 +1,21 @@
 <template>
   <div :class="$style.root">
     <header :class="$style.header">
-      <Title @click="open = !open" :isButton="true"><small>{{items.active}} -</small> {{question.question}}</Title>
+      <Title
+        v-if="withQuestion"
+        @click="open = !open"
+        :isButton="true"
+      >
+        <small>{{items.active}} -</small>
+        {{question.question}}
+      </Title>
+      <Title
+        v-else
+        @click="open = !open"
+        :isButton="true"
+      >
+        {{items.active}}
+      </Title>
       <slot />
     </header>
     <transition name="fade">
@@ -25,7 +39,8 @@
   export default {
     name: 'SelectBar',
     props: [
-      'items'
+      'items',
+      'with-question'
     ],
     components: {
       Title,
@@ -53,6 +68,8 @@
     width: 100%;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     z-index: 1;
+    grid-column: span 2;
+    background-color: #fff;
   }
 
   .header {

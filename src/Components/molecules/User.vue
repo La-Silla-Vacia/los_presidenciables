@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.root">
+  <div :class="[$style.root, {[$style.compact]: compact}]">
     <div
       :class="$style.avatar"
       :style="{ backgroundImage: `url(${photo})` }"
@@ -26,8 +26,8 @@
       partido: {
         required: true
       },
-      label: {
-      }
+      label: {},
+      compact: {}
     }
   }
 </script>
@@ -67,4 +67,13 @@
     text-transform: uppercase;
   }
 
+  .compact {
+    .name {
+      font-size: 14px;
+    }
+
+    .partido {
+      font-size: 8px;
+    }
+  }
 </style>

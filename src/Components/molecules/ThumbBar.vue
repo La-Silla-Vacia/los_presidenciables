@@ -1,32 +1,34 @@
 <template>
-  <div :class="$style.root" :isInActive="!question">
-    Bar
+  <div :class="$style.root">
+    <router-link
+      v-for="candidate in candidates"
+      :key="candidate.id"
+      :to="`./${candidate.id}`"
+      :class="[
+        $style.thumb,
+        {[$style.active]: $route.params.uid === candidate.id}
+      ]"
+    >
+      <User
+        :name="candidate.name"
+        :partido="candidate.partido"
+        :compact="true"
+      />
+    </router-link>
   </div>
 </template>
 
 <script>
-  import Card from '../atoms/Card'
   import User from '../molecules/User'
-  import Button from '../atoms/Button'
-  import Hr from '../atoms/Hr'
 
   export default {
     name: 'ThumbBar',
-    props: [
-      'candidate',
-      'theme'
-    ],
-    mounted () {
-    },
     components: {
-      Card,
-      User,
-      Button,
-      Hr
+      User
     },
     computed: {
-      question () {
-        return this.$store.getters.getAnswerByCandidate(this.candidate.name)
+      candidates () {
+        return this.$store.getters.getCandidates()
       }
     }
   }
@@ -36,6 +38,19 @@
   @import '../../assets/styles/base';
 
   .root {
+    max-height: $max-content-height;
+    overflow: auto;
+  }
 
+  .thumb {
+    border: 1px solid #fff;
+    display: block;
+    padding: 20px 10px 20px 20px;
+  }
+
+  .active {
+    border-left: 3px solid $color__primary--base;
+    padding-left: 18px;
+    background-color: #fff;
   }
 </style>
