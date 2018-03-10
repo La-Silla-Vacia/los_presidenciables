@@ -7,8 +7,10 @@
     "url": "https://github.com/La-Silla-Vacia/los_presidenciables.git"
   },
   "dependencies": {
+    "lodash.debounce": "^4.0.8",
     "lsv-components": "latest",
     "lsv-interactive": "latest",
+    "lsv-interactive-vue": "^0.0.1",
     "vue": "^2.5.14",
     "vue-eslint-parser": "^2.0.3",
     "vue-resource": "^1.5.0",

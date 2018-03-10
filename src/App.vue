@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.container, {[$style.loading]: loading}]" id="app">
+  <div :class="[$style.container, {[$style.loading]: loading}]">
     <LoadScreen v-if="loading" />
     <div v-else :class="$style.inner">
       <h2 :class="$style.title">Hello los_presidenciables!</h2>
