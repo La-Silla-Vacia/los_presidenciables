@@ -21,7 +21,7 @@
     methods: {
       handleClick () {
         this.$emit('click')
-        this.$store.commit(types.RECEIVE_THEME, { theme: this.text })
+        this.$store.commit(types.RECEIVE_SITE, { theme: this.text })
       }
     }
   }
@@ -33,7 +33,7 @@
   .root {
     border: 0;
     background: transparent;
-    font-family: map(fonts, family-sans);
+    font-family: $font__family--sans;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.5);
     letter-spacing: 0.035em;
@@ -44,10 +44,10 @@
 
   .root:focus {
     outline: none;
-    border-bottom: 1px solid map(colors, primary, base);
+    border-bottom: 1px solid $color__primary--base;
   }
 
   .active {
-    color: map(colors, primary, base);
+    color: $color__primary--base;
   }
 </style>

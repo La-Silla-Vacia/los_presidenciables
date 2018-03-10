@@ -2,6 +2,7 @@
   <button
     v-if="isButton"
     :class="$style.root"
+    @click="$emit('click')"
   >
     <slot/> <span :class="$style.caret" ></span>
   </button>

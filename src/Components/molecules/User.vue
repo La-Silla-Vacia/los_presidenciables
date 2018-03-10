@@ -1,4 +1,4 @@
-<template xmlns:backgroundImage="http://www.w3.org/1999/xhtml">
+<template>
   <div :class="$style.root">
     <div
       :class="$style.avatar"
@@ -8,7 +8,7 @@
       <div :class="$style.name">{{name}}</div>
       <div :class="$style.partido">{{partido}}</div>
     </div>
-    <Button v-if="label" :compact="false">{{label}}</Button>
+    <slot />
   </div>
 </template>
 
@@ -17,6 +17,7 @@
     name: 'User',
     props: {
       photo: {
+        type: String,
         default: require('../../assets/images/photo_default.jpg')
       },
       name: {
@@ -25,7 +26,8 @@
       partido: {
         required: true
       },
-      label: {}
+      label: {
+      }
     }
   }
 </script>
@@ -35,7 +37,7 @@
 
   .root {
     display: flex;
-    font-family: map(fonts, family-sans-especial);
+    font-family: $font__family--sans--especial;
     color: #000;
     align-items: center;
   }
@@ -62,6 +64,7 @@
     font-weight: 400;
     letter-spacing: 0.025em;
     align-items: center;
+    text-transform: uppercase;
   }
 
 </style>

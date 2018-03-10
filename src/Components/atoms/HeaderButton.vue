@@ -16,8 +16,6 @@
       'isActive',
       'text'
     ],
-    mounted () {
-    },
     methods: {
       handleClick () {
         this.$store.commit(types.RECEIVE_CHAPTER, { chapter: this.text })

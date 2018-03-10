@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.root">
     <header :class="$style.header">
-      <Title @click.native="open = !open" :isButton="true">{{items.active}}</Title>
+      <Title @click="open = !open" :isButton="true">{{items.active}}</Title>
       <slot />
     </header>
     <transition name="fade">
@@ -30,11 +30,6 @@
     components: {
       Title,
       SelectBarItem
-    },
-    methods: {
-      handleClick () {
-        console.log('clicked')
-      }
     },
     data () {
       return {

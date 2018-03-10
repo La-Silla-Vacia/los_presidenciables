@@ -1,6 +1,6 @@
 <template>
   <button
-    @click="$emit('click')"
+    @click="handleClick"
     :class="[
       $style.root,
       {[$style.absolute]: absolute},
@@ -17,7 +17,12 @@
     props: [
       'absolute',
       'large'
-    ]
+    ],
+    methods: {
+      handleClick() {
+        this.$emit('click')
+      }
+    }
   }
 </script>
 
