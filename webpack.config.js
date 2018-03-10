@@ -9,7 +9,7 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 //process.traceDeprecation = true;
 
 module.exports = {
-  entry: ['whatwg-fetch', './start.js'],
+  entry: './start.js',
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {

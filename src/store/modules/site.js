@@ -4,7 +4,8 @@ import * as types from '../mutation-types'
 const state = {
   site: {},
   loaded: false,
-  chapter: 'LO QUE PROPONEN'
+  chapter: 'LO QUE PROPONEN',
+  settings: {}
 }
 
 const getters = {
@@ -20,13 +21,16 @@ const getters = {
       'TEST DE CARACTER',
     ]
   },
+  getThemes: () => (uid, collection = state.site.themes) => {
+    return collection
+  },
   getActiveChapter: () => (uid, collection = state.chapter) => {
     return collection
   },
   isLoaded: () => (url, loaded = state.loaded) => {
     return loaded
   },
-  getDataUri: (uid, collection = state.site) => {
+  getDataUri: (uid, collection = state.settings) => {
     return collection.dataUri
   }
 }
@@ -45,10 +49,21 @@ const actions = {
 const mutations = {
   [types.RECEIVE_SITE] (state, { site, loaded }) {
     state.loaded = loaded
-    state.site = site
+    state.site.themes = {
+      active: site.themes[0],
+      items: site.themes
+    }
+    state.site.questions = site.questions
+    state.site.candidates = site.candidates
+  },
+  [types.RECEIVE_SETTINGS] (state, { settings }) {
+    state.settings = settings
   },
   [types.RECEIVE_CHAPTER] (state, { chapter }) {
     state.chapter = chapter
+  },
+  [types.RECEIVE_THEME] (state, { theme }) {
+    state.site.themes.active = theme
   }
 }
 

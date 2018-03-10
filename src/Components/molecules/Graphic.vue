@@ -1,32 +1,24 @@
 <template>
-  <div :class="$style.container">
-    <Header
-      chapters={this.chapters}
-      activeChapter={this.state.chapter}
-      callback={this.setChapter}
-    />
+  <div :class="$style.root">
+    <Header />
+    <SelectBar :items="themes" />
   </div>
 </template>
 
 <script>
   import Header from './Header'
+  import SelectBar from './SelectBar'
 
   export default {
     name: 'Graphic',
     components: {
-      Header
+      Header,
+      SelectBar
     },
-    mounted () {
-    },
-    methods: {},
     computed: {
-      items () {
-        return this.$store.getters.getItems()
-      }
-    },
-    methods: {
-      handleClick (name) {
-        alert(name)
+      themes () {
+        console.log(this.$store.getters.getThemes())
+        return this.$store.getters.getThemes()
       }
     }
   }
@@ -35,13 +27,10 @@
 <style module lang="scss">
   @import '../../assets/styles/base';
 
-  .container {
+  .root {
     width: 100%;
     height: 100%;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
     padding-bottom: 2em;
   }
 

@@ -26,7 +26,7 @@
       }
     },
     beforeCreate () {
-      this.$store.commit(types.RECEIVE_SITE, {site: window.los_presidenciables__data})
+      this.$store.commit(types.RECEIVE_SETTINGS, {settings: window.los_presidenciables__data})
       this.$store.dispatch('fetchContent')
     },
     created () {
@@ -72,6 +72,7 @@
 
 <style lang="scss">
   @import './assets/styles/base';
+  @import './assets/styles/transitions';
 
   /* Hide the sidebar in historias */
   .article-sidebar.col-md-4.col-lg-3 {

@@ -1,7 +1,7 @@
 <template>
   <button
     @click="handleClick"
-    :class="[$style.root, { [$style.active]: isActive}]"
+    :class="[$style.root, {[$style.active]: isActive}]"
   >
     {{text}}
   </button>
@@ -11,7 +11,7 @@
   import * as types from '../../store/mutation-types'
 
   export default {
-    name: 'HeaderButton',
+    name: 'SelectBarItem',
     props: [
       'isActive',
       'text'
@@ -20,7 +20,8 @@
     },
     methods: {
       handleClick () {
-        this.$store.commit(types.RECEIVE_CHAPTER, { chapter: this.text })
+        this.$emit('click')
+        this.$store.commit(types.RECEIVE_THEME, { theme: this.text })
       }
     }
   }
@@ -32,35 +33,21 @@
   .root {
     border: 0;
     background: transparent;
-    font-family: $font__family--sans--especial;
-    font-size: 11px;
-    font-weight: 900;
+    font-family: map(fonts, family-sans);
+    font-size: 14px;
     color: rgba(0, 0, 0, 0.5);
-    padding: 1em 0;
     letter-spacing: 0.035em;
-    position: relative;
+    padding: 0.5em;
+    text-align: left;
+    text-transform: uppercase;
   }
 
   .root:focus {
     outline: none;
-    color: $color__primary--base;
-  }
-
-  .root::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    background-color: currentColor;
-    height: 0;
+    border-bottom: 1px solid map(colors, primary, base);
   }
 
   .active {
-    color: $color__primary--base;
-  }
-
-  .active::after {
-    height: 3px;
+    color: map(colors, primary, base);
   }
 </style>
