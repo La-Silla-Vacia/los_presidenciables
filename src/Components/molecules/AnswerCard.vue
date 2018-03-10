@@ -61,6 +61,7 @@
     font-weight: bold;
     display: flex;
     align-items: center;
+    margin-top: 10px;
   }
 
   .link svg {

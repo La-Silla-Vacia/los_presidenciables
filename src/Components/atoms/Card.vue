@@ -32,7 +32,7 @@
     font-family: $font__family--sans--especial;
     line-height: 1.46;
     font-weight: normal;
-    margin: 0 0 18px;
+    margin: 0 0 8px;
   }
 
   .isInActive {

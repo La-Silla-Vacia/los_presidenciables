@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.root">
     <header :class="$style.header">
-      <Title @click="open = !open" :isButton="true">{{items.active}}</Title>
+      <Title @click="open = !open" :isButton="true"><small>{{items.active}} -</small> {{question.question}}</Title>
       <slot />
     </header>
     <transition name="fade">
@@ -30,6 +30,11 @@
     components: {
       Title,
       SelectBarItem
+    },
+    computed: {
+      question () {
+        return this.$store.getters.getQuestionByTheme()
+      }
     },
     data () {
       return {

@@ -34,6 +34,11 @@
     background: transparent;
     padding: 1rem 0;
     position: relative;
+
+    small {
+      font-size: 1em;
+      font-weight: normal;
+    }
   }
 
   .root:focus {
@@ -50,10 +55,10 @@
     border-right: 6px solid transparent;
     border-left: 6px solid transparent;
     color: $color__primary--base;
+    transition: transform .3s;
   }
 
   .root:focus .caret {
-    transform: scale(1.2) translateY(-30%);
+    transform: scale(1.2)     translateY(-20%);
   }
-
 </style>
