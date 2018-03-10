@@ -90,14 +90,15 @@ module.exports = {
         baseDir: './dev/',
         directory: false,
       },
-    })
+    }),
+    new ExtractTextPlugin({ filename: './styles.css' })
   ]
 };
 
 if (process.env.NODE_ENV === 'development') {
   module.exports.output = {
-    //path: __dirname,
-    filename: './dev/script.js'
+    path: path.resolve(__dirname, './dev'),
+    filename: './script.js'
   }
   module.exports.module = {
     loaders: [
@@ -156,17 +157,14 @@ if (process.env.NODE_ENV === 'development') {
       }
     ]
   }
-
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new ExtractTextPlugin({ filename: './dev/styles.css' })
-  ])
 }
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
   module.exports.output = {
-    //path: __dirname,
-    filename: './dist/script.js'
+    path: path.resolve(__dirname, './dist'),
+    publicPath: 'https://la-silla-vacia.github.io/los_presidenciables/',
+    filename: './script.js'
   }
 
   module.exports.module = {
@@ -242,6 +240,5 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),
-    new ExtractTextPlugin({ filename: './dist/styles.css' })
   ])
 }

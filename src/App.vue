@@ -13,7 +13,7 @@
   import * as types from './store/mutation-types'
 
   import LoadScreen from './Components/atoms/LoadScreen'
-  import Graphic from './Components/molecules/Graphic'
+  import Graphic from './Components/organisms/Graphic'
 
   export default {
     name: 'app',

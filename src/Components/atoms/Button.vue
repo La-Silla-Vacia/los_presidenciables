@@ -1,0 +1,51 @@
+<template>
+  <button
+    @click="$emit('click')"
+    :class="[
+      $style.root,
+      {[$style.absolute]: absolute},
+      {[$style.large]: large}
+    ]"
+  >
+    <slot />
+  </button>
+</template>
+
+<script>
+  export default {
+    name: 'Button',
+    props: [
+      'absolute',
+      'large'
+    ]
+  }
+</script>
+
+<style module lang="scss">
+  @import '../../assets/styles/base';
+
+  .root {
+    background-color: $color__primary--base;
+    border-radius: 5px;
+    padding: 8px 12px;
+    color: #fff;
+    justify-self: flex-end;
+    margin-left: auto;
+    text-transform: uppercase;
+    border: 0;
+    font-size: 12px;
+    font-family: $font__family--sans;
+    letter-spacing: 0.08em;
+    font-weight: bold;
+  }
+
+  .absolute {
+    position: absolute;
+    right: 1em;
+  }
+
+  .large {
+    font-size: 15px;
+    font-family: $font__family--sans--especial;
+  }
+</style>
