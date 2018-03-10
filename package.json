@@ -13,7 +13,6 @@
     "lsv-interactive-vue": "^0.0.1",
     "vue": "^2.5.14",
     "vue-eslint-parser": "^2.0.3",
-    "vue-markdown": "^2.2.4",
     "vue-resource": "^1.5.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
@@ -72,7 +71,7 @@
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
-    "webpack-bundle-analyzer": "^2.9.0",
+    "webpack-bundle-analyzer": "^2.11.1",
     "webpack-dev-server": "^2.9.3"
   }
 }

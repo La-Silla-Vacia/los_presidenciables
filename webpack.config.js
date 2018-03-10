@@ -1,12 +1,11 @@
 var path = require('path')
 var webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var CleanWebpackPlugin = require('clean-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
-//process.traceDeprecation = true;
+// process.traceDeprecation = true;
 
 module.exports = {
   entry: './start.js',
@@ -18,68 +17,11 @@ module.exports = {
     }
   },
   devtool: '#eval-source-map',
-  module: {
-    loaders: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-            // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-            // the "scss" and "sass" values for the lang attribute to the right configs here.
-            // other preprocessors should work out of the box, no loader config like this necessary.
-            scss: ExtractTextPlugin.extract({
-              use: 'css-loader!sass-loader',
-              fallback: 'vue-style-loader'
-            }),
-            sass: ExtractTextPlugin.extract({
-              use: 'css-loader!sass-loader?indentedSyntax',
-              fallback: 'vue-style-loader'
-            })
-          },
-          cssModules: {
-            localIdentName: '[name]__[local]__[hash:base64:5]',
-            camelCase: true
-          }
-          // other vue-loader options go here
-        },
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'images/[name].[hash:7].[ext]'
-        }
-      },
-      {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'fonts/[name].[hash:7].[ext]'
-        }
-      },
-      {
-        test: /\.json$/,
-        loaders: ['json-loader']
-      },
-      {
-        test: /\.css$/,
-        loader: ['style-loader', 'css-loader!sass-loader'],
-      }
-    ]
-  },
   plugins: [
     new webpack.LoaderOptionsPlugin({
       minimize: false,
       debug: true
-      //devtool: 'inline-source-map'
+      // devtool: 'inline-source-map'
     }),
     new BrowserSyncPlugin({
       // browse to http://localhost:3000/ during development,
@@ -88,12 +30,12 @@ module.exports = {
       port: 3000,
       server: {
         baseDir: './dev/',
-        directory: false,
-      },
+        directory: false
+      }
     }),
-    new ExtractTextPlugin({ filename: './styles.css' })
+    new ExtractTextPlugin({filename: './styles.css'})
   ]
-};
+}
 
 if (process.env.NODE_ENV === 'development') {
   module.exports.output = {
@@ -124,7 +66,7 @@ if (process.env.NODE_ENV === 'development') {
             camelCase: true
           }
           // other vue-loader options go here
-        },
+        }
       },
       {
         test: /\.js$/,
@@ -153,7 +95,7 @@ if (process.env.NODE_ENV === 'development') {
       },
       {
         test: /\.css$/,
-        loader: ['style-loader', 'css-loader!sass-loader'],
+        loader: ['style-loader', 'css-loader!sass-loader']
       }
     ]
   }
@@ -191,7 +133,7 @@ if (process.env.NODE_ENV === 'production') {
             camelCase: true
           }
           // other vue-loader options go here
-        },
+        }
       },
       {
         test: /\.js$/,
@@ -220,7 +162,7 @@ if (process.env.NODE_ENV === 'production') {
       },
       {
         test: /\.css$/,
-        loader: ['style-loader', 'css-loader!sass-loader'],
+        loader: ['style-loader', 'css-loader!sass-loader']
       }
     ]
   }
@@ -240,5 +182,6 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),
+    new BundleAnalyzerPlugin()
   ])
 }

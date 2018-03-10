@@ -1,14 +1,16 @@
 <template>
-  <Graphic />
+  <Container class="">
+    ProposalQuestidfords
+  </Container>
 </template>
 
 <script>
-  import Graphic from '../organisms/Graphic'
+  import Container from '../atoms/Container'
 
   export default {
     name: 'Proposals',
     components: {
-      Graphic
+      Container
     }
   }
 </script>

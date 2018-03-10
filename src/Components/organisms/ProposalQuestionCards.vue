@@ -1,6 +1,5 @@
 <template>
   <div :class="$style.root">
-    <Header />
     <SelectBar :items="themes">
       <Button :absolute="true" @click="handleCompareClick">COMPARAR</Button>
     </SelectBar>
@@ -8,23 +7,22 @@
       <AnswerCard
         v-for="candidate in candidates"
         :key="candidate.name"
-        :data="candidate"
+        :candidate="candidate"
+        :theme="themes.active"
       />
     </Container>
   </div>
 </template>
 
 <script>
-  import Header from '../molecules/Header'
   import SelectBar from '../molecules/SelectBar'
   import Button from '../atoms/Button'
   import Container from '../atoms/Container'
   import AnswerCard from '../molecules/AnswerCard'
 
   export default {
-    name: 'Graphic',
+    name: 'ProposalQuestionCards',
     components: {
-      Header,
       SelectBar,
       Button,
       Container,

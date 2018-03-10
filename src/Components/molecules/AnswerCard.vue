@@ -1,30 +1,28 @@
 <template>
-  <Card :class="$style.root" :isInActive="!question">
+  <Card :isInActive="!question">
     <User
-      :name="data.name"
-      :partido="data.partido"
-      :photo="data.foto || undefined"
+      :name="candidate.name"
+      :partido="candidate.partido"
+      :photo="candidate.foto || undefined"
     >
       <Button v-if="question" :large="true">{{question.answer}}</Button>
     </User>
     <Hr />
-    <vue-markdown v-if="question" :source="question.summary" />
+    <p v-if="question" v-html="question.summary" />
     <div v-if="question" :class="$style.footer">
-      <a :href="question.link" :class="$style.link" target="_blank">
+      <router-link :to="`/proposals/${candidate.id}#${theme.replace(/[^a-z0-9]/gi, '_').toLowerCase()}`" :class="$style.link">
         <svg width="11" height="12" viewBox="0 0 11 12">
           <polygon fill="currentColor"
                    transform="translate(5.899495, 5.899495) rotate(-45.000000) translate(-5.899495, -5.899495) "
                    points="5.89949494 -1.10050506 4.67449494 0.124494937 9.57449494 5.02449494 -1.10050506 5.02449494 -1.10050506 6.77449494 9.57449494 6.77449494 4.67449494 11.6744949 5.89949494 12.8994949 12.8994949 5.89949494"></polygon>
         </svg>
         VER DETALLE DE PROPUESTA
-      </a>
+      </router-link>
     </div>
   </Card>
 </template>
 
 <script>
-  import VueMarkdown from 'vue-markdown'
-
   import Card from '../atoms/Card'
   import User from '../molecules/User'
   import Button from '../atoms/Button'
@@ -33,12 +31,12 @@
   export default {
     name: 'AnswerCard',
     props: [
-      'data'
+      'candidate',
+      'theme'
     ],
     mounted () {
     },
     components: {
-      VueMarkdown,
       Card,
       User,
       Button,
@@ -46,7 +44,7 @@
     },
     computed: {
       question () {
-        return this.$store.getters.getAnswerByCandidate(this.data.name)
+        return this.$store.getters.getAnswerByCandidate(this.candidate.name)
       }
     }
   }

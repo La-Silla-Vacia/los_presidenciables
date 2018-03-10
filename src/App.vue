@@ -1,7 +1,8 @@
 <template>
   <div :class="[$style.container, {[$style.loading]: loading}]">
     <LoadScreen v-if="loading" />
-    <router-view v-else :key="$route.path" />
+    <Header v-else />
+    <router-view v-if="!loading" :key="$route.path" />
   </div>
 </template>
 
@@ -11,13 +12,13 @@
   import * as types from './store/mutation-types'
 
   import LoadScreen from './Components/atoms/LoadScreen'
-  import Graphic from './Components/organisms/Graphic'
+  import Header from './Components/molecules/Header'
 
   export default {
     name: 'app',
     components: {
       LoadScreen,
-      Graphic
+      Header
     },
     data () {
       return {
