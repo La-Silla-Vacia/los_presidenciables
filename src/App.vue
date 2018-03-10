@@ -1,9 +1,7 @@
 <template>
   <div :class="[$style.container, {[$style.loading]: loading}]">
     <LoadScreen v-if="loading" />
-    <div v-else :class="$style.inner">
-      <Graphic />
-    </div>
+    <router-view v-else :key="$route.path" />
   </div>
 </template>
 

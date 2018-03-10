@@ -4,8 +4,11 @@ import Vue from 'vue'
 import VueResource from 'vue-resource'
 
 import App from './src/App'
-
+import { sync } from 'vuex-router-sync'
+import router from './src/router'
 import store from './src/store'
+
+const unsync = sync(store, router)
 
 Vue.use(VueResource)
 
@@ -20,10 +23,14 @@ lsv("los_presidenciables", function (interactive) {
   /* eslint-disable no-new */
   new Vue({
     el: interactive.el,
+    router,
     store,
     template: '<App />',
     components: {
       App
+    },
+    destroyed () {
+      unsync()
     }
   })
 
