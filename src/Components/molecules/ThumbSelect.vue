@@ -58,7 +58,6 @@
         return this.$store.getters.getCandidates()
       },
       current () {
-        console.log(this.$store.getters.isComparing(this.which))
         return this.$store.getters.isComparing(this.which)
       }
     },

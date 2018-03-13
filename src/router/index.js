@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import ProposalQuestionCards from '@/components/organisms/ProposalQuestionCards'
 import Proposals from '@/components/templates/Proposals'
+import Maquinaria from '@/components/templates/Maquinaria'
 
 Vue.use(Router)
 
@@ -20,7 +21,13 @@ export default new Router({
     },
     {
       path: '/la-maquinaria',
-      name: 'LA MAQUINARIA QUE TIENEN'
+      name: 'LA MAQUINARIA QUE TIENEN',
+      component: Maquinaria
+    },
+    {
+      path: '/la-maquinaria/:uid',
+      name: 'LA MAQUINARIA QUE TIENEN single',
+      component: Maquinaria
     },
     {
       path: '/gastado',

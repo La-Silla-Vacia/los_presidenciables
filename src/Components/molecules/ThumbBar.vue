@@ -3,7 +3,7 @@
     <router-link
       v-for="candidate in candidates"
       :key="candidate.id"
-      :to="`./${candidate.id}`"
+      :to="`${routeBase}${candidate.id}`"
       :class="[
         $style.thumb,
         {[$style.active]: $route.params.uid === candidate.id}
@@ -26,6 +26,11 @@
     components: {
       User
     },
+    props: {
+      routeBase: {
+        default: './'
+      }
+    },
     computed: {
       candidates () {
         return this.$store.getters.getCandidates()
@@ -46,11 +51,14 @@
     border: 1px solid #fff;
     display: block;
     padding: 20px 10px 20px 20px;
+    background-color: #E3E4E5;
+    opacity: .5;
   }
 
   .active {
     border-left: 3px solid $color__primary--base;
     padding-left: 18px;
     background-color: #fff;
+    opacity: 1;
   }
 </style>

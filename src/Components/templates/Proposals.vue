@@ -47,12 +47,12 @@
         this.$store.commit(types.RECEIVE_COMPARE, {active: state, first: this.candidate})
       }
     },
+    mounted () {
+      this.$store.commit(types.RECEIVE_COMPARE, {active: false})
+    },
     computed: {
       themes () {
         return this.$store.getters.getThemes()
-      },
-      candidates () {
-        return this.$store.getters.getCandidates()
       },
       candidate () {
         const candidate = this.$route.params.uid
