@@ -25,8 +25,7 @@
     padding: 40px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-column-gap: 18px;
-    max-height: $max-content-height;
+    grid-gap: 18px;
     overflow: auto;
   }
 
@@ -34,5 +33,11 @@
     padding: 0;
     grid-template-columns: 220px 1fr;
     grid-template-rows: 1fr;
+  }
+
+  .comparing {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0;
+    padding: 0;
   }
 </style>

@@ -1,14 +1,15 @@
-import Vue from "vue"
-import * as types from "../mutation-types"
+import Vue from 'vue'
+import * as types from '../mutation-types'
 
 const state = {
   site: {},
   loaded: false,
   themes: {},
   questions: [],
-  chapter: "LO QUE PROPONEN",
+  chapter: 'LO QUE PROPONEN',
   candidates: [],
-  settings: {}
+  settings: {},
+  comparing: true
 }
 
 const getters = {
@@ -17,11 +18,11 @@ const getters = {
   },
   getChapters: () => (uid, collection = state.site) => {
     return [
-      "LO QUE PROPONEN",
-      "LA MAQUINARIA QUE TIENEN",
-      "LO QUE HAN GASTADO",
-      "CÓMO LOS BUSCAN",
-      "TEST DE CARACTER"
+      'LO QUE PROPONEN',
+      'LA MAQUINARIA QUE TIENEN',
+      'LO QUE HAN GASTADO',
+      'CÓMO LOS BUSCAN',
+      'TEST DE CARACTER'
     ]
   },
   getThemes: () => (uid, collection = state.themes) => {
@@ -89,6 +90,9 @@ const getters = {
   getActiveChapter: () => (uid, collection = state.chapter) => {
     return collection
   },
+  isComparing: () => (uid, collection = state.comparing) => {
+    return collection
+  },
   isLoaded: () => (url, loaded = state.loaded) => {
     return loaded
   },
@@ -98,7 +102,7 @@ const getters = {
 }
 
 const actions = {
-  fetchContent() {
+  fetchContent () {
     Vue.http.get(getters.getDataUri()).then((response) => {
       const data = JSON.parse(response.bodyText)
       this.commit(types.RECEIVE_SITE, {site: data, loaded: true})
@@ -109,7 +113,7 @@ const actions = {
 }
 
 const mutations = {
-  [types.RECEIVE_SITE](state, {site, loaded, theme}) {
+  [types.RECEIVE_SITE] (state, {site, loaded, theme}) {
     state.loaded = loaded || state.loaded
     state.themes = {
       active: theme || site.themes[0] || state.themes.active,
@@ -118,15 +122,17 @@ const mutations = {
     state.questions = site ? site.questions : state.questions
     state.candidates = site ? site.candidates : state.candidates
   },
-  [types.RECEIVE_SETTINGS](state, {settings}) {
+  [types.RECEIVE_SETTINGS] (state, {settings}) {
     state.settings = settings
   },
-  [types.RECEIVE_CHAPTER](state, {chapter}) {
+  [types.RECEIVE_CHAPTER] (state, {chapter}) {
     state.chapter = chapter
   },
-  [types.RECEIVE_THEME](state, {theme}) {
-    console.log("bier")
+  [types.RECEIVE_THEME] (state, {theme}) {
     state.site.themes.active = theme
+  },
+  [types.RECEIVE_COMPARE] (state, payload) {
+    state.comparing = payload
   }
 }
 

@@ -1,11 +1,11 @@
 <template>
-  <div :class="$style.root">
+  <div :class="[$style.root, {[$style.compact]: compact}]">
     <div v-for="item in data" :key="item.theme" :class="$style.section">
       <div :class="$style.title" tabindex="0">{{item.theme}}</div>
       <p
-        v-for="answer in item.answers"
+        v-for="(answer, index) in item.answers"
         v-if="answer.summary.length"
-        :key="answer"
+        :key="answer + index"
         :class="$style.answer"
       >
         {{answer.summary}}
@@ -19,9 +19,10 @@
 
 <script>
   export default {
-    name: "Paper",
+    name: 'Paper',
     props: [
-      "data"
+      'data',
+      'compact'
     ],
     components: {},
     computed: {}
@@ -39,6 +40,10 @@
     width: 100%;
     max-height: $max-content-height;
     overflow: auto;
+  }
+
+  .compact {
+    max-width: 543px;
   }
 
   .title {
@@ -62,6 +67,7 @@
     line-height: 2;
     font-weight: normal;
     position: relative;
+    margin: 0;
 
     &::before {
       content: '';
