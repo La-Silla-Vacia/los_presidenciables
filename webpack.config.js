@@ -65,7 +65,7 @@ if (process.env.NODE_ENV === 'development') {
             })
           },
           cssModules: {
-            localIdentName: '[name]__[local]__[hash:base64:5]',
+            localIdentName: '[name]__[local]',
             camelCase: true
           }
           // other vue-loader options go here
@@ -132,7 +132,7 @@ if (process.env.NODE_ENV === 'production') {
             })
           },
           cssModules: {
-            localIdentName: 'lsvi__[hash:base64:5]',
+            localIdentName: 'lsvi__[name]__[local]',
             camelCase: true
           }
           // other vue-loader options go here
@@ -185,6 +185,6 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),
-    new BundleAnalyzerPlugin()
+    // new BundleAnalyzerPlugin()
   ])
 }

@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.root">
     <SelectBar :with-question="true" :items="themes">
-      <Button :absolute="true" @click="handleCompareClick">COMPARAR</Button>
+      <!--<Button :absolute="true" @click="handleCompareClick">COMPARAR</Button>-->
     </SelectBar>
     <Container>
       <AnswerCard
