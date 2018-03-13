@@ -1,10 +1,12 @@
 <template>
-  <button
+  <router-link
+    :to="{name: text}"
     @click="handleClick"
-    :class="[$style.root, { [$style.active]: isActive}]"
+    :active-class="$style.active"
+    :class="$style.root"
   >
     {{text}}
-  </button>
+  </router-link>
 </template>
 
 <script>

@@ -3,10 +3,10 @@
     <nav :class="$style.nav">
       <HeaderButton
         v-for="chapter in chapters"
-        :key="chapter"
+        :key="chapter.text"
         :callback="handleClick"
-        :isActive="chapter === activeChapter"
-        :text="chapter"
+        :isActive="chapter.text === activeChapter"
+        :text="chapter.text"
       >
       </HeaderButton>
     </nav>
@@ -23,7 +23,6 @@
     },
     mounted () {
     },
-    methods: {},
     computed: {
       chapters () {
         return this.$store.getters.getChapters()

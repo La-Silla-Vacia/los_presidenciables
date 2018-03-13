@@ -10,13 +10,29 @@ export default new Router({
   routes: [
     {
       path: '/proposals',
-      name: 'proposals',
+      name: 'LO QUE PROPONEN',
       component: ProposalQuestionCards
     },
     {
       path: '/proposals/:uid',
       name: 'proposal',
       component: Proposals
+    },
+    {
+      path: '/la-maquinaria',
+      name: 'LA MAQUINARIA QUE TIENEN'
+    },
+    {
+      path: '/gastado',
+      name: 'LO QUE HAN GASTADO'
+    },
+    {
+      path: 'como-los-buscan',
+      name: 'CÓMO LOS BUSCAN'
+    },
+    {
+      path: 'test-de-caracter',
+      name: 'TEST DE CARACTER'
     },
     {
       path: '*',

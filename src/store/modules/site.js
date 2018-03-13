@@ -18,13 +18,13 @@ const getters = {
   getItems: () => (uid, collection = state.site) => {
     return collection
   },
-  getChapters: () => (uid, collection = state.site) => {
+  getChapters: () => () => {
     return [
-      'LO QUE PROPONEN',
-      'LA MAQUINARIA QUE TIENEN',
-      'LO QUE HAN GASTADO',
-      'CÓMO LOS BUSCAN',
-      'TEST DE CARACTER'
+      {text: 'LO QUE PROPONEN'},
+      {text: 'LA MAQUINARIA QUE TIENEN'},
+      {text: 'LO QUE HAN GASTADO'},
+      {text: 'CÓMO LOS BUSCAN'},
+      {text: 'TEST DE CARACTER'}
     ]
   },
   getThemes: () => (uid, collection = state.themes) => {
