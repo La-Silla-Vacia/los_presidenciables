@@ -4,7 +4,8 @@
     :class="[
       $style.root,
       {[$style.absolute]: absolute},
-      {[$style.large]: large}
+      {[$style.large]: large},
+      {[$style[type]]: type}
     ]"
   >
     <slot />
@@ -16,7 +17,8 @@
     name: 'Button',
     props: [
       'absolute',
-      'large'
+      'large',
+      'type'
     ],
     methods: {
       handleClick() {
@@ -52,5 +54,10 @@
   .large {
     font-size: 15px;
     font-family: $font__family--sans--especial;
+  }
+
+  .ghost {
+    background-color: transparent;
+    color: $color__primary--base
   }
 </style>

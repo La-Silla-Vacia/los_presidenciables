@@ -92,14 +92,13 @@ const getters = {
   getActiveChapter: () => (uid, collection = state.chapter) => {
     return collection
   },
-  isComparing: () => (uid, collection = state) => {
-      if (uid === 'first') {
-      console.log(uid, collection)
+  isComparing: (state) => (uid, collection = state) => {
+    if (uid === 'first') {
       return collection.comparingFirst
     } else if (uid === 'second') {
       return collection.comparingSecond
     }
-    return collection.comparing
+    return state.comparing
   },
   isLoaded: () => (url, loaded = state.loaded) => {
     return loaded
@@ -140,8 +139,7 @@ const mutations = {
     state.site.themes.active = theme
   },
   [types.RECEIVE_COMPARE] (state, {active, first, second}) {
-    console.log(active, first, second)
-    state.comparing = active || state.comparing
+    state.comparing = active
     state.comparingFirst = first || state.comparingFirst
     state.comparingSecond = second || state.comparingSecond
   }

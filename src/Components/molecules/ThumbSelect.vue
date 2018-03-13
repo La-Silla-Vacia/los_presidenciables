@@ -47,9 +47,9 @@
       handleSelect (candidate) {
         this.open = false
         if (this.which === 'first') {
-          this.$store.commit(types.RECEIVE_COMPARE, {first: candidate})
+          this.$store.commit(types.RECEIVE_COMPARE, {active: true, first: candidate})
         } else {
-          this.$store.commit(types.RECEIVE_COMPARE, {second: candidate})
+          this.$store.commit(types.RECEIVE_COMPARE, {active: true, second: candidate})
         }
       }
     },

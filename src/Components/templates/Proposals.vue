@@ -1,7 +1,11 @@
 <template>
   <div>
     <SelectBar :items="themes">
-      <Button :absolute="true" @click="handleCompareClick">COMPARAR</Button>
+      <Button v-if="!comparing" :absolute="true" @click="handleCompareClick(true)">COMPARAR</Button>
+      <Button v-else type="ghost" :absolute="true" @click="handleCompareClick(false)">
+        <img src="../../assets/images/close.svg" width="8"/>
+        CLOSE
+      </Button>
     </SelectBar>
     <Container :type="comparing ? 'comparing' : 'sidebar'">
       <ThumbBar v-if="!comparing"/>
@@ -39,8 +43,8 @@
       Paper
     },
     methods: {
-      handleCompareClick () {
-        this.$store.commit(types.RECEIVE_COMPARE, {active: true, first: this.candidate})
+      handleCompareClick (state) {
+        this.$store.commit(types.RECEIVE_COMPARE, {active: state, first: this.candidate})
       }
     },
     computed: {
