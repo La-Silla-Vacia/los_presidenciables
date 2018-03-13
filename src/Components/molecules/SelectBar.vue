@@ -16,7 +16,7 @@
       >
         {{items.active}}
       </Title>
-      <slot />
+      <slot/>
     </header>
     <transition name="fade">
       <nav v-if="open" :class="$style.nav">

@@ -12,7 +12,7 @@
       <User
         :name="candidate.name"
         :partido="candidate.partido"
-        :compact="true"
+        size="compact"
       />
     </router-link>
   </div>

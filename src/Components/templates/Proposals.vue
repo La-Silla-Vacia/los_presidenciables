@@ -5,11 +5,14 @@
     </SelectBar>
     <Container :type="comparing ? 'comparing' : 'sidebar'">
       <ThumbBar v-if="!comparing"/>
-      <div :class="[$style.Proposal, $style.Proposal__left]">
-        <Paper :data="candidate" :compact="comparing" />
+      <Paper v-if="!comparing" :data="candidate"/>
+      <div v-if="comparing" :class="[$style.Proposal, $style.Proposal__left]">
+        <ThumbSelect which="first"/>
+        <Paper :data="compareFirst" :compact="true"/>
       </div>
       <div v-if="comparing" :class="[$style.Proposal, $style.Proposal__right]">
-        <Paper :data="candidate" :compact="comparing" />
+        <ThumbSelect which="second"/>
+        <Paper v-if="compareSecond" :data="compareSecond" :compact="true"/>
       </div>
     </Container>
   </div>
@@ -22,6 +25,7 @@
   import SelectBar from '../molecules/SelectBar'
   import Button from '../atoms/Button'
   import ThumbBar from '../molecules/ThumbBar'
+  import ThumbSelect from '../molecules/ThumbSelect'
   import Paper from '../molecules/Paper'
 
   export default {
@@ -31,11 +35,12 @@
       SelectBar,
       Button,
       ThumbBar,
+      ThumbSelect,
       Paper
     },
     methods: {
       handleCompareClick () {
-        this.$store.commit(types.RECEIVE_COMPARE, !this.comparing)
+        this.$store.commit(types.RECEIVE_COMPARE, {active: true, first: this.candidate})
       }
     },
     computed: {
@@ -47,11 +52,16 @@
       },
       candidate () {
         const candidate = this.$route.params.uid
-        const candidateName = this.$store.getters.getCandidateByUid(candidate)
-        return this.$store.getters.getAnswersByCandidate(candidateName.name)
+        return this.$store.getters.getCandidateByUid(candidate)
       },
       comparing () {
         return this.$store.getters.isComparing()
+      },
+      compareFirst () {
+        return this.$store.getters.isComparing('first')
+      },
+      compareSecond () {
+        return this.$store.getters.isComparing('second')
       }
     }
   }

@@ -9,7 +9,9 @@ const state = {
   chapter: 'LO QUE PROPONEN',
   candidates: [],
   settings: {},
-  comparing: true
+  comparing: false,
+  comparingFirst: null,
+  comparingSecond: null
 }
 
 const getters = {
@@ -80,7 +82,7 @@ const getters = {
       }
 
       if (res.length) {
-        result[resIndex].answers.concat(obj.answers)
+        result[resIndex].answers = result[resIndex].answers.concat(obj.answers)
       } else {
         result.push(obj)
       }
@@ -90,8 +92,14 @@ const getters = {
   getActiveChapter: () => (uid, collection = state.chapter) => {
     return collection
   },
-  isComparing: () => (uid, collection = state.comparing) => {
-    return collection
+  isComparing: () => (uid, collection = state) => {
+      if (uid === 'first') {
+      console.log(uid, collection)
+      return collection.comparingFirst
+    } else if (uid === 'second') {
+      return collection.comparingSecond
+    }
+    return collection.comparing
   },
   isLoaded: () => (url, loaded = state.loaded) => {
     return loaded
@@ -131,8 +139,11 @@ const mutations = {
   [types.RECEIVE_THEME] (state, {theme}) {
     state.site.themes.active = theme
   },
-  [types.RECEIVE_COMPARE] (state, payload) {
-    state.comparing = payload
+  [types.RECEIVE_COMPARE] (state, {active, first, second}) {
+    console.log(active, first, second)
+    state.comparing = active || state.comparing
+    state.comparingFirst = first || state.comparingFirst
+    state.comparingSecond = second || state.comparingSecond
   }
 }
 

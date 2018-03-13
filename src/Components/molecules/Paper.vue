@@ -1,10 +1,10 @@
 <template>
   <div :class="[$style.root, {[$style.compact]: compact}]">
-    <div v-for="item in data" :key="item.theme" :class="$style.section">
+    <div v-for="item in candidateAnswers" :key="item.theme" :class="$style.section">
       <div :class="$style.title" tabindex="0">{{item.theme}}</div>
       <p
         v-for="(answer, index) in item.answers"
-        v-if="answer.summary.length"
+        v-if="answer.summary"
         :key="answer + index"
         :class="$style.answer"
       >
@@ -25,7 +25,12 @@
       'compact'
     ],
     components: {},
-    computed: {}
+    computed: {
+      candidateAnswers () {
+        const candidate = this.data
+        return this.$store.getters.getAnswersByCandidate(candidate.name)
+      }
+    }
   }
 </script>
 
@@ -33,7 +38,7 @@
   @import '../../assets/styles/base';
 
   .root {
-    padding: 3em 1em;
+    padding: 3em 2em;
     background-color: #fff;
     margin: 20px auto;
     max-width: 720px;

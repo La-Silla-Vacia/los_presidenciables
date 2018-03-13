@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.root, {[$style.compact]: compact}]">
+  <div :class="[$style.root, {[$style[size]]: size}]">
     <div
       :class="$style.avatar"
       :style="{ backgroundImage: `url(${photo})` }"
@@ -27,7 +27,7 @@
         required: true
       },
       label: {},
-      compact: {}
+      size: {}
     }
   }
 </script>
@@ -74,6 +74,17 @@
 
     .partido {
       font-size: 8px;
+    }
+  }
+
+  .small {
+    .avatar {
+      width: 25px;
+      height: 25px;
+    }
+
+    .name {
+      font-size: 12px;
     }
   }
 </style>
