@@ -11,7 +11,8 @@ const state = {
   settings: {},
   comparing: false,
   comparingFirst: null,
-  comparingSecond: null
+  comparingSecond: null,
+  maquinaria: []
 }
 
 const getters = {
@@ -105,6 +106,13 @@ const getters = {
   },
   getDataUri: (uid, collection = state.settings) => {
     return collection.dataUri
+  },
+  getMaquinaria: () => (uid, collection = state.maquinaria) => {
+    for (let i = 0; i < collection.length; i += 1) {
+      if (collection[i].label === uid) {
+        return collection[i]
+      }
+    }
   }
 }
 
@@ -112,6 +120,7 @@ const actions = {
   fetchContent () {
     Vue.http.get(getters.getDataUri()).then((response) => {
       const data = JSON.parse(response.bodyText)
+      console.log(data)
       this.commit(types.RECEIVE_SITE, {site: data, loaded: true})
     }, (error) => {
       console.log(error.statusText)
@@ -128,15 +137,13 @@ const mutations = {
     }
     state.questions = site ? site.questions : state.questions
     state.candidates = site ? site.candidates : state.candidates
+    state.maquinaria = site.maquinaria || state.maquinaria
   },
   [types.RECEIVE_SETTINGS] (state, {settings}) {
     state.settings = settings
   },
   [types.RECEIVE_CHAPTER] (state, {chapter}) {
     state.chapter = chapter
-  },
-  [types.RECEIVE_THEME] (state, {theme}) {
-    state.site.themes.active = theme
   },
   [types.RECEIVE_COMPARE] (state, {active, first, second}) {
     state.comparing = active

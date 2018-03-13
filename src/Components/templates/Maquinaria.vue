@@ -10,7 +10,12 @@
     <Container :type="comparing ? 'comparing' : 'sidebar'">
       <ThumbBar routeBase="/la-maquinaria/"/>
 
-      <div :class="$style.content">
+      <div v-if="isSingle">
+        <chart-sunburst v-if="data" :data='data'/>
+        <h2 v-else>No data</h2>
+      </div>
+
+      <div v-else :class="$style.content">
         <p>Monocle ipsum dolor sit amet joy cosy Airbus A380 ANA bulletin punctual. Ettinger international Marylebone
           hub. Winkreative bulletin premium perfect Porter lovely. Comme des Garçons Washlet sharp bulletin, uniforms
           charming izakaya handsome Toto punctual destination wardrobe. Quality of life perfect first-class Nordic hub
@@ -28,6 +33,8 @@
 </template>
 
 <script>
+  import {ChartSunburst} from 'vue-d2b'
+
   import * as types from '../../store/mutation-types'
 
   import Container from '../atoms/Container'
@@ -40,6 +47,7 @@
   export default {
     name: 'Maquinaria',
     components: {
+      ChartSunburst,
       Container,
       Bar,
       Button,
@@ -56,18 +64,75 @@
       this.$store.commit(types.RECEIVE_COMPARE, {active: false})
     },
     computed: {
-      themes () {
-        return this.$store.getters.getThemes()
-      },
-      candidates () {
-        return this.$store.getters.getCandidates()
-      },
       candidate () {
         const candidate = this.$route.params.uid
         return this.$store.getters.getCandidateByUid(candidate)
       },
       comparing () {
         return this.$store.getters.isComparing()
+      },
+      isSingle () {
+        return this.$route.params.uid
+      },
+      data () {
+        return this.$store.getters.getMaquinaria(this.candidate.name)
+      }
+    },
+    data () {
+      return {
+        chartData: {
+          label: 'root',
+          children: [
+            {
+              label: 'child 1',
+              children: [
+                {
+                  label: 'child 1-1',
+                  size: 10
+                },
+                {
+                  label: 'child 1-2',
+                  children: [
+                    {
+                      label: 'child 1-2-1',
+                      size: 5
+                    },
+                    {
+                      label: 'child 1-3-1',
+                      size: 8
+                    }
+                  ]
+                },
+                {
+                  label: 'child 1-3',
+                  children: [
+                    {
+                      label: 'child 1-3-1',
+                      children: [
+                        {
+                          label: 'child 1-3-1-1',
+                          size: 2
+                        },
+                        {
+                          label: 'child 1-3-1-2',
+                          size: 5
+                        }
+                      ]
+                    },
+                    {
+                      label: 'child 1-3-2',
+                      size: 8
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              label: 'child 2',
+              size: 25
+            }
+          ]
+        }
       }
     }
   }
