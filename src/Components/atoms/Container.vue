@@ -19,7 +19,6 @@
 
   .root {
     width: 100%;
-    height: 100%;
     position: relative;
     background-color: #f6f6f6;
     padding: 40px;
@@ -27,6 +26,7 @@
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 18px;
     overflow: auto;
+    height: $max-content-height;
   }
 
   .sidebar {

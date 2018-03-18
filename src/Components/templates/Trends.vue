@@ -1,30 +1,11 @@
 <template>
   <div>
-    <Bar title="¿Quien le pone los votos?">
-      <Button v-if="!comparing" :absolute="true" @click="handleCompareClick(true)">COMPARAR</Button>
-      <Button v-else type="ghost" :absolute="true" @click="handleCompareClick(false)">
-        <img src="../../assets/images/close.svg" width="8"/>
-        CLOSE
-      </Button>
-    </Bar>
+    <Bar title="¿Cómo gastan el presupuesto los candidatos?"/>
     <Container :type="comparing ? 'comparing' : 'sidebar'">
-      <ThumbBar routeBase="/la-maquinaria/"/>
+      <ThumbBar routeBase="/como-los-buscan/"/>
 
-      <div v-if="isSingle">
-        <chart-sunburst v-if="data" :data='data'/>
-        <h2 v-else>No data</h2>
-      </div>
-
-      <div v-else :class="$style.content">
-        <p>Monocle ipsum dolor sit amet joy cosy Airbus A380 ANA bulletin punctual. Ettinger international Marylebone
-          hub. Winkreative bulletin premium perfect Porter lovely. Comme des Garçons Washlet sharp bulletin, uniforms
-          charming izakaya handsome Toto punctual destination wardrobe. Quality of life perfect first-class Nordic hub
-          Washlet hand-crafted artisanal uniforms sophisticated craftsmanship Singapore exclusive.</p>
-
-        <p>Comme des Garçons Washlet sharp bulletin, uniforms charming izakaya handsome Toto punctual destination
-          wardrobe. Quality of life perfect first-class Nordic hub Washlet hand-crafted artisanal uniforms sophisticated
-          craftsmanship Singapore exclusive.</p>
-
+      <div :class="$style.content">
+        <div v-html="embed"/>
         <p :class="$style.highlight">SELECCIONE UN CANDIDATO PARA VER SUS FACTORES DE PODER</p>
       </div>
 
@@ -33,8 +14,6 @@
 </template>
 
 <script>
-  import {ChartSunburst} from 'vue-d2b'
-
   import * as types from '../../store/mutation-types'
 
   import Container from '../atoms/Container'
@@ -45,9 +24,8 @@
   import Paper from '../molecules/Paper'
 
   export default {
-    name: 'Maquinaria',
+    name: 'Trends',
     components: {
-      ChartSunburst,
       Container,
       Bar,
       Button,
@@ -59,9 +37,6 @@
       handleCompareClick (state) {
         this.$store.commit(types.RECEIVE_COMPARE, {active: state, first: this.candidate})
       }
-    },
-    mounted () {
-      this.$store.commit(types.RECEIVE_COMPARE, {active: false})
     },
     computed: {
       candidate () {
@@ -79,7 +54,9 @@
       }
     },
     data () {
-      return {}
+      return {
+        embed: '<h2>Not working yet.</h2>'
+      }
     }
   }
 </script>

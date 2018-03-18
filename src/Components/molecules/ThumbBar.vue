@@ -43,7 +43,6 @@
   @import '../../assets/styles/base';
 
   .root {
-    max-height: $max-content-height;
     overflow: auto;
   }
 

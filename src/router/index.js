@@ -4,6 +4,7 @@ import ProposalQuestionCards from '@/components/organisms/ProposalQuestionCards'
 import Proposals from '@/components/templates/Proposals'
 import Maquinaria from '@/components/templates/Maquinaria'
 import Gastado from '@/components/templates/Gastado'
+import Trends from '@/components/templates/Trends'
 
 Vue.use(Router)
 
@@ -42,7 +43,8 @@ export default new Router({
     },
     {
       path: 'como-los-buscan',
-      name: 'CÓMO LOS BUSCAN'
+      name: 'CÓMO LOS BUSCAN',
+      component: Trends
     },
     {
       path: 'test-de-caracter',

@@ -15,8 +15,6 @@
 </template>
 
 <script>
-  import {ChartSunburst} from 'vue-d2b'
-
   import * as types from '../../store/mutation-types'
 
   import Container from '../atoms/Container'
@@ -27,9 +25,8 @@
   import Paper from '../molecules/Paper'
 
   export default {
-    name: 'Maquinaria',
+    name: 'Gastado',
     components: {
-      ChartSunburst,
       Container,
       Bar,
       Button,
