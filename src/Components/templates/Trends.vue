@@ -42,7 +42,14 @@ export default {
   },
   methods: {
     createWidget() {
-      this.$refs.container.innerHTML = "";
+      if (this.filter.length) {
+        this.$refs.container.innerHTML = "";
+      } else {
+        this.$refs.container.innerHTML =
+          "<em>Seleccione al menos 1 candidato</em>";
+        return;
+      }
+
       const items = this.comparisonItems;
       trends.embed.renderExploreWidgetTo(this.$refs.container, "TIMESERIES", {
         comparisonItem: items,
@@ -52,10 +59,12 @@ export default {
     },
     handleFilterChange(e) {
       const arrayIndex = this.filter.indexOf(e);
-      if (arrayIndex === -1) {
-        this.filter.push(e);
-      } else {
+      if (arrayIndex !== -1) {
         this.filter.splice(arrayIndex, 1);
+      } else if (this.filter.length === 5) {
+        alert('You can\'t select more than 5 people at the time');
+      } else {
+        this.filter.push(e);
       }
       this.createWidget();
     }
