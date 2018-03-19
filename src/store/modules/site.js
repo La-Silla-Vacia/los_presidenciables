@@ -120,7 +120,6 @@ const actions = {
   fetchContent () {
     Vue.http.get(getters.getDataUri()).then((response) => {
       const data = JSON.parse(response.bodyText)
-      console.log(data)
       this.commit(types.RECEIVE_SITE, {site: data, loaded: true})
     }, (error) => {
       console.log(error.statusText)

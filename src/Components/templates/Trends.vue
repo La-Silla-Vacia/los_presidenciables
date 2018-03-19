@@ -1,8 +1,12 @@
 <template>
   <div>
     <Bar title="¿Cómo gastan el presupuesto los candidatos?"/>
-    <Container :type="comparing ? 'comparing' : 'sidebar'">
-      <ThumbBar routeBase="/como-los-buscan/"/>
+    <Container type="sidebar">
+      <ThumbBar 
+        @change="handleFilterChange" 
+        :buttons="true"
+        :filter="filter"
+      />
 
       <div :class="$style.content">
         <div ref="container">
@@ -34,28 +38,26 @@ export default {
     Paper
   },
   mounted() {
-    console.log(this.$refs.container);
-    const keyword = "/m/03c3tmt";
-      trends.embed.renderExploreWidgetTo(
-        this.$refs.container,
-        "TIMESERIES",
-        {
-          comparisonItem: [{ keyword: keyword, geo: "", time: "today 12-m" }],
-          category: 0,
-          property: ""
-        },
-        {
-          exploreQuery: "q=%2Fm%2F0rfgxy2",
-          guestPath: "https://www.google.com:443/trends/embed/"
-        }
-      );
+    this.createWidget();
   },
   methods: {
-    handleCompareClick(state) {
-      this.$store.commit(types.RECEIVE_COMPARE, {
-        active: state,
-        first: this.candidate
+    createWidget() {
+      this.$refs.container.innerHTML = "";
+      const items = this.comparisonItems;
+      trends.embed.renderExploreWidgetTo(this.$refs.container, "TIMESERIES", {
+        comparisonItem: items,
+        category: 0,
+        property: ""
       });
+    },
+    handleFilterChange(e) {
+      const arrayIndex = this.filter.indexOf(e);
+      if (arrayIndex === -1) {
+        this.filter.push(e);
+      } else {
+        this.filter.splice(arrayIndex, 1);
+      }
+      this.createWidget();
     }
   },
   computed: {
@@ -71,11 +73,23 @@ export default {
     },
     data() {
       return this.$store.getters.getMaquinaria(this.candidate.name);
+    },
+    comparisonItems() {
+      const candidates = this.filter;
+      const result = [];
+      candidates.map((candidate, i) => {
+        if (i > 4) return;
+        result.push({ keyword: candidate, geo: "", time: "today 12-m" });
+      });
+      return result;
     }
   },
   data() {
     return {
-      embed: "<h2>Not working yet.</h2>"
+      embed: "<h2>Not working yet.</h2>",
+      filter: [
+        'Timochenko'
+      ]
     };
   }
 };
@@ -85,6 +99,10 @@ export default {
 @import "../../assets/styles/base";
 
 .content {
+  max-width: 937px;
+  width: 100%;
+  margin: 1em auto;
+
   p {
     font-family: $font__family--serif--especial;
     margin: 0 0 0.5em 0;
