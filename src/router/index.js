@@ -38,7 +38,7 @@ export default new Router({
     },
     {
       path: '/gastado/:uid',
-      name: 'LO QUE HAN GASTADO',
+      name: 'LO QUE HAN GASTADO single',
       component: Gastado
     },
     {
