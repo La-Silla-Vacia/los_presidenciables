@@ -88,7 +88,11 @@ export default {
     return {
       embed: "<h2>Not working yet.</h2>",
       filter: [
-        'Timochenko'
+        "Iván Duque",
+        "Germán Vargas Lleras",
+        "Sergio Fajardo",
+        "Humberto de la Calle",
+        "Gustavo Petro"
       ]
     };
   }

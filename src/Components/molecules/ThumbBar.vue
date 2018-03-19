@@ -4,9 +4,10 @@
       v-for="candidate in candidates"
       :key="candidate.id"
       @click="handleClick(candidate)"
+      :data-active-index="filter.indexOf(candidate.name) + 1"
       :class="[
         $style.thumb,
-        {[$style.active]: $route.params.uid === candidate.id}
+        {[$style.active]: filter.indexOf(candidate.name) > -1}
       ]"
     >
       <User
@@ -36,58 +37,84 @@
 </template>
 
 <script>
-  import User from '../molecules/User'
+import User from "../molecules/User";
 
-  export default {
-    name: 'ThumbBar',
-    components: {
-      User
+export default {
+  name: "ThumbBar",
+  components: {
+    User
+  },
+  props: {
+    routeBase: {
+      default: "./"
     },
-    props: {
-      routeBase: {
-        default: './'
-      },
-      buttons: {
-        default: false
-      },
-      filter: {
-        
-      }
+    buttons: {
+      default: false
     },
-    methods: {
-      handleClick(candidate) {
-        this.$emit('change', candidate.name)
-      }
-    },
-    computed: {
-      candidates () {
-        return this.$store.getters.getCandidates()
-      }
+    filter: {
+      type: Array
+    }
+  },
+  methods: {
+    handleClick(candidate) {
+      this.$emit("change", candidate.name);
+    }
+  },
+  computed: {
+    candidates() {
+      return this.$store.getters.getCandidates();
     }
   }
+};
 </script>
 
 <style module lang="scss">
-  @import '../../assets/styles/base';
+@import "../../assets/styles/base";
 
-  .root {
-    overflow: auto;
-  }
+.root {
+  overflow: auto;
+}
 
-  .thumb {
-    border: 1px solid #fff;
-    display: block;
-    padding: 20px 10px 20px 20px;
-    background-color: #E3E4E5;
-    opacity: .5;
-    text-align: left;
-    width: 100%;
-  }
+.thumb {
+  border: 1px solid #fff;
+  display: block;
+  padding: 20px 10px 20px 20px;
+  background-color: #e3e4e5;
+  opacity: 0.5;
+  text-align: left;
+  width: 100%;
 
-  .active {
+  &:focus {
+    outline: none;
     border-left: 3px solid $color__primary--base;
     padding-left: 18px;
-    background-color: #fff;
-    opacity: 1;
   }
+}
+
+.active {
+  border-left: 3px solid $color__primary--base;
+  padding-left: 18px;
+  background-color: #fff;
+  opacity: 1;
+
+  &[data-active-index="1"] figure {
+    border: 2px solid rgb(33, 150, 243);
+  }
+
+  &[data-active-index="2"] figure {
+    border: 2px solid #f44336;
+  }
+
+  &[data-active-index="3"] figure {
+    border: 2px solid #ffca28;
+  }
+
+  &[data-active-index="4"] figure {
+    border: 2px solid #43a047;
+  }
+
+  &[data-active-index="5"] figure {
+    border: 2px solid #9c27b0;
+  }
+}
 </style>

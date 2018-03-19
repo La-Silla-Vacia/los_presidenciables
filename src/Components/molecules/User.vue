@@ -1,9 +1,9 @@
 <template>
   <div :class="[$style.root, {[$style[size]]: size}]">
-    <div
+    <figure
       :class="$style.avatar"
       :style="{ backgroundImage: `url(${photo})` }"
-    ></div>
+    ></figure>
     <div>
       <div :class="$style.name">{{name}}</div>
       <div :class="$style.partido">{{partido}}</div>
