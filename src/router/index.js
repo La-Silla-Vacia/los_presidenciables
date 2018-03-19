@@ -42,12 +42,12 @@ export default new Router({
       component: Gastado
     },
     {
-      path: 'como-los-buscan',
+      path: '/como-los-buscan',
       name: 'CÓMO LOS BUSCAN',
       component: Trends
     },
     {
-      path: 'test-de-caracter',
+      path: '/test-de-caracter',
       name: 'TEST DE CARACTER'
     },
     {
