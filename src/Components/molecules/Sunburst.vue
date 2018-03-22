@@ -1,33 +1,35 @@
 <template>
   <div :class="$style.root">
     <div :class="$style.el" ref="el">
-      <div
-        v-if="current"
-        :class="$style.tooltip"
-        :style="{
-          left: current.x + 12 + 'px',
-          top: current.y - 30 + 'px',
+      <transition name="fade">
+        <div
+          v-if="current"
+          :class="$style.tooltip"
+          :style="{
+          left: current.x + 10 + 'px',
+          top: current.y - 40 + 'px',
         }"
-      >
-        <header :class="$style.header">
-          <div :class="$style.partido">
-            {{current.data.name}}
+        >
+          <header :class="$style.header">
+            <div :class="$style.partido">
+              {{current.data.name}}
+            </div>
+            <div :class="$style.votes">
+              <span>VOTOS</span>
+              {{current.data.value}}
+            </div>
+          </header>
+          <div :class="$style.content">
+            {{current.data.explicacion}}
           </div>
-          <div :class="$style.votes">
-            <span>VOTOS</span>
-            {{current.data.value}}
+          <div :class="$style.table">
+            <div v-for="row in current.data.children" :class="$style.row">
+              <span>{{row.name}}</span>
+              {{row.value}}
+            </div>
           </div>
-        </header>
-        <div :class="$style.content">
-          {{current.data.explicacion}}
         </div>
-        <div :class="$style.table">
-          <div v-for="row in current.data.children" :class="$style.row">
-            <span>{{row.name}}</span>
-            {{row.value}}
-          </div>
-        </div>
-      </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -91,7 +93,7 @@
           .data(partition.nodes(data))
           .enter().append('path')
           .attr('d', arc)
-          .style('fill', function (d) {
+          .style('fill', (d) => {
             // console.log((d.children ? d : d.parent).name)
             return color((d.children ? d : d.parent).name)
           })
@@ -102,23 +104,15 @@
             return '1px'
           })
           .on('click', click)
-          .on('mouseover', (d) => {
-            console.log(d)
+          .on('mousemove', (d) => {
             this.current = {
               data: d,
               x: d3.event.layerX,
               y: d3.event.layerY
             }
           })
-          .on('mouseout', (d) => {
+          .on('mouseout', () => {
             this.current = null
-            // div.transition()
-            //   .duration(500)
-            //   .style('opacity', 0)
-          })
-          .append('title')
-          .text(function (d) {
-            return d.name + '\n' + formatNumber(d.value)
           })
 
         function click (d) {
@@ -167,9 +161,8 @@
     padding: 15px;
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
-    border-radius: 8px;
+    border-radius: 3px;
     pointer-events: none;
-    transition: .3s;
 
     &::before {
       content: '';
