@@ -56,8 +56,13 @@
     font-family: $font__family--sans--especial;
   }
 
-  .ghost {
+  .ghost,
+  .ghost--bordered {
     background-color: transparent;
     color: $color__primary--base
+  }
+
+  .ghost--bordered {
+    border: 1px solid currentColor;
   }
 </style>

@@ -5,6 +5,7 @@ import Proposals from '@/components/templates/Proposals'
 import Maquinaria from '@/components/templates/Maquinaria'
 import Gastado from '@/components/templates/Gastado'
 import Trends from '@/components/templates/Trends'
+import Test from '@/components/templates/Test'
 
 Vue.use(Router)
 
@@ -48,7 +49,8 @@ export default new Router({
     },
     {
       path: '/test-de-caracter',
-      name: 'TEST DE CARACTER'
+      name: 'TEST DE CARACTER',
+      component: Test
     },
     {
       path: '*',
