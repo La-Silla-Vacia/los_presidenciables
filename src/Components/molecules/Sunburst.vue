@@ -1,5 +1,35 @@
 <template>
-  <div :class="$style.root" ref="el"/>
+  <div :class="$style.root">
+    <div :class="$style.el" ref="el">
+      <div
+        v-if="current"
+        :class="$style.tooltip"
+        :style="{
+          left: current.x + 12 + 'px',
+          top: current.y - 30 + 'px',
+        }"
+      >
+        <header :class="$style.header">
+          <div :class="$style.partido">
+            {{current.data.name}}
+          </div>
+          <div :class="$style.votes">
+            <span>VOTOS</span>
+            {{current.data.value}}
+          </div>
+        </header>
+        <div :class="$style.content">
+          {{current.data.explicacion}}
+        </div>
+        <div :class="$style.table">
+          <div v-for="row in current.data.children" :class="$style.row">
+            <span>{{row.name}}</span>
+            {{row.value}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -22,7 +52,6 @@
         const width = this.$refs.el.offsetWidth
         const height = this.$refs.el.offsetHeight * 0.8
         const radius = (Math.min(width, height) / 2) - 10
-        console.log(radius)
         const formatNumber = d3.format(',d')
 
         const x = d3.scale.linear()
@@ -66,13 +95,27 @@
             // console.log((d.children ? d : d.parent).name)
             return color((d.children ? d : d.parent).name)
           })
-          .style('stroke', (d) => {
+          .style('stroke', () => {
             return '#fff'
           })
           .style('stroke-width', () => {
             return '1px'
           })
           .on('click', click)
+          .on('mouseover', (d) => {
+            console.log(d)
+            this.current = {
+              data: d,
+              x: d3.event.layerX,
+              y: d3.event.layerY
+            }
+          })
+          .on('mouseout', (d) => {
+            this.current = null
+            // div.transition()
+            //   .duration(500)
+            //   .style('opacity', 0)
+          })
           .append('title')
           .text(function (d) {
             return d.name + '\n' + formatNumber(d.value)
@@ -100,12 +143,93 @@
 
         d3.select(self.frameElement).style('height', height + 'px')
       }
+    },
+    data () {
+      return {
+        current: null
+      }
     }
   }
 </script>
 
-<style module>
-  .root {
+<style module lang="scss">
+  @import "../../assets/styles/base";
+
+  .root,
+  .el {
     height: 100%;
+    position: relative;
+  }
+
+  .tooltip {
+    position: absolute;
+    width: 285px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    pointer-events: none;
+    transition: .3s;
+
+    &::before {
+      content: '';
+      width: 13px;
+      height: 13px;
+      position: absolute;
+      left: 0;
+      transform: translateX(-50%) rotate(45deg);
+      background: rgba(255, 255, 255, 0.9);
+      top: 2em;
+    }
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+
+  .partido {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .votes {
+    font-size: 14px;
+    color: #000;
+
+    & span {
+      font-size: 8px;
+      color: rgba(0, 0, 0, .4);
+    }
+  }
+
+  .content {
+    font-family: $font__family--sans--especial;
+    font-size: 11px;
+    color: #171918;
+    margin-top: 1em;
+  }
+
+  .table {
+    border-top: 1px solid #B2BABF;
+    font-family: $font__family--sans--especial;
+    font-size: 12px;
+    margin-top: 1em;
+  }
+
+  .table span {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 8px;
+    font-family: $font__family--sans;
+  }
+
+  .row {
+    border-bottom: 1px solid #B2BABF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 </style>
