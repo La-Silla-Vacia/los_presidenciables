@@ -109,7 +109,7 @@ const getters = {
   },
   getMaquinaria: () => (uid, collection = state.maquinaria) => {
     for (let i = 0; i < collection.length; i += 1) {
-      if (collection[i].label === uid) {
+      if (collection[i].name === uid) {
         return collection[i]
       }
     }

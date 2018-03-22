@@ -11,7 +11,7 @@
       <ThumbBar routeBase="/la-maquinaria/"/>
 
       <div v-if="isSingle">
-        <chart-sunburst v-if="data" :data='data'/>
+        <Sunburst v-if="data" :data='data'/>
         <h2 v-else>No data</h2>
       </div>
 
@@ -33,8 +33,6 @@
 </template>
 
 <script>
-  import {ChartSunburst} from 'vue-d2b'
-
   import * as types from '../../store/mutation-types'
 
   import Container from '../atoms/Container'
@@ -43,21 +41,25 @@
   import ThumbBar from '../molecules/ThumbBar'
   import ThumbSelect from '../molecules/ThumbSelect'
   import Paper from '../molecules/Paper'
+  import Sunburst from '../molecules/Sunburst'
 
   export default {
     name: 'Maquinaria',
     components: {
-      ChartSunburst,
       Container,
       Bar,
       Button,
       ThumbBar,
       ThumbSelect,
-      Paper
+      Paper,
+      Sunburst
     },
     methods: {
       handleCompareClick (state) {
-        this.$store.commit(types.RECEIVE_COMPARE, {active: state, first: this.candidate})
+        this.$store.commit(types.RECEIVE_COMPARE, {
+          active: state,
+          first: this.candidate
+        })
       }
     },
     mounted () {
@@ -85,7 +87,7 @@
 </script>
 
 <style module lang="scss">
-  @import '../../assets/styles/base';
+  @import "../../assets/styles/base";
 
   .content {
     max-width: 617px;

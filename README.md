@@ -45,6 +45,7 @@ window.los_presidenciables_data = {
 </div>
 <link type="text/css" rel="stylesheet" href="https://la-silla-vacia.github.io/los_presidenciables/styles.css" />
 <script defer type="text/javascript" src="https://la-silla-vacia.github.io/los_presidenciables/script.js"></script>
+<script src="//d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1328_RC04/embed_loader.js"></script>
 <!-- END OF OUR INTERACTIE -->
 ```
