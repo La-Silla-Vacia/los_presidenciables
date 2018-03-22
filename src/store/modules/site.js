@@ -113,6 +113,65 @@ const getters = {
         return collection[i]
       }
     }
+  },
+  getTest: () => (uid, collection = state.questions) => {
+    return [
+      {
+        question: 'Pregunta redactada para responder con opción multiple?',
+        answers: [
+          {
+            answer: 'Respuesta uno'
+          },
+          {
+            answer: 'Respuesta dos'
+          }
+        ]
+      },
+      {
+        question: 'Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing?',
+        answers: [
+          {
+            answer: 'Respuesta uno'
+          },
+          {
+            answer: 'Respuesta dos'
+          }
+        ]
+      },
+      {
+        question: 'Pregunta redactada para responder con opción multiple?',
+        answers: [
+          {
+            answer: 'Respuesta uno'
+          },
+          {
+            answer: 'Respuesta dos'
+          }
+        ]
+      },
+      {
+        question: 'Pregunta redactada para responder con opción multiple?',
+        answers: [
+          {
+            answer: 'Respuesta uno'
+          },
+          {
+            answer: 'Respuesta dos'
+          }
+        ]
+      },
+      {
+        question: 'Pregunta redactada para responder con opción multiple?',
+        answers: [
+          {
+            answer: 'Respuesta uno'
+          },
+          {
+            answer: 'Respuesta dos'
+          }
+        ]
+      }
+    ]
   }
 }
 

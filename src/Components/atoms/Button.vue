@@ -1,6 +1,6 @@
 <template>
   <button
-    @click="handleClick"
+    @click.prevent="handleClick"
     :class="[
       $style.root,
       {[$style.absolute]: absolute},

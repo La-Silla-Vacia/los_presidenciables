@@ -1,10 +1,19 @@
 .fade-enter-active,
-.fade-leave-active {
-  transition: opacity .3s, transform .3s;
+.fade-leave-active,
+.scaleY-enter-active,
+.scaleY-leave-active {
+  transition: opacity .3s, transform .3s, height .3s;
 }
 
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
   transform: translateY(-1em);
+}
+
+.scaleY-enter,
+.scaleY-leave-to {
+  opacity: 0;
+  overflow: hidden;
+  height: 0;
 }
