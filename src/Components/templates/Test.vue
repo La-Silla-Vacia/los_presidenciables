@@ -103,8 +103,8 @@
     },
     data () {
       return {
-        questionIndex: 0,
-        answers: [0, 0, 0, 0, 0, 1]
+        questionIndex: null,
+        answers: []
       }
     }
   }

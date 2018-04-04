@@ -22,7 +22,7 @@
           <div :class="$style.content">
             {{current.data.explicacion}}
           </div>
-          <div :class="$style.table">
+          <div :class="$style.table" v-if="current.data.children">
             <div v-for="row in current.data.children" :class="$style.row">
               <span>{{row.name}}</span>
               {{row.value}}

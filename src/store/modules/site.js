@@ -177,9 +177,24 @@ const getters = {
 
 const actions = {
   fetchContent () {
+    const rawData = localStorage.getItem('presidenciables_data')
+    if (rawData) {
+      const obj = JSON.parse(rawData)
+      this.commit(types.RECEIVE_SITE, {site: obj.value, loaded: true})
+      const dateString = obj.timestamp
+      const now = new Date().getTime().toString()
+
+      if (dateString > now) {
+        return
+      }
+    }
+
     Vue.http.get(getters.getDataUri()).then((response) => {
       const data = JSON.parse(response.bodyText)
       this.commit(types.RECEIVE_SITE, {site: data, loaded: true})
+
+      const object = {value: data, timestamp: new Date().getTime()}
+      localStorage.setItem('presidenciables_data', JSON.stringify(object))
     }, (error) => {
       console.log(error.statusText)
     })

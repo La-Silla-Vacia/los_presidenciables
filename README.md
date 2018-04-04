@@ -35,9 +35,9 @@ To embed on a webpage use this code:
 ```html
 <!-- START OF OUR INTERACTIVE -->
 <script type="text/javascript">
-window.los_presidenciables_data = {
-  "dataUri": "https://lsv-data-visualizations.firebaseio.com/los_presidenciables.json"
-}
+  window.los_presidenciables__data = {
+    "dataUri": "https://lsv-candidatos-congreso-2018.firebaseio.com/comparacion.json"
+  }
 </script>
 <div class="lsv-interactive" id="los_presidenciables">
 <img src="https://raw.githubusercontent.com/la-silla-vacia/lsv-interactive/master/misc/lsvi-loading.gif"
