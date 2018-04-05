@@ -68,7 +68,10 @@ const getters = {
     const result = question.answers.filter((answer) => {
       if (answer.candidate === candidate) return true
     })
-    return result[0]
+    if (result[0]) {
+      result[0].answer.trim()
+    }
+    return result[0] ? result[0] : null
   },
   getAnswersByCandidate: (state, getters) => (candidate, collection = state.questions) => {
     const result = []
