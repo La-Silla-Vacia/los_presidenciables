@@ -189,7 +189,7 @@ const actions = {
       const now = new Date().getTime().toString()
 
       if (dateString > now) {
-        return
+        // return
       }
     }
 

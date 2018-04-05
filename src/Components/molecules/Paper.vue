@@ -30,12 +30,10 @@
       const themeHash = currentTheme.replace(/[^a-z0-9]/gi, '_').toLowerCase()
       if (this.$route.hash) {
         const location = this.$refs.root.querySelector(this.$route.hash)
-        if (location)
-          this.$refs.root.scrollTop = location.offsetTop - 50
+        if (location) { this.$refs.root.scrollTop = location.offsetTop - 50 }
       } else if (themeHash) {
         const location = this.$refs.root.querySelector('#' + themeHash)
-        if (location)
-          this.$refs.root.scrollTop = location.offsetTop - 50
+        if (location) { this.$refs.root.scrollTop = location.offsetTop - 50 }
       }
     },
     computed: {
@@ -62,6 +60,7 @@
 
   .compact {
     max-width: 543px;
+    max-height: $max-content-height - 106px;
   }
 
   .title {

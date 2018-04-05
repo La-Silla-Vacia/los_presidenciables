@@ -228,6 +228,7 @@
   .question__label {
     display: block;
     font-weight: normal;
+    padding-left: 1.5em;
   }
 
   .question__label span {
@@ -238,7 +239,7 @@
     border: 1px solid #707070;
     border-radius: 50%;
     position: relative;
-    margin: -0.2em 0.25em 0 0;
+    margin: -0.2em 0.25em 0 -1.5em;
     vertical-align: middle;
   }
 
