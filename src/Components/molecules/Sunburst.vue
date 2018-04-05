@@ -1,12 +1,5 @@
 <template>
   <div :class="$style.root">
-    <!--<svg width="0" height="0">-->
-    <!--<defs>-->
-    <!--<pattern id="img1" patternUnits="userSpaceOnUse" :width="avatarPathWidth" :height="avatarPathWidth">-->
-    <!--<image v-bind="{'xlink:href': candidatePhoto}" :x="avatarCoords.x" :y="avatarCoords.y" :width="avatarPathWidth" :height="avatarPathWidth"></image>-->
-    <!--</pattern>-->
-    <!--</defs>-->
-    <!--</svg>-->
     <div :class="$style.el" ref="el">
       <transition name="fade">
         <div
@@ -43,6 +36,8 @@
 
 <script>
   /* global d3 */
+  import colors from '../colors'
+
   const photo = require('../../assets/images/photo_default.jpg')
 
   export default {
@@ -102,8 +97,19 @@
           .enter().append('path')
           .attr('d', arc)
           .style('fill', (d) => {
-            // console.log((d.children ? d : d.parent).name)
-            return color((d.children ? d : d.parent).name)
+            let parent = (d.children ? d : d.parent)
+            if (parent.parent && parent.parent.name !== this.candidate.name) parent = parent.parent
+            const colorOptions = colors.filter(color => {
+              if (color.name === parent.name) return true
+            })
+            return colorOptions.length ? colorOptions[0].color : color((d.children ? d : d.parent).name)
+          })
+          .style('opacity', (d) => {
+            if (d.depth === 2) {
+              return 0.8
+            } else if (d.depth === 3) {
+              return 0.6
+            }
           })
           .style('stroke', () => {
             return '#fff'
@@ -191,6 +197,9 @@
   .el {
     height: 100%;
     position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
   }
 
   .tooltip {

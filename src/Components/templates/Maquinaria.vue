@@ -1,16 +1,11 @@
 <template>
   <div>
-    <Bar title="¿Quien le pone los votos?">
-      <Button v-if="!comparing" :absolute="true" @click="handleCompareClick(true)">COMPARAR</Button>
-      <Button v-else type="ghost" :absolute="true" @click="handleCompareClick(false)">
-        <img src="../../assets/images/close.svg" width="8"/>
-        CLOSE
-      </Button>
-    </Bar>
+    <Bar title="¿Quien le pone los votos?"></Bar>
     <Container :type="comparing ? 'comparing' : 'sidebar'">
       <ThumbBar routeBase="/la-maquinaria/"/>
 
       <div v-if="isSingle">
+
         <Sunburst v-if="data" :data='data'/>
         <h2 v-else>No data</h2>
       </div>
