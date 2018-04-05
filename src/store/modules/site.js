@@ -31,6 +31,9 @@ const getters = {
   getThemes: () => (uid, collection = state.themes) => {
     return collection
   },
+  getActiveTheme: () => (uid, collection = state.themes) => {
+    return collection.active
+  },
   getQuestionByTheme: (state, getters) => (theme, collection = state.questions) => {
     let result
     const currentTheme = theme || state.themes.active

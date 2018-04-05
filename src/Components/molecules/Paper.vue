@@ -1,6 +1,7 @@
 <template>
-  <div :class="[$style.root, {[$style.compact]: compact}]">
-    <div v-for="item in candidateAnswers" :key="item.theme" :class="$style.section">
+  <div ref="root" :class="[$style.root, {[$style.compact]: compact}]">
+    <div v-for="item in candidateAnswers" :id="item.theme.replace(/[^a-z0-9]/gi, '_').toLowerCase()" :key="item.theme"
+         :class="$style.section">
       <div :class="$style.title" tabindex="0">{{item.theme}}</div>
       <p
         v-for="(answer, index) in item.answers"
@@ -24,7 +25,19 @@
       'data',
       'compact'
     ],
-    components: {},
+    mounted () {
+      const currentTheme = this.$store.getters.getActiveTheme()
+      const themeHash = currentTheme.replace(/[^a-z0-9]/gi, '_').toLowerCase()
+      if (this.$route.hash) {
+        const location = this.$refs.root.querySelector(this.$route.hash)
+        if (location)
+          this.$refs.root.scrollTop = location.offsetTop - 50
+      } else if (themeHash) {
+        const location = this.$refs.root.querySelector('#' + themeHash)
+        if (location)
+          this.$refs.root.scrollTop = location.offsetTop - 50
+      }
+    },
     computed: {
       candidateAnswers () {
         const candidate = this.data
