@@ -1,5 +1,12 @@
 <template>
   <div :class="$style.root">
+    <!--<svg width="0" height="0">-->
+    <!--<defs>-->
+    <!--<pattern id="img1" patternUnits="userSpaceOnUse" :width="avatarPathWidth" :height="avatarPathWidth">-->
+    <!--<image v-bind="{'xlink:href': candidatePhoto}" :x="avatarCoords.x" :y="avatarCoords.y" :width="avatarPathWidth" :height="avatarPathWidth"></image>-->
+    <!--</pattern>-->
+    <!--</defs>-->
+    <!--</svg>-->
     <div :class="$style.el" ref="el">
       <transition name="fade">
         <div
@@ -36,6 +43,8 @@
 
 <script>
   /* global d3 */
+  const photo = require('../../assets/images/photo_default.jpg')
+
   export default {
     name: 'Sunburst',
     props: [
@@ -54,7 +63,6 @@
         const width = this.$refs.el.offsetWidth
         const height = this.$refs.el.offsetHeight * 0.8
         const radius = (Math.min(width, height) / 2) - 10
-        const formatNumber = d3.format(',d')
 
         const x = d3.scale.linear()
           .range([0, 2 * Math.PI])
@@ -136,11 +144,41 @@
         }
 
         d3.select(self.frameElement).style('height', height + 'px')
+
+        const avatarPath = this.$refs.el.querySelector('path')
+        const avatarRect = avatarPath.getBoundingClientRect()
+        const avatarWidth = avatarRect.width
+        this.avatarPathWidth = avatarRect.width
+        svg.append('defs')
+          .append('pattern')
+          .attr('id', 'img1')
+          .attr('patternUnits', 'userSpaceOnUse')
+          .attr('width', avatarWidth)
+          .attr('height', avatarWidth)
+          .attr('x', avatarWidth / 2)
+          .attr('y', avatarWidth / 2)
+          .append('image')
+          .attr('xlink:href', this.candidatePhoto)
+          .attr('width', avatarWidth)
+          .attr('height', avatarWidth)
+          .attr('x', 0)
+          .attr('y', 0)
+        avatarPath.style.fill = 'url(#img1)'
+      }
+    },
+    computed: {
+      candidate () {
+        return this.$store.getters.getCandidateByName(this.createData().name)
+      },
+      candidatePhoto () {
+        return this.candidate.foto || photo
       }
     },
     data () {
       return {
-        current: null
+        current: null,
+        avatarPathWidth: 230,
+        avatarCoords: {x: 0, y: 0}
       }
     }
   }

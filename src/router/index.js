@@ -13,6 +13,10 @@ export default new Router({
   mode: 'hash',
   routes: [
     {
+      path: '/',
+      component: ProposalQuestionCards
+    },
+    {
       path: '/proposals',
       name: 'LO QUE PROPONEN',
       component: ProposalQuestionCards

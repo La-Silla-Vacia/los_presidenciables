@@ -52,6 +52,13 @@ const getters = {
     }
     return result
   },
+  getCandidateByName: () => (name, collection = state.candidates) => {
+    let result
+    for (let i = 0; i < collection.length; i += 1) {
+      if (collection[i].name === name) result = collection[i]
+    }
+    return result
+  },
   getAnswerByCandidate: (state, getters) => (candidate, collection = state.themes) => {
     const currentTheme = collection.active
     const question = getters.getQuestionByTheme(currentTheme)
