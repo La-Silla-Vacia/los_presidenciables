@@ -121,64 +121,58 @@ const getters = {
       }
     }
   },
-  getTest: () => (uid, collection = state.questions) => {
-    return [
-      {
-        question: 'Pregunta redactada para responder con opción multiple?',
-        answers: [
-          {
-            answer: 'Respuesta uno'
-          },
-          {
-            answer: 'Respuesta dos'
+  getTest: () => (uid, collection = state.test) => {
+    let candidates = []
+    const qa = collection.map(question => {
+      const candidateKeys = candidates = Object.keys(question)
+      const allAnswers = Object.values(question)
+      candidateKeys.shift()
+      allAnswers.shift()
+
+      const answersText = allAnswers.filter((item, pos) => {
+        return allAnswers.indexOf(item) === pos
+      })
+
+      const answers = answersText.map(answer => {
+        const whoRaw = candidateKeys.filter(candidate => {
+          if (answer === question[candidate]) return true
+        })
+        const who = whoRaw.map(person => {
+          switch (person) {
+            case ('vivianeMorales'):
+              return 'Viviane Morales'
+            case ('piedadCordoba'):
+              return 'Piedad Córdoba'
+            case ('gustavoPetro'):
+              return 'Gustavo Petro'
+            case ('sergioFajardo'):
+              return 'Sergio Fajardo'
+            case ('humbertoDeLaCalle'):
+              return 'Humberto de la Calle'
+            case ('germanVargasLleras'):
+              return 'Germán Vargas Lleras'
+            case ('ivanDuque'):
+              return 'Iván Duque'
+            default:
+              return person
           }
-        ]
-      },
-      {
-        question: 'Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing?',
-        answers: [
-          {
-            answer: 'Respuesta uno'
-          },
-          {
-            answer: 'Respuesta dos'
-          }
-        ]
-      },
-      {
-        question: 'Pregunta redactada para responder con opción multiple?',
-        answers: [
-          {
-            answer: 'Respuesta uno'
-          },
-          {
-            answer: 'Respuesta dos'
-          }
-        ]
-      },
-      {
-        question: 'Pregunta redactada para responder con opción multiple?',
-        answers: [
-          {
-            answer: 'Respuesta uno'
-          },
-          {
-            answer: 'Respuesta dos'
-          }
-        ]
-      },
-      {
-        question: 'Pregunta redactada para responder con opción multiple?',
-        answers: [
-          {
-            answer: 'Respuesta uno'
-          },
-          {
-            answer: 'Respuesta dos'
-          }
-        ]
+        })
+        return {
+          answer: answer.trim(),
+          who
+        }
+      })
+
+      return {
+        question: question.candidato,
+        answers: answers
       }
-    ]
+    })
+
+    return {
+      candidates,
+      qa
+    }
   }
 }
 
@@ -218,6 +212,7 @@ const mutations = {
     state.questions = site ? site.questions : state.questions
     state.candidates = site ? site.candidates : state.candidates
     state.maquinaria = site.maquinaria || state.maquinaria
+    state.test = site ? site.comparacion_caracter : []
   },
   [types.RECEIVE_SETTINGS] (state, {settings}) {
     state.settings = settings

@@ -13,7 +13,7 @@
 
         <div :class="$style.intro" v-else-if="answers.length >= test.length">
           <div :class="$style.intro">Por su caracter su candidato es:</div>
-          <div :class="[$style.title, $style.result]">Germán Vargas Lleras</div>
+          <div :class="[$style.title, $style.result]">{{result[result.length - 1].name}}</div>
 
           <div :class="$style.buttons">
             <Button :class="$style.button" type="ghost--bordered">HUY NO!</Button>
@@ -94,11 +94,32 @@
       }
     },
     computed: {
-      test () {
+      testData () {
         return this.$store.getters.getTest()
+      },
+      test () {
+        return this.testData.qa
       },
       question () {
         return this.test[this.questionIndex]
+      },
+      result () {
+        let people = []
+        this.answers.map((answer, index) => {
+          const who = this.test[index].answers[answer].who
+          people = people.concat(who)
+        })
+
+        const counts = {}
+        people.forEach(function (x) {
+          counts[x] = (counts[x] || 0) + 1
+        })
+        const order = Object.keys(counts).sort(function (a, b) {
+          return counts[a] - counts[b]
+        })
+        return order.map(person => {
+          return {name: person, amount: counts[person]}
+        })
       }
     },
     data () {

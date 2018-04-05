@@ -2,15 +2,13 @@
   <div>
     <Bar title="¿Cómo gastan el presupuesto los candidatos?"/>
     <Container type="sidebar">
-      <ThumbBar 
-        @change="handleFilterChange" 
+      <ThumbBar
+        @change="handleFilterChange"
         :buttons="true"
         :filter="filter"
       />
 
-      <div :class="$style.content">
-        <div ref="container">
-        </div>
+      <div :class="$style.content" ref="container">
       </div>
 
     </Container>
