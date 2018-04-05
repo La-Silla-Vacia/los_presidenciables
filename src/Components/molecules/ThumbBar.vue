@@ -88,6 +88,7 @@ export default {
     outline: none;
     border-left: 3px solid $color__primary--base;
     padding-left: 18px;
+    text-decoration: none;
   }
 }
 

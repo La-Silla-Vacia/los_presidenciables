@@ -5,10 +5,10 @@
       :partido="candidate.partido"
       :photo="candidate.foto || undefined"
     >
-      <Button v-if="question" :large="true">{{question.answer}}</Button>
+      <Button v-if="question" :large="true">{{question.answer.split('.')[0]}}</Button>
     </User>
     <Hr />
-    <p v-if="question" v-html="question.summary" />
+    <p v-if="question" v-html="question.answer" />
     <div v-if="question" :class="$style.footer">
       <router-link :to="`/proposals/${candidate.id}#${theme.replace(/[^a-z0-9]/gi, '_').toLowerCase()}`" :class="$style.link">
         <svg width="11" height="12" viewBox="0 0 11 12">

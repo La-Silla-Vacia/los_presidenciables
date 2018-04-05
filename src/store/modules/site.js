@@ -211,7 +211,7 @@ const mutations = {
     }
     state.questions = site ? site.questions : state.questions
     state.candidates = site ? site.candidates : state.candidates
-    state.maquinaria = site.maquinaria || state.maquinaria
+    state.maquinaria = site ? site.maquinaria : state.maquinaria
     state.test = site ? site.comparacion_caracter : []
   },
   [types.RECEIVE_SETTINGS] (state, {settings}) {
