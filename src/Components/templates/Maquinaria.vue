@@ -8,10 +8,10 @@
       </Button>
     </Bar>
     <Container :type="comparing ? 'comparing' : 'sidebar'">
-      <ThumbBar v-if="!comparing" routeBase="/la-maquinaria/" />
+      <ThumbBar v-if="!comparing" routeBase="/la-maquinaria/"/>
 
-      <div v-if="isSingle && !comparing">
-        <Sunburst v-if="data" :data="data" :ratio="1" />
+      <div :class="$style.container" v-if="isSingle && !comparing">
+        <Sunburst v-if="data" :data="data" :ratio="1"/>
         <h2 v-else>No data</h2>
       </div>
 
@@ -88,12 +88,13 @@
       handleCompareClick (state) {
         this.$store.commit(types.RECEIVE_COMPARE, {
           active: state,
-          first: this.candidate
+          first: this.candidate,
+          second: null
         })
       }
     },
     mounted () {
-      this.$store.commit(types.RECEIVE_COMPARE, {active: false})
+      this.$store.commit(types.RECEIVE_COMPARE, {active: false, first: this.candidate, second: null})
     },
     computed: {
       candidate () {
@@ -183,5 +184,9 @@
       font-weight: bold;
       color: $color__primary--base;
     }
+  }
+
+  .container {
+    position: relative;
   }
 </style>

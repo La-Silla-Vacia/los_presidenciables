@@ -121,6 +121,7 @@ const getters = {
     return collection.dataUri
   },
   getMaquinaria: () => (uid, collection = state.maquinaria) => {
+    if (!collection) return null
     for (let i = 0; i < collection.length; i += 1) {
       if (collection[i].name === uid) {
         return collection[i]
@@ -229,7 +230,11 @@ const mutations = {
   [types.RECEIVE_COMPARE] (state, {active, first, second}) {
     state.comparing = active
     state.comparingFirst = first || state.comparingFirst
-    state.comparingSecond = second || state.comparingSecond
+    if (second === null) {
+      state.comparingSecond = null
+    } else {
+      state.comparingSecond = second || state.comparingSecond
+    }
   }
 }
 
