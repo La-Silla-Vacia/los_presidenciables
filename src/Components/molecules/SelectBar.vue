@@ -21,6 +21,7 @@
 </template>
 
 <script>
+  import * as types from '../../store/mutation-types'
   import Title from '../atoms/Title'
   import Bar from '../atoms/Bar'
   import SelectBarItem from '../atoms/SelectBarItem'
@@ -31,6 +32,19 @@
       'items',
       'with-question'
     ],
+    mounted () {
+      setTimeout(this.checkCurrent, 500)
+    },
+    methods: {
+      checkCurrent () {
+        for (let i = 0; i < this.items.items.length; i += 1) {
+          const text = this.items.items[i]
+          if (this.$route.hash === '#' + text.replace(/[^a-z0-9]/gi, '_').toLowerCase()) {
+            this.$store.commit(types.RECEIVE_SITE, {theme: text})
+          }
+        }
+      }
+    },
     components: {
       Title,
       Bar,

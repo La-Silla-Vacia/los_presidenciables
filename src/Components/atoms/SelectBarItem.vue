@@ -1,10 +1,11 @@
 <template>
-  <button
-    @click="handleClick"
+  <router-link
+    :to="`#${text.replace(/[^a-z0-9]/gi, '_').toLowerCase()}`"
+    @click.native="handleClick"
     :class="[$style.root, {[$style.active]: isActive}]"
   >
     {{text}}
-  </button>
+  </router-link>
 </template>
 
 <script>
@@ -16,8 +17,6 @@
       'isActive',
       'text'
     ],
-    mounted () {
-    },
     methods: {
       handleClick () {
         this.$emit('click')
@@ -45,6 +44,7 @@
   .root:focus {
     outline: none;
     border-bottom: 1px solid $color__primary--base;
+    text-decoration: none;
   }
 
   .active {

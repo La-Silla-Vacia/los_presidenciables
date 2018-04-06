@@ -78,6 +78,7 @@
     padding: 0 20px;
     border-bottom: 1px solid rgba(149, 152, 154, .25);
     position: relative;
+    z-index: 1;
 
     &::after {
       content: '';

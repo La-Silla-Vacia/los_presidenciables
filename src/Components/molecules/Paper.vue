@@ -26,20 +26,31 @@
       'compact'
     ],
     mounted () {
-      const currentTheme = this.$store.getters.getActiveTheme()
-      const themeHash = currentTheme.replace(/[^a-z0-9]/gi, '_').toLowerCase()
-      if (this.$route.hash) {
-        const location = this.$refs.root.querySelector(this.$route.hash)
-        if (location) { this.$refs.root.scrollTop = location.offsetTop - 50 }
-      } else if (themeHash) {
-        const location = this.$refs.root.querySelector('#' + themeHash)
-        if (location) { this.$refs.root.scrollTop = location.offsetTop - 50 }
+      this.scrollToHash()
+    },
+    methods: {
+      scrollToHash () {
+        const currentTheme = this.$store.getters.getActiveTheme()
+        const themeHash = currentTheme.replace(/[^a-z0-9]/gi, '_').toLowerCase()
+        const offset = this.compact ? 100 : 50
+        const id = this.$route.hash ? this.$route.hash : '#' + themeHash
+        const location = this.$refs.root.querySelector(id)
+        if (location) {
+          this.$refs.root.scrollTop = location.offsetTop - offset
+        }
       }
     },
     computed: {
       candidateAnswers () {
         const candidate = this.data
         return this.$store.getters.getAnswersByCandidate(candidate.name)
+      }
+    },
+    watch: {
+      $route (to, from) {
+        if (to.hash !== from.hash) {
+          this.scrollToHash()
+        }
       }
     }
   }

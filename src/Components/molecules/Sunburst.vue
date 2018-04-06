@@ -157,7 +157,7 @@
         this.avatarPathWidth = avatarRect.width
         svg.append('defs')
           .append('pattern')
-          .attr('id', 'img1')
+          .attr('id', `img-${this.candidate.id}`)
           .attr('patternUnits', 'userSpaceOnUse')
           .attr('width', avatarWidth)
           .attr('height', avatarWidth)
@@ -169,7 +169,7 @@
           .attr('height', avatarWidth)
           .attr('x', 0)
           .attr('y', 0)
-        avatarPath.style.fill = 'url(#img1)'
+        avatarPath.style.fill = `url(#img-${this.candidate.id})`
       }
     },
     computed: {

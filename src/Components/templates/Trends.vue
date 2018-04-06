@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Bar title="¿Cómo gastan el presupuesto los candidatos?"/>
     <Container type="sidebar">
       <ThumbBar
         @change="handleFilterChange"
@@ -94,13 +93,17 @@
       comparisonItems () {
         const candidates = this.filter
         const result = []
+
+        const d = new Date();
+        const date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+
         candidates.map((candidate, i) => {
           if (candidates.length === 1) {
             if (i > 4) return
-            result.push({'keyword': candidate, 'geo': 'CO', 'time': 'today 12-m'})
+            result.push({'keyword': candidate, 'geo': 'CO', 'time': '2018-03-12 ' + date})
           } else {
             if (i > 4) return
-            result.push({keyword: candidate, geo: '', time: 'today 12-m'})
+            result.push({keyword: candidate, geo: '', time: '2018-03-12 ' + date})
           }
         })
         return result
