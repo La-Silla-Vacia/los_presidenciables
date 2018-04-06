@@ -44,6 +44,7 @@
   .root:focus {
     outline: none;
     color: $color__primary--base;
+    text-decoration: none;
   }
 
   .root::after {

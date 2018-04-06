@@ -1,16 +1,21 @@
 <template>
   <div>
-    <Bar title="¿Quien le pone los votos?"></Bar>
+    <Bar title="¿Quien le pone los votos?">
+      <Button v-if="!comparing && isSingle" :absolute="true" @click="handleCompareClick(true)">COMPARAR</Button>
+      <Button v-else-if="isSingle" type="ghost" :absolute="true" @click="handleCompareClick(false)">
+        <img src="../../assets/images/close.svg" width="8"/>
+        CLOSE
+      </Button>
+    </Bar>
     <Container :type="comparing ? 'comparing' : 'sidebar'">
-      <ThumbBar routeBase="/la-maquinaria/"/>
+      <ThumbBar v-if="!comparing" routeBase="/la-maquinaria/"/>
 
-      <div v-if="isSingle">
-
+      <div v-if="isSingle && !comparing">
         <Sunburst v-if="data" :data='data'/>
         <h2 v-else>No data</h2>
       </div>
 
-      <div v-else :class="$style.content">
+      <div v-if="!isSingle" :class="$style.content">
         <p>Monocle ipsum dolor sit amet joy cosy Airbus A380 ANA bulletin punctual. Ettinger international Marylebone
           hub. Winkreative bulletin premium perfect Porter lovely. Comme des Garçons Washlet sharp bulletin, uniforms
           charming izakaya handsome Toto punctual destination wardrobe. Quality of life perfect first-class Nordic hub
@@ -21,6 +26,17 @@
           craftsmanship Singapore exclusive.</p>
 
         <p :class="$style.highlight">SELECCIONE UN CANDIDATO PARA VER SUS FACTORES DE PODER</p>
+      </div>
+
+      <div v-if="comparing" :class="[$style.Proposal, $style.Proposal__left]">
+        <ThumbSelect which="first"/>
+        <Sunburst v-if="dataFirst" :data='dataFirst'/>
+        <div v-else>No data</div>
+      </div>
+      <div v-if="comparing" :class="[$style.Proposal, $style.Proposal__right]">
+        <ThumbSelect which="second"/>
+        <Sunburst v-if="dataSecond" :data='dataSecond'/>
+        <div v-else>No data</div>
       </div>
 
     </Container>
@@ -65,14 +81,26 @@
         const candidate = this.$route.params.uid
         return this.$store.getters.getCandidateByUid(candidate)
       },
-      comparing () {
-        return this.$store.getters.isComparing()
-      },
       isSingle () {
         return this.$route.params.uid
       },
       data () {
         return this.$store.getters.getMaquinaria(this.candidate.name)
+      },
+      compareFirst () {
+        return this.$store.getters.isComparing('first')
+      },
+      compareSecond () {
+        return this.$store.getters.isComparing('second')
+      },
+      dataFirst () {
+        return this.$store.getters.getMaquinaria(this.compareFirst.name)
+      },
+      dataSecond () {
+        if (this.compareSecond) { return this.$store.getters.getMaquinaria(this.compareSecond.name) }
+      },
+      comparing () {
+        return this.$store.getters.isComparing()
       }
     },
     data () {
@@ -101,6 +129,19 @@
       letter-spacing: 0.035em;
       font-weight: bold;
       margin-top: 2em;
+    }
+  }
+
+  .Proposal {
+    &__left {
+      border-right: 1px solid #fff;
+    }
+    &__right {
+      border-left: 1px solid #fff;
+    }
+
+    > div:last-child {
+      height: calc(100% - 66px);
     }
   }
 </style>

@@ -5,6 +5,7 @@
         v-if="current"
         :name="current.name"
         :partido="current.partido"
+        :photo="current.foto"
         size="compact"
       />
       <span v-else :class="$style.select">Seleccione un candidato</span>
@@ -21,6 +22,7 @@
           <User
             :name="candidate.name"
             :partido="candidate.partido"
+            :photo="candidate.foto"
             size="small"
           />
         </button>
@@ -91,7 +93,7 @@
   }
 
   .open::after {
-    height: $max-content-height;
+    height: $max-content-height - 66;
     opacity: 1;
   }
 

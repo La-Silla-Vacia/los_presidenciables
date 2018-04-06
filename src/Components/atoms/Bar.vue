@@ -46,7 +46,7 @@
     position: relative;
     width: 100%;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1;
+    z-index: 2;
     grid-column: span 2;
     background-color: #fff;
   }

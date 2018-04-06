@@ -31,7 +31,7 @@
 
   .sidebar {
     padding: 0;
-    grid-template-columns: 220px 1fr;
+    grid-template-columns: 235px 1fr;
     grid-template-rows: 1fr;
   }
 
