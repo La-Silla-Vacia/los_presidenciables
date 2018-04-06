@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.root">
-    <div :class="$style.el" ref="el">
+    <div :class="[$style.el, {[$style[`comparing--${this.compare}`]]: this.compare}]" ref="el">
       <transition name="fade">
         <div
           v-if="current"
@@ -43,7 +43,9 @@
   export default {
     name: 'Sunburst',
     props: [
-      'data'
+      'data',
+      'compare',
+      'ratio'
     ],
     mounted () {
       this.create()
@@ -57,7 +59,7 @@
         const data = this.createData()
         const width = this.$refs.el.offsetWidth
         const height = this.$refs.el.offsetHeight * 0.8
-        const radius = (Math.min(width, height) / 2) - 10
+        const radius = ((Math.min(width, height) / 2) - 10) * this.ratio
 
         const x = d3.scale.linear()
           .range([0, 2 * Math.PI])
@@ -73,24 +75,39 @@
           })
 
         const arc = d3.svg.arc()
-          .startAngle(function (d) {
-            return Math.max(0, Math.min(2 * Math.PI, x(d.x)))
+          .startAngle(d => {
+            let sum = Math.max(0, Math.min(2 * Math.PI, x(d.x)))
+            if (this.compare) {
+              sum = sum / 2
+              if (this.compare === 'left') {
+                sum = sum + (180 * (Math.PI / 180))
+              }
+            }
+            return sum
           })
-          .endAngle(function (d) {
-            return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx)))
+          .endAngle(d => {
+            let sum = Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx)))
+            if (this.compare) {
+              sum = sum / 2
+              if (this.compare === 'left') {
+                sum = sum + (180 * (Math.PI / 180))
+              }
+            }
+            return sum
           })
-          .innerRadius(function (d) {
+          .innerRadius(d => {
             return Math.max(0, y(d.y))
           })
-          .outerRadius(function (d) {
+          .outerRadius(d => {
             return Math.max(0, y(d.y + d.dy))
           })
 
+        const xOffset = this.compare === 'right' ? 0 : height / 2
         const svg = d3.select(this.$refs.el).append('svg')
-          .attr('width', width)
+          .attr('width', this.compare ? height / 2 : height)
           .attr('height', height)
           .append('g')
-          .attr('transform', 'translate(' + width / 2 + ',' + (height / 2) + ')')
+          .attr('transform', 'translate(' + xOffset + ',' + (height / 2) + ')')
 
         svg.selectAll('path')
           .data(partition.nodes(data))
@@ -152,6 +169,10 @@
         d3.select(self.frameElement).style('height', height + 'px')
 
         const avatarPath = this.$refs.el.querySelector('path')
+        if (this.compare) {
+          avatarPath.style.fill = 'transparent'
+          return
+        }
         const avatarRect = avatarPath.getBoundingClientRect()
         const avatarWidth = avatarRect.width
         this.avatarPathWidth = avatarRect.width
@@ -170,6 +191,14 @@
           .attr('x', 0)
           .attr('y', 0)
         avatarPath.style.fill = `url(#img-${this.candidate.id})`
+      }
+    },
+    watch: {
+      data (oldData, newData) {
+        if (oldData !== newData) {
+          this.$refs.el.innerHTML = ''
+          this.create()
+        }
       }
     },
     computed: {
@@ -202,6 +231,10 @@
     width: 100%;
   }
 
+  .el svg {
+    margin: auto;
+  }
+
   .tooltip {
     position: absolute;
     width: 285px;
@@ -210,6 +243,7 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
     border-radius: 3px;
     pointer-events: none;
+    z-index: 100;
 
     &::before {
       content: '';
@@ -271,5 +305,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .comparing--left svg {
+    margin: auto 0 auto auto;
+  }
+
+  .comparing--right svg {
+    margin: auto auto auto 0;
   }
 </style>

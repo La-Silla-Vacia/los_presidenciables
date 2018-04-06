@@ -8,10 +8,10 @@
       </Button>
     </Bar>
     <Container :type="comparing ? 'comparing' : 'sidebar'">
-      <ThumbBar v-if="!comparing" routeBase="/la-maquinaria/"/>
+      <ThumbBar v-if="!comparing" routeBase="/la-maquinaria/" />
 
       <div v-if="isSingle && !comparing">
-        <Sunburst v-if="data" :data='data'/>
+        <Sunburst v-if="data" :data="data" :ratio="1" />
         <h2 v-else>No data</h2>
       </div>
 
@@ -29,13 +29,32 @@
       </div>
 
       <div v-if="comparing" :class="[$style.Proposal, $style.Proposal__left]">
-        <ThumbSelect which="first"/>
-        <Sunburst v-if="dataFirst" :data='dataFirst'/>
+        <ThumbSelect which="first">
+          <div :class="$style.possible_votes">
+            POSIBLES VOTOS <strong>{{dataFirst.total}}</strong>
+          </div>
+        </ThumbSelect>
+        <Sunburst
+          v-if="dataFirst"
+          :key="dataFirst.name"
+          compare="left"
+          :data="dataFirst"
+          :ratio="ratio.first"
+        />
         <div v-else>No data</div>
       </div>
       <div v-if="comparing" :class="[$style.Proposal, $style.Proposal__right]">
-        <ThumbSelect which="second"/>
-        <Sunburst v-if="dataSecond" :data='dataSecond'/>
+        <ThumbSelect which="second">
+          <div v-if="dataSecond" :class="$style.possible_votes">
+            POSIBLES VOTOS <strong>{{dataSecond.total}}</strong>
+          </div>
+        </ThumbSelect>
+        <Sunburst
+          v-if="dataSecond"
+          compare="right"
+          :data="dataSecond"
+          :ratio="ratio.second"
+        />
         <div v-else>No data</div>
       </div>
 
@@ -97,7 +116,17 @@
         return this.$store.getters.getMaquinaria(this.compareFirst.name)
       },
       dataSecond () {
-        if (this.compareSecond) { return this.$store.getters.getMaquinaria(this.compareSecond.name) }
+        if (this.compareSecond) {
+          return this.$store.getters.getMaquinaria(this.compareSecond.name)
+        }
+      },
+      ratio () {
+        if (this.dataFirst && this.dataSecond) {
+          const biggest = Math.max(this.dataFirst.total, this.dataSecond.total)
+          return {first: this.dataFirst.total / biggest, second: this.dataSecond.total / biggest}
+        } else {
+          return {first: 1, second: 1}
+        }
       },
       comparing () {
         return this.$store.getters.isComparing()
@@ -142,6 +171,17 @@
 
     > div:last-child {
       height: calc(100% - 66px);
+    }
+  }
+
+  .possible_votes {
+    font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+    font-size: 14px;
+
+    strong {
+      font-family: $font__family--sans;
+      font-weight: bold;
+      color: $color__primary--base;
     }
   }
 </style>

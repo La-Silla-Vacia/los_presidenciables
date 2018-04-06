@@ -11,6 +11,8 @@
       <span v-else :class="$style.select">Seleccione un candidato</span>
     </button>
 
+    <slot />
+
     <transition name="fade">
       <nav :class="$style.slide" v-if="!current || open">
         <button
@@ -79,6 +81,9 @@
     border-bottom: 1px solid rgba(149, 152, 154, .25);
     position: relative;
     z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     &::after {
       content: '';
@@ -148,5 +153,6 @@
     left: 0;
     z-index: 10;
     border-top: 1px solid rgba(149, 152, 154, .25);
+    top: 100%;
   }
 </style>

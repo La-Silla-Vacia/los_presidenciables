@@ -25,6 +25,7 @@
           <div :class="$style.header">
             {{questionIndex + 1}}
             <button
+              v-if="answers[questionIndex] !== undefined"
               :class="$style.next"
               @click.prevent="handleNext"
             >
