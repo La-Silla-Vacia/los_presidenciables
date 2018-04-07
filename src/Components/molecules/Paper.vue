@@ -3,12 +3,13 @@
     <div v-for="item in candidateAnswers" :id="item.theme.replace(/[^a-z0-9]/gi, '_').toLowerCase()" :key="item.theme"
          :class="$style.section">
       <div :class="$style.title" tabindex="0">{{item.theme}}</div>
+
       <div
         v-for="(answer, index) in item.answers"
         v-if="answer.summary"
         :key="answer + index"
         :class="$style.answer"
-        v-html="toMarkdown(answer.summary)"
+        v-html="toMarkdown(answer)"
       >
       </div>
       <div v-else :class="$style.answer">
@@ -57,8 +58,13 @@
           }
         }
       },
-      toMarkdown (data) {
-        return md.render(data)
+      toMarkdown (answer) {
+        const markdown = md.render(answer.summary)
+        if (answer.link) {
+          return `<a href="${answer.link}" target="_blank" rel="noreferrer noopener" class="${this.$style.link}">Ver respuesta</a> ${markdown}`
+        } else {
+          return markdown
+        }
       }
     },
     computed: {
@@ -88,6 +94,7 @@
     width: 100%;
     max-height: $max-content-height;
     overflow: auto;
+    position: relative;
   }
 
   .compact {
@@ -110,26 +117,26 @@
     border-bottom: 1px solid rgba(0, 0, 0, .25);
   }
 
-  .answer,
+  .answer ul,
   .answer p {
     font-size: 14px;
     letter-spacing: 0.035em;
     line-height: 2;
     font-weight: normal;
-    position: relative;
     margin: 0;
+    position: relative;
+  }
 
-    &::before {
-      content: '';
-      width: 0;
-      height: 0;
-      border-top: 6px solid transparent;
-      border-bottom: 6px solid transparent;
-      border-left: 8px solid $color__primary--base;
-      position: absolute;
-      top: 9px;
-      left: -16px;
-    }
+  .answer p::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 8px solid $color__primary--base;
+    position: absolute;
+    top: 9px;
+    left: -16px;
   }
 
   .active {
@@ -142,5 +149,15 @@
 
   .answer ul {
     padding-left: 1em;
+  }
+
+  .link {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background-image: url('../../assets/images/icon_link.svg');
+    font-size: 0;
+    position: absolute;
+    right: 10px;
   }
 </style>
