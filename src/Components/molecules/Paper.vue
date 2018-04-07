@@ -40,7 +40,7 @@
         const currentTheme = this.$store.getters.getActiveTheme()
         const themeHash = currentTheme.replace(/[^a-z0-9]/gi, '_').toLowerCase()
         const offset = this.compact ? 100 : 50
-        const id = this.$route.hash ? this.$route.hash : '#' + themeHash
+        const id = themeHash ? '#' + themeHash : this.$route.hash
         if (!this.$refs.root) return
         const location = this.$refs.root.querySelector(id)
         const paragraphs = this.$refs.root.querySelectorAll('p, li')
@@ -52,7 +52,6 @@
           }
 
           const locationParagraphs = location.querySelectorAll('p, li')
-          console.log(locationParagraphs)
           for (let i = 0; i < locationParagraphs.length; i += 1) {
             locationParagraphs[i].classList.add(this.$style.active)
           }
@@ -60,7 +59,7 @@
       },
       toMarkdown (answer) {
         const markdown = md.render(answer.summary)
-        if (answer.link) {
+        if (answer.link && !this.compact) {
           return `<a href="${answer.link}" target="_blank" rel="noreferrer noopener" class="${this.$style.link}">Ver respuesta</a> ${markdown}`
         } else {
           return markdown
@@ -76,7 +75,7 @@
     watch: {
       $route (to, from) {
         if (to.hash !== from.hash) {
-          this.scrollToHash()
+          setTimeout(this.scrollToHash, 100)
         }
       }
     }
