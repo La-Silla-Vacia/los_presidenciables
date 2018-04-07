@@ -6,6 +6,10 @@
         <div :class="$style.partido">{{item.name}}</div>
         <div :class="$style.num">{{item.value}}</div>
       </div>
+      <div :class="[$style.detail_table__row, $style.detail_table__row__total]">
+        <div :class="$style.partido">POSIBLES VOTOS</div>
+        <div :class="$style.num">{{data.total}}</div>
+      </div>
     </div>
 
     <div :class="$style.el" ref="el">
@@ -89,6 +93,8 @@
             return d.size
           })
 
+        let dif = 0
+
         const arc = d3.svg.arc()
           .startAngle(d => {
             let sum = Math.max(0, Math.min(2 * Math.PI, x(d.x)))
@@ -111,10 +117,17 @@
             return sum
           })
           .innerRadius(d => {
-            return Math.max(0, y(d.y))
+            if (d.depth === 0) {
+              console.log(Math.max(0, y(d.y)))
+            }
+            return Math.max(0, y(d.y)) - dif
           })
           .outerRadius(d => {
-            return Math.max(0, y(d.y + d.dy))
+            if (d.depth === 0) {
+              dif = Math.max(0, y(d.y + d.dy)) - 45
+              return 45
+            }
+            return Math.max(0, y(d.y + d.dy)) - dif
           })
 
         const xOffset = this.compare === 'right' ? 0 : height / 2
@@ -149,7 +162,7 @@
           .style('stroke-width', () => {
             return '1px'
           })
-          .on('click', click)
+          // .on('click', click)
           .on('mousemove', (d) => {
             this.current = {
               data: d,
@@ -162,25 +175,25 @@
           })
 
         this.children = data.children
-        function click (d) {
-          svg.transition()
-            .duration(750)
-            .tween('scale', function () {
-              const xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx])
-              const yd = d3.interpolate(y.domain(), [d.y, 1])
-              const yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius])
-              return function (t) {
-                x.domain(xd(t))
-                y.domain(yd(t)).range(yr(t))
-              }
-            })
-            .selectAll('path')
-            .attrTween('d', function (d) {
-              return function () {
-                return arc(d)
-              }
-            })
-        }
+        // function click (d) {
+        //   svg.transition()
+        //     .duration(750)
+        //     .tween('scale', function () {
+        //       const xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx])
+        //       const yd = d3.interpolate(y.domain(), [d.y, 1])
+        //       const yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius])
+        //       return function (t) {
+        //         x.domain(xd(t))
+        //         y.domain(yd(t)).range(yr(t))
+        //       }
+        //     })
+        //     .selectAll('path')
+        //     .attrTween('d', function (d) {
+        //       return function () {
+        //         return arc(d)
+        //       }
+        //     })
+        // }
 
         d3.select(self.frameElement).style('height', height + 'px')
 
@@ -376,5 +389,23 @@
     letter-spacing: 0.035em;
     font-weight: bold;
     line-height: 1;
+    text-align: right;
+  }
+
+  .detail_table__row__total {
+    background-color: $color__primary--base;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+
+    .partido {
+      font-weight: normal;
+    }
+
+    .partido,
+    .num {
+      color: #fff;
+    }
   }
 </style>
