@@ -117,14 +117,12 @@
             return sum
           })
           .innerRadius(d => {
-            if (d.depth === 0) {
-              console.log(Math.max(0, y(d.y)))
-            }
             return Math.max(0, y(d.y)) - dif
           })
           .outerRadius(d => {
             if (d.depth === 0) {
               dif = Math.max(0, y(d.y + d.dy)) - 45
+              console.log(dif)
               return 45
             }
             return Math.max(0, y(d.y + d.dy)) - dif
