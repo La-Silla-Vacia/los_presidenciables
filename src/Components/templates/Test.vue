@@ -172,7 +172,7 @@
         let stageNum = 0
         if (this.answers.length >= this.test.length) {
           stageNum = 3
-        } else if (stage >= 33.3333) {
+        } else if (stage >= 33.3333 && stage <= 66.6665) {
           stageNum = 1
         } else if (stage >= 66.6666) {
           stageNum = 2
