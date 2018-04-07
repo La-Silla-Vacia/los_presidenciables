@@ -12,6 +12,7 @@
     "lsv-components": "latest",
     "lsv-interactive": "latest",
     "lsv-interactive-vue": "^0.0.1",
+    "markdown-it": "^8.4.1",
     "vue": "^2.5.14",
     "vue-d2b": "^1.0.11",
     "vue-eslint-parser": "^2.0.3",

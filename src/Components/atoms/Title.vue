@@ -4,12 +4,13 @@
     :class="$style.root"
     @click="$emit('click')"
   >
-    <slot/> <span :class="$style.caret" ></span>
+    <slot/>
+    <span :class="$style.caret"></span>
   </button>
   <div
     v-else
     :class="$style.root">
-    <slot />
+    <slot/>
   </div>
 </template>
 
@@ -17,8 +18,8 @@
   export default {
     name: 'Title',
     props: [
-      'isButton',
-    ],
+      'isButton'
+    ]
   }
 </script>
 
@@ -26,7 +27,7 @@
   @import '../../assets/styles/base';
 
   .root {
-    font-family: $font__family--serif--especial;
+    font-family: $font__family--sans--especial;
     font-size: 18px;
     font-weight: bold;
     color: #000;
@@ -59,6 +60,6 @@
   }
 
   .root:focus .caret {
-    transform: scale(1.2)     translateY(-20%);
+    transform: scale(1.2) translateY(-20%);
   }
 </style>

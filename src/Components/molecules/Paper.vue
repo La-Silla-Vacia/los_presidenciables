@@ -3,22 +3,28 @@
     <div v-for="item in candidateAnswers" :id="item.theme.replace(/[^a-z0-9]/gi, '_').toLowerCase()" :key="item.theme"
          :class="$style.section">
       <div :class="$style.title" tabindex="0">{{item.theme}}</div>
-      <p
+      <div
         v-for="(answer, index) in item.answers"
         v-if="answer.summary"
         :key="answer + index"
         :class="$style.answer"
+        v-html="toMarkdown(answer.summary)"
       >
-        {{answer.summary}}
-      </p>
-      <p v-else>
-        Sin definir
-      </p>
+      </div>
+      <div v-else :class="$style.answer">
+        <p>
+          Sin definir
+        </p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import MarkdownIt from 'markdown-it'
+
+  const md = new MarkdownIt()
+
   export default {
     name: 'Paper',
     props: [
@@ -34,10 +40,25 @@
         const themeHash = currentTheme.replace(/[^a-z0-9]/gi, '_').toLowerCase()
         const offset = this.compact ? 100 : 50
         const id = this.$route.hash ? this.$route.hash : '#' + themeHash
+        if (!this.$refs.root) return
         const location = this.$refs.root.querySelector(id)
+        const paragraphs = this.$refs.root.querySelectorAll('p, li')
         if (location) {
           this.$refs.root.scrollTop = location.offsetTop - offset
+
+          for (let i = 0; i < paragraphs.length; i += 1) {
+            paragraphs[i].classList.remove(this.$style.active)
+          }
+
+          const locationParagraphs = location.querySelectorAll('p, li')
+          console.log(locationParagraphs)
+          for (let i = 0; i < locationParagraphs.length; i += 1) {
+            locationParagraphs[i].classList.add(this.$style.active)
+          }
         }
+      },
+      toMarkdown (data) {
+        return md.render(data)
       }
     },
     computed: {
@@ -89,7 +110,8 @@
     border-bottom: 1px solid rgba(0, 0, 0, .25);
   }
 
-  .section p {
+  .answer,
+  .answer p {
     font-size: 14px;
     letter-spacing: 0.035em;
     line-height: 2;
@@ -108,5 +130,17 @@
       top: 9px;
       left: -16px;
     }
+  }
+
+  .active {
+    background-color: rgba(242, 248, 80, .25)
+  }
+
+  .answer p {
+    margin-bottom: 1em;
+  }
+
+  .answer ul {
+    padding-left: 1em;
   }
 </style>
