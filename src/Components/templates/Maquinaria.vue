@@ -16,14 +16,17 @@
       </div>
 
       <div v-if="!isSingle" :class="$style.content">
-        <p>Monocle ipsum dolor sit amet joy cosy Airbus A380 ANA bulletin punctual. Ettinger international Marylebone
-          hub. Winkreative bulletin premium perfect Porter lovely. Comme des Garçons Washlet sharp bulletin, uniforms
-          charming izakaya handsome Toto punctual destination wardrobe. Quality of life perfect first-class Nordic hub
-          Washlet hand-crafted artisanal uniforms sophisticated craftsmanship Singapore exclusive.</p>
+        <p>Los políticos profesionales suelen decir que mientras en las elecciones legislativas la maquinaria mueve el
+          70 por ciento de los votos y la opinión el 30 por ciento restante, en las presidenciales es al revés. Pero el
+          impacto de las estructuras organizadas de los caciques electorales suele ser mayor entre más reñida esté la
+          contienda entre los candidatos que se apoyan en ellas.</p>
 
-        <p>Comme des Garçons Washlet sharp bulletin, uniforms charming izakaya handsome Toto punctual destination
-          wardrobe. Quality of life perfect first-class Nordic hub Washlet hand-crafted artisanal uniforms sophisticated
-          craftsmanship Singapore exclusive.</p>
+        <p>Para entender qué fuerza electoral tienen los apoyos políticos que han recibido los candidatos, revisamos a
+          quién apoyan los congresistas, sindicatos y otros grupos organizados. A cada uno le damos un peso según sus
+          resultados electorales o cantidad de afiliados, cifras que si bien no necesariamente significan que pongan de
+          manera mecánica esos votos, sí ayudan a entender el paso de cada apoyo.</p>
+
+        <p>Iremos actualizando este ese ejercicio a medida que vayan variando esos apoyos.</p>
 
         <p :class="$style.highlight">SELECCIONE UN CANDIDATO PARA VER SUS FACTORES DE PODER</p>
       </div>

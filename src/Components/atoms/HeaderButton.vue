@@ -41,7 +41,8 @@
     position: relative;
   }
 
-  .root:focus {
+  .root:focus,
+  .root:hover {
     outline: none;
     color: $color__primary--base;
     text-decoration: none;

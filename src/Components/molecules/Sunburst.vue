@@ -1,7 +1,7 @@
 <template>
   <div :class="[$style.root, {[$style[`comparing--${this.compare}`]]: this.compare}]">
-    <div :class="$style.table">
-      <div v-for="item in children" :class="$style.table__row">
+    <div :class="$style.detail_table">
+      <div v-for="item in children" :class="$style.detail_table__row">
         <div :class="$style.mark" :style="{backgroundColor: getColor(item.name)}"></div>
         <div :class="$style.partido">{{item.name}}</div>
         <div :class="$style.num">{{item.value}}</div>
@@ -61,7 +61,8 @@
     methods: {
       createData () {
         const dataString = JSON.stringify(this.data)
-        return JSON.parse(dataString)
+        const data = JSON.parse(dataString)
+        return data
       },
       getColor (name) {
         const c = colors.filter(color => {
@@ -331,7 +332,7 @@
     margin: auto auto auto 0;
   }
 
-  .table {
+  .detail_table {
     width: 190px;
     border-top: 1px solid rgba(149, 152, 154, 0.25);
     margin-top: 3em;
@@ -340,12 +341,12 @@
     left: 2em;
   }
 
-  .comparing--right .table {
+  .comparing--right .detail_table {
     left: inherit;
     right: 2em;
   }
 
-  .table__row {
+  .detail_table__row {
     border-bottom: 1px solid rgba(149, 152, 154, 0.25);
     position: relative;
     padding: 8px 0 8px 20px;
