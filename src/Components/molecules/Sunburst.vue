@@ -1,17 +1,5 @@
 <template>
   <div :class="[$style.root, {[$style[`comparing--${this.compare}`]]: this.compare}]">
-    <div :class="$style.detail_table">
-      <div v-for="item in children" :class="$style.detail_table__row">
-        <div :class="$style.mark" :style="{backgroundColor: getColor(item.name)}"></div>
-        <div :class="$style.partido">{{item.name}}</div>
-        <div :class="$style.num">{{item.value}}</div>
-      </div>
-      <div :class="[$style.detail_table__row, $style.detail_table__row__total]">
-        <div :class="$style.partido">POSIBLES VOTOS</div>
-        <div :class="$style.num">{{data.total}}</div>
-      </div>
-    </div>
-
     <div :class="$style.el" ref="el">
       <transition name="fade">
         <div
@@ -43,6 +31,17 @@
         </div>
       </transition>
     </div>
+    <div :class="$style.detail_table">
+      <div v-for="item in children" :class="$style.detail_table__row">
+        <div :class="$style.mark" :style="{backgroundColor: getColor(item.name)}"></div>
+        <div :class="$style.partido">{{item.name}}</div>
+        <div :class="$style.num">{{item.value}}</div>
+      </div>
+      <div :class="[$style.detail_table__row, $style.detail_table__row__total]">
+        <div :class="$style.partido">POSIBLES VOTOS</div>
+        <div :class="$style.num">{{data.total}}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -69,10 +68,15 @@
         return data
       },
       getColor (name) {
+        const colorFunc = d3.scale.category20c()
         const c = colors.filter(color => {
           if (color.name === name) return true
         })
-        if (c.length) return c[0].color
+        if (c.length) {
+          return c[0].color
+        } else {
+          return colorFunc(name)
+        }
       },
       create () {
         const data = this.createData()
@@ -122,7 +126,6 @@
           .outerRadius(d => {
             if (d.depth === 0) {
               dif = Math.max(0, y(d.y + d.dy)) - 45
-              console.log(dif)
               return 45
             }
             return Math.max(0, y(d.y + d.dy)) - dif

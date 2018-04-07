@@ -14,5 +14,13 @@ export default [
   {
     name: 'Partido Liberal',
     color: '#cf2a24'
+  },
+  {
+    name: 'Partido Verde',
+    color: '#03a855'
+  },
+  {
+    name: 'Polo Democrático',
+    color: '#f0dc00'
   }
 ]

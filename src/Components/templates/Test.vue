@@ -2,7 +2,21 @@
   <div>
     <Bar title="¿Quién es su candidato?"/>
     <Container type="comparing">
-      <div :class="$style.image"/>
+      <div v-if="answers.length >= test.length" :class="$style.image">
+        <img :src="result[result.length - 1].photo" alt=""/>
+      </div>
+      <div v-else-if="result.length" :class="$style.image">
+        <img
+          v-for="res in result"
+          :key="res.name"
+          :src="res.photo"
+          :style="{opacity: res.opacity}"
+          alt=""
+        />
+      </div>
+      <div v-else :class="$style.image">
+        <img src="../../assets/images/blur_photo.png" alt=""/>
+      </div>
       <div :class="$style.content">
         <div :class="$style.intro" v-if="questionIndex === null">
           <img src="../../assets/images/quien_avatar.png" width="100" alt=""/>
@@ -78,6 +92,55 @@
   import Bar from '../atoms/Bar'
   import Button from '../atoms/Button'
 
+  const german = [
+    require('../../assets/images/candidatos/german1.jpg'),
+    require('../../assets/images/candidatos/german2.jpg'),
+    require('../../assets/images/candidatos/german3.jpg'),
+    require('../../assets/images/candidatos/german4.jpg')
+  ]
+
+  const gustavo = [
+    require('../../assets/images/candidatos/gustavo1.jpg'),
+    require('../../assets/images/candidatos/gustavo2.jpg'),
+    require('../../assets/images/candidatos/gustavo3.jpg'),
+    require('../../assets/images/candidatos/gustavo4.jpg')
+  ]
+
+  const humberto = [
+    require('../../assets/images/candidatos/humberto1.jpg'),
+    require('../../assets/images/candidatos/humberto2.jpg'),
+    require('../../assets/images/candidatos/humberto3.jpg'),
+    require('../../assets/images/candidatos/humberto4.jpg')
+  ]
+
+  const ivan = [
+    require('../../assets/images/candidatos/ivan1.jpg'),
+    require('../../assets/images/candidatos/ivan2.jpg'),
+    require('../../assets/images/candidatos/ivan3.jpg'),
+    require('../../assets/images/candidatos/ivan4.jpg')
+  ]
+
+  const piedad = [
+    require('../../assets/images/candidatos/piedad1.jpg'),
+    require('../../assets/images/candidatos/piedad2.jpg'),
+    require('../../assets/images/candidatos/piedad3.jpg'),
+    require('../../assets/images/candidatos/piedad4.jpg')
+  ]
+
+  const sergio = [
+    require('../../assets/images/candidatos/sergio1.jpg'),
+    require('../../assets/images/candidatos/sergio2.jpg'),
+    require('../../assets/images/candidatos/sergio3.jpg'),
+    require('../../assets/images/candidatos/sergio4.jpg')
+  ]
+
+  const viviane = [
+    require('../../assets/images/candidatos/viviane1.jpg'),
+    require('../../assets/images/candidatos/viviane2.jpg'),
+    require('../../assets/images/candidatos/viviane3.jpg'),
+    require('../../assets/images/candidatos/viviane4.jpg')
+  ]
+
   export default {
     name: 'Test',
     components: {
@@ -105,6 +168,16 @@
         return this.test[this.questionIndex]
       },
       result () {
+        const stage = (this.questionIndex + 1) * 100 / this.test.length
+        let stageNum = 0
+        if (this.answers.length >= this.test.length) {
+          stageNum = 3
+        } else if (stage >= 33.3333) {
+          stageNum = 1
+        } else if (stage >= 66.6666) {
+          stageNum = 2
+        }
+
         let people = []
         this.answers.map((answer, index) => {
           const who = this.test[index].answers[answer].who
@@ -118,8 +191,44 @@
         const order = Object.keys(counts).sort(function (a, b) {
           return counts[a] - counts[b]
         })
+
+        let totalCounts = 0
+        for (let i = 0; i < order.length; i += 1) {
+          totalCounts += counts[order[i]]
+        }
+
         return order.map(person => {
-          return {name: person, amount: counts[person]}
+          let photo = null
+          switch (person) {
+            case ('Germán Vargas Lleras'):
+              photo = german[stageNum]
+              break
+            case ('Gustavo Petro'):
+              photo = gustavo[stageNum]
+              break
+            case ('Humberto de la Calle'):
+              photo = humberto[stageNum]
+              break
+            case ('Iván Duque'):
+              photo = ivan[stageNum]
+              break
+            case ('Piedad Córdoba'):
+              photo = piedad[stageNum]
+              break
+            case ('Sergio Fajardo'):
+              photo = sergio[stageNum]
+              break
+            case ('Viviane Morales'):
+              photo = viviane[stageNum]
+              break
+          }
+
+          return {
+            name: person,
+            amount: counts[person],
+            opacity: counts[person] / totalCounts,
+            photo: photo
+          }
         })
       }
     },
@@ -158,8 +267,21 @@
   }
 
   .image {
-    background-image: url('../../assets/images/blur_photo.png');
-    background-size: cover;
+    position: relative;
+    overflow: hidden;
+
+    img {
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+      width: auto;
+      max-width: inherit;
+      min-height: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      position: absolute;
+    }
   }
 
   .title {
