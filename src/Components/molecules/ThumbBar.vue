@@ -4,10 +4,10 @@
       v-for="candidate in candidates"
       :key="candidate.id"
       @click="handleClick(candidate)"
-      :data-active-index="filter.indexOf(candidate.name) + 1"
+      :data-active-index="isActive(candidate) + 1"
       :class="[
         $style.thumb,
-        {[$style.active]: filter.indexOf(candidate.name) > -1}
+        {[$style.active]: isActive(candidate) !== undefined}
       ]"
     >
       <User
@@ -59,6 +59,15 @@
     methods: {
       handleClick (candidate) {
         this.$emit('change', candidate.name)
+      },
+      isActive (candidate) {
+        if (typeof this.filter[0] === 'object') {
+          for (let i = 0; i < this.filter.length; i += 1) {
+            if (this.filter[i].name === candidate.name) return i
+          }
+        } else {
+          return this.filter.indexOf(candidate.name) > -1
+        }
       }
     },
     computed: {

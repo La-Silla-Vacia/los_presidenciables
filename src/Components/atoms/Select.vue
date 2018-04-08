@@ -14,7 +14,7 @@
 
 <script>
   export default {
-    name: 'Button',
+    name: 'Select',
     props: [
       'absolute',
       'large',
@@ -44,10 +44,6 @@
     font-family: $font__family--sans;
     letter-spacing: 0.08em;
     font-weight: bold;
-  }
-
-  .root img {
-    width: 18px
   }
 
   .absolute {

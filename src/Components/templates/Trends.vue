@@ -1,5 +1,17 @@
 <template>
   <div>
+    <Bar>
+      <div :class="$style.buttons">
+        <Button type="ghost" @click="handleModeChange(false)">
+          <img v-if="!single" src="../../assets/images/icon_graph--active.svg"/>
+          <img v-else src="../../assets/images/icon_graph.svg"/>
+        </Button>
+        <Button type="ghost" @click="handleModeChange(true)">
+          <img v-if="single" src="../../assets/images/icon_graph-bar--active.svg"/>
+          <img v-else src="../../assets/images/icon_graph-bar.svg"/>
+        </Button>
+      </div>
+    </Bar>
     <Container type="sidebar">
       <ThumbBar
         @change="handleFilterChange"
@@ -14,11 +26,10 @@
 </template>
 
 <script>
-  import * as types from '../../store/mutation-types'
-
   import Container from '../atoms/Container'
   import Bar from '../atoms/Bar'
   import Button from '../atoms/Button'
+  import Select from '../atoms/Select'
   import ThumbBar from '../molecules/ThumbBar'
   import ThumbSelect from '../molecules/ThumbSelect'
   import Paper from '../molecules/Paper'
@@ -29,11 +40,13 @@
       Container,
       Bar,
       Button,
+      Select,
       ThumbBar,
       ThumbSelect,
       Paper
     },
     mounted () {
+      this.setDefaultFilter()
       this.createWidget()
     },
     methods: {
@@ -47,7 +60,7 @@
         }
 
         const items = this.comparisonItems
-        if (this.filter.length === 1) {
+        if (this.single) {
           trends.embed.renderExploreWidgetTo(this.$refs.container, 'GEO_MAP', {
             comparisonItem: this.comparisonItems
           })
@@ -65,15 +78,42 @@
         }
       },
       handleFilterChange (e) {
-        const arrayIndex = this.filter.indexOf(e)
-        if (arrayIndex !== -1) {
-          this.filter.splice(arrayIndex, 1)
-        } else if (this.filter.length === 5) {
-          alert('You can\'t select more than 5 people at the time')
+        const id = this.$store.getters.getCandidateByName(e).trendsId
+        const obj = {name: e, id: id}
+        if (this.single) {
+          this.filter = [obj]
         } else {
-          this.filter.push(e)
+          let arrayIndex = -1
+          for (let i = 0; i < this.filter.length; i += 1) {
+            if (this.filter[i].name === e) arrayIndex = i
+          }
+          if (arrayIndex !== -1) {
+            this.filter.splice(arrayIndex, 1)
+          } else if (this.filter.length === 5) {
+            alert('You can\'t select more than 5 people at the time')
+          } else {
+            this.filter.push(obj)
+          }
         }
         this.createWidget()
+      },
+      handleModeChange (e) {
+        this.single = e
+        this.setDefaultFilter()
+        this.createWidget()
+      },
+      setDefaultFilter () {
+        if (!this.single) {
+          this.filter = [
+            {name: 'Iván Duque', id: this.$store.getters.getCandidateByName('Iván Duque').trendsId},
+            {name: 'Germán Vargas Lleras', id: this.$store.getters.getCandidateByName('Germán Vargas Lleras').trendsId},
+            {name: 'Sergio Fajardo', id: this.$store.getters.getCandidateByName('Sergio Fajardo').trendsId},
+            {name: 'Humberto de la Calle', id: this.$store.getters.getCandidateByName('Humberto de la Calle').trendsId},
+            {name: 'Gustavo Petro', id: this.$store.getters.getCandidateByName('Gustavo Petro').trendsId}
+          ]
+        } else {
+          this.filter = [{name: 'Iván Duque', id: this.$store.getters.getCandidateByName('Iván Duque').trendsId}]
+        }
       }
     },
     computed: {
@@ -94,16 +134,16 @@
         const candidates = this.filter
         const result = []
 
-        const d = new Date();
+        const d = new Date()
         const date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
 
         candidates.map((candidate, i) => {
-          if (candidates.length === 1) {
+          if (this.single) {
             if (i > 4) return
-            result.push({'keyword': candidate, 'geo': 'CO', 'time': '2018-03-12 ' + date})
+            result.push({'keyword': candidate.id, 'geo': 'CO', 'time': '2018-03-12 ' + date})
           } else {
             if (i > 4) return
-            result.push({keyword: candidate, geo: '', time: '2018-03-12 ' + date})
+            result.push({keyword: candidate.id, geo: '', time: '2018-03-12 ' + date})
           }
         })
         return result
@@ -112,13 +152,8 @@
     data () {
       return {
         embed: '<h2>Not working yet.</h2>',
-        filter: [
-          'Iván Duque',
-          'Germán Vargas Lleras',
-          'Sergio Fajardo',
-          'Humberto de la Calle',
-          'Gustavo Petro'
-        ]
+        filter: [],
+        single: false
       }
     }
   }
@@ -149,5 +184,9 @@
       font-weight: bold;
       margin-top: 2em;
     }
+  }
+
+  .buttons {
+    margin-left: auto;
   }
 </style>
