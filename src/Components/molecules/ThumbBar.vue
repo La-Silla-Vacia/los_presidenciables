@@ -13,6 +13,7 @@
       <User
         :name="candidate.name"
         :partido="candidate.partido"
+        :photo="candidate.foto"
         size="compact"
       />
     </button>
