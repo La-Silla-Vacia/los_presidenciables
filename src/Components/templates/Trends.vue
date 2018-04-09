@@ -63,13 +63,12 @@
 
   const md = new MarkdownIt()
   Object.defineProperty(Array.prototype, 'chunk', {
-    value: function(chunkSize) {
-      var R = [];
-      for (var i=0; i<this.length; i+=chunkSize)
-        R.push(this.slice(i,i+chunkSize));
-      return R;
+    value: function (chunkSize) {
+      var R = []
+      for (var i = 0; i < this.length; i += chunkSize) { R.push(this.slice(i, i + chunkSize)) }
+      return R
     }
-  });
+  })
 
   export default {
     name: 'Trends',
