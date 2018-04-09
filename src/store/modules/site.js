@@ -12,7 +12,8 @@ const state = {
   comparing: false,
   comparingFirst: null,
   comparingSecond: null,
-  maquinaria: []
+  maquinaria: [],
+  trends_events: []
 }
 
 const getters = {
@@ -128,6 +129,11 @@ const getters = {
       }
     }
   },
+  getTrendEvents: () => (uid, collection = state.trends_events) => {
+    return collection.filter(item => {
+      if (uid.indexOf(item.name) !== -1) return true
+    })
+  },
   getTest: () => (uid, collection = state.test) => {
     let candidates = []
     const qa = collection.map(question => {
@@ -219,6 +225,7 @@ const mutations = {
     state.questions = site ? site.questions : state.questions
     state.candidates = site ? site.candidates : state.candidates
     state.maquinaria = site ? site.maquinaria : state.maquinaria
+    state.trends_events = site ? site.trends_events : state.trends_events
     state.test = site ? site.comparacion_caracter : []
   },
   [types.RECEIVE_SETTINGS] (state, {settings}) {

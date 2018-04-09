@@ -19,13 +19,40 @@
         :filter="filter"
       />
 
-      <div :class="$style.content" ref="container"></div>
+      <div :class="$style.content">
+        <div :class="$style.graph" ref="container"></div>
+
+        <div :class="$style.footer">
+          <button
+            v-if="chunckedEvents.length - 1 <= currentI"
+            :class="$style.arrowLeft"
+            @click="currentI -= 1"
+          >
+          </button>
+          <div
+            v-for="trend in events"
+            :class="$style.article"
+          >
+            <div :class="$style.date">{{toDate(trend.date)}}</div>
+            <div :class="$style.title">{{trend.name}}</div>
+            <div :class="$style.text" v-html="toMarkdown(trend.text)"></div>
+          </div>
+          <button
+            v-if="chunckedEvents.length - 1 > currentI"
+            :class="$style.arrowRight"
+            @click="currentI += 1"
+          ></button>
+        </div>
+      </div>
 
     </Container>
   </div>
 </template>
 
 <script>
+  import moment from 'moment'
+  import MarkdownIt from 'markdown-it'
+
   import Container from '../atoms/Container'
   import Bar from '../atoms/Bar'
   import Button from '../atoms/Button'
@@ -33,6 +60,16 @@
   import ThumbBar from '../molecules/ThumbBar'
   import ThumbSelect from '../molecules/ThumbSelect'
   import Paper from '../molecules/Paper'
+
+  const md = new MarkdownIt()
+  Object.defineProperty(Array.prototype, 'chunk', {
+    value: function(chunkSize) {
+      var R = [];
+      for (var i=0; i<this.length; i+=chunkSize)
+        R.push(this.slice(i,i+chunkSize));
+      return R;
+    }
+  });
 
   export default {
     name: 'Trends',
@@ -76,6 +113,12 @@
             property: ''
           })
         }
+      },
+      toMarkdown (text) {
+        return md.render(text)
+      },
+      toDate (date) {
+        return moment(date).format('D MMM Y')
       },
       handleFilterChange (e) {
         const id = this.$store.getters.getCandidateByName(e).trendsId
@@ -130,6 +173,14 @@
       data () {
         return this.$store.getters.getMaquinaria(this.candidate.name)
       },
+      events () {
+        const names = this.filter.map(item => {
+          return item.name
+        })
+        const events = this.$store.getters.getTrendEvents(names)
+        this.chunckedEvents = events.chunk(3)
+        return this.chunckedEvents[this.currentI]
+      },
       comparisonItems () {
         const candidates = this.filter
         const result = []
@@ -153,7 +204,9 @@
       return {
         embed: '<h2>Not working yet.</h2>',
         filter: [],
-        single: false
+        single: false,
+        currentI: 0,
+        chunckedEvents: []
       }
     }
   }
@@ -166,9 +219,6 @@
     max-width: 937px;
     width: 100%;
     margin: 1em auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-gap: 1em;
 
     p {
       font-family: $font__family--serif--especial;
@@ -186,7 +236,66 @@
     }
   }
 
+  .graph {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 1em;
+  }
+
   .buttons {
     margin-left: auto;
+  }
+
+  .footer {
+    margin-top: 15px;
+    padding: 15px 40px 0;
+    height: 140px;
+    border-top: 1px solid rgba(148, 152, 154, .25);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2em;
+    position: relative;
+  }
+
+  .article {
+    font-family: $font__family--sans--especial;
+  }
+
+  .date {
+    font-size: 11px;
+    color: #B1B9BD;
+    font-weight: 900;
+  }
+
+  .title {
+    font-size: 18px;
+    color: #000;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .text {
+    & p {
+      font-family: $font__family--sans--especial;
+      margin: 0 0 9px;
+      font-size: 12px;
+      color: #444848;
+    }
+  }
+
+  .arrowLeft,
+  .arrowRight {
+    position: absolute;
+    width: 18px;
+    height: 35px;
+    border: 0;
+    background: url(../../assets/images/arrow_left.svg);
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+
+  .arrowRight {
+    background: url(../../assets/images/arrow_right.svg);
+    right: 0;
   }
 </style>
