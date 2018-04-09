@@ -1,13 +1,29 @@
 <template>
   <div>
-    <Bar title="¿Cómo gastan el presupuesto los candidatos?" />
+    <Bar title="¿Cómo gastan el presupuesto los candidatos?"/>
     <Container :type="comparing ? 'comparing' : 'sidebar'">
       <ThumbBar routeBase="/gastado/"/>
 
       <div :class="$style.content">
-        <p>No data yet</p>
+        <div :class="$style.row">
+          <div :class="$style.bar">
+            <div :class="$style.num">$0</div>
+            <div :class="$style.percentage">0%</div>
+            <div :class="$style.line">
+              <div :class="$style.line__inner" style="width: 0%"></div>
+            </div>
+            <div :class="$style.num">$?</div>
+          </div>
 
-        <p :class="$style.highlight">SELECCIONE UN CANDIDATO PARA VER SUS FACTORES DE PODER</p>
+          <div :class="[$style.bar, $style['bar--details']]">
+            <RadialProgress percentage="0" title="Valla" />
+            <RadialProgress percentage="0" title="Publicidad en radio nacional" />
+            <RadialProgress percentage="0" title="Publicidad en TV nacional" />
+            <RadialProgress percentage="0" title="Publicidad en prensa nacional" />
+            <RadialProgress percentage="0" title="Publicidad en prensa local" />
+            <RadialProgress percentage="0" title="Viaje interno (con 2 acompañantes)" />
+          </div>
+        </div>
       </div>
 
     </Container>
@@ -21,8 +37,7 @@
   import Bar from '../atoms/Bar'
   import Button from '../atoms/Button'
   import ThumbBar from '../molecules/ThumbBar'
-  import ThumbSelect from '../molecules/ThumbSelect'
-  import Paper from '../molecules/Paper'
+  import RadialProgress from '../atoms/RadialProgess'
 
   export default {
     name: 'Gastado',
@@ -31,16 +46,12 @@
       Bar,
       Button,
       ThumbBar,
-      ThumbSelect,
-      Paper
+      RadialProgress
     },
     methods: {
       handleCompareClick (state) {
         this.$store.commit(types.RECEIVE_COMPARE, {active: state, first: this.candidate})
       }
-    },
-    mounted () {
-      this.$store.commit(types.RECEIVE_COMPARE, {active: false})
     },
     computed: {
       candidate () {
@@ -58,61 +69,7 @@
       }
     },
     data () {
-      return {
-        chartData: {
-          label: 'root',
-          children: [
-            {
-              label: 'child 1',
-              children: [
-                {
-                  label: 'child 1-1',
-                  size: 10
-                },
-                {
-                  label: 'child 1-2',
-                  children: [
-                    {
-                      label: 'child 1-2-1',
-                      size: 5
-                    },
-                    {
-                      label: 'child 1-3-1',
-                      size: 8
-                    }
-                  ]
-                },
-                {
-                  label: 'child 1-3',
-                  children: [
-                    {
-                      label: 'child 1-3-1',
-                      children: [
-                        {
-                          label: 'child 1-3-1-1',
-                          size: 2
-                        },
-                        {
-                          label: 'child 1-3-1-2',
-                          size: 5
-                        }
-                      ]
-                    },
-                    {
-                      label: 'child 1-3-2',
-                      size: 8
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              label: 'child 2',
-              size: 25
-            }
-          ]
-        }
-      }
+      return {}
     }
   }
 </script>
@@ -121,7 +78,7 @@
   @import '../../assets/styles/base';
 
   .content {
-    max-width: 617px;
+    width: calc(100% - 6em);
     margin: 4em 0 0 2em;
 
     p {
@@ -138,5 +95,48 @@
       font-weight: bold;
       margin-top: 2em;
     }
+  }
+
+  .row {
+    background-color: #fff;
+    width: 100%;
+  }
+
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #000;
+    padding: 24px 30px;
+  }
+
+  .bar--details {
+    border-top: 3px solid #f6f6f6;
+  }
+
+  .num {
+    font-size: 12px;
+  }
+
+  .percentage {
+    margin-left: 1em;
+    color: $color__primary--base;
+    font-size: 12px;
+    padding: 7px 5px;
+    background-color: rgba(68, 165, 219, .2)
+  }
+
+  .line {
+    height: 10px;
+    background-color: #ECEEEF;
+    border-radius: 5px;
+    flex-grow: 1;
+    margin: 0 1em;
+  }
+
+  .line__inner {
+    height: 100%;
+    background-color: $color__primary--base;
+    border-radius: 5px;
   }
 </style>

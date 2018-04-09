@@ -226,8 +226,8 @@
     watch: {
       data (oldData, newData) {
         if (oldData !== newData) {
-          this.$refs.el.innerHTML = ''
-          this.create()
+          // this.$refs.el.innerHTML = ''
+          // this.create()
         }
       }
     },
