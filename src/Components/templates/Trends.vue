@@ -24,7 +24,7 @@
 
         <div :class="$style.footer">
           <button
-            v-if="chunckedEvents.length - 1 <= currentI"
+            v-if="chunckedEvents.length - 1 <= currentI && currentI !== 0"
             :class="$style.arrowLeft"
             @click="currentI -= 1"
           >
@@ -121,6 +121,7 @@
         return moment(date).format('D MMM Y')
       },
       handleFilterChange (e) {
+        this.currentI = 0
         const id = this.$store.getters.getCandidateByName(e).trendsId
         const obj = {name: e, id: id}
         if (this.single) {
@@ -141,6 +142,7 @@
         this.createWidget()
       },
       handleModeChange (e) {
+        this.currentI = 0
         this.single = e
         this.setDefaultFilter()
         this.createWidget()
