@@ -26,7 +26,7 @@ const getters = {
       {text: 'LOS APOYOS POLÍTICOS'},
       {text: 'LO QUE HAN GASTADO'},
       {text: 'CÓMO LOS BUSCAN'},
-      {text: 'TEST DE CARACTER'}
+      {text: 'TEST DE CARÁCTER'}
     ]
   },
   getThemes: () => (uid, collection = state.themes) => {

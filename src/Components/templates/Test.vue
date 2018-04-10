@@ -30,8 +30,8 @@
           <div :class="[$style.title, $style.result]">{{result[result.length - 1].name}}</div>
 
           <div :class="$style.buttons">
-            <Button :class="$style.button" type="ghost--bordered">HUY NO!</Button>
-            <Button :class="$style.button" type="ghost--bordered">ME GUSTA!</Button>
+            <Button :class="$style.button" type="ghost--bordered">Uy, no</Button>
+            <Button :class="$style.button" type="ghost--bordered">¡Me gusta!</Button>
           </div>
         </div>
 

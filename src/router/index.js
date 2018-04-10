@@ -54,7 +54,7 @@ export default new Router({
     },
     {
       path: '/test-de-caracter',
-      name: 'TEST DE CARACTER',
+      name: 'TEST DE CARÁCTER',
       component: Test
     },
     {
