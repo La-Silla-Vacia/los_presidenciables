@@ -1,10 +1,16 @@
 <template>
   <div>
-    <Bar title="¿Cómo gastan el presupuesto los candidatos?"/>
+    <Bar title="¿Cómo gastan el presupuesto los candidatos?">
+      <Button v-if="!comparing && isSingle" :absolute="true" @click="handleCompareClick(true)">COMPARAR</Button>
+      <Button v-else-if="isSingle" type="ghost" :absolute="true" @click="handleCompareClick(false)">
+        <img src="../../assets/images/close.svg" width="8"/>
+        CLOSE
+      </Button>
+    </Bar>
     <Container :type="comparing ? 'comparing' : 'sidebar'">
-      <ThumbBar routeBase="/gastado/"/>
+      <ThumbBar v-if="!comparing" routeBase="/gastado/"/>
 
-      <div :class="$style.content">
+      <div v-if="!comparing" :class="$style.content">
         <div :class="$style.row">
           <div :class="$style.bar">
             <div :class="$style.num">$0</div>
@@ -16,18 +22,44 @@
           </div>
 
           <div :class="[$style.bar, $style['bar--details']]">
-            <RadialProgress percentage="0" title="Vallas" />
-            <RadialProgress percentage="0" title="Propagandas en radio nacional" />
-            <RadialProgress percentage="0" title="Propagandas en TV nacional" />
-            <RadialProgress percentage="0" title="Propagandas en prensa nacional" />
-            <RadialProgress percentage="0" title="Propagandas en prensa local" />
-            <RadialProgress percentage="0" title="Viajes" />
+            <RadialProgress
+              v-for="item in data"
+              :key="item.tipoDeGasto"
+              percentage="0"
+              :title="item.tipoDeGasto"
+            ></RadialProgress>
           </div>
         </div>
 
         <div :class="$style.cta">
           ¿Tiene información sobre los gastos?
-          <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSd3U9MTHvM5olE4s_oEOKsqaBeQuZloVnWPys6EEcvuuj6IHQ/viewform">Ayúdenos a reportarlos aquí</a>
+          <a target="_blank"
+             href="https://docs.google.com/forms/d/e/1FAIpQLSd3U9MTHvM5olE4s_oEOKsqaBeQuZloVnWPys6EEcvuuj6IHQ/viewform">Ayúdenos
+            a reportarlos aquí</a>
+        </div>
+      </div>
+
+
+      <div v-if="comparing" :class="[$style.Proposal, $style.Proposal__left]">
+        <ThumbSelect which="first"></ThumbSelect>
+        <div :class="[$style.bar, $style['bar--details']]" style="background-color: #fff; margin: 1em 0">
+          <RadialProgress
+            v-for="item in data"
+            :key="item.tipoDeGasto"
+            percentage="0"
+            :title="item.tipoDeGasto"
+          ></RadialProgress>
+        </div>
+      </div>
+      <div v-if="comparing" :class="[$style.Proposal, $style.Proposal__right]">
+        <ThumbSelect which="second"></ThumbSelect>
+        <div :class="[$style.bar, $style['bar--details']]" style="background-color: #fff; margin: 1em 0">
+          <RadialProgress
+            v-for="item in data"
+            :key="item.tipoDeGasto"
+            percentage="0"
+            :title="item.tipoDeGasto"
+          ></RadialProgress>
         </div>
       </div>
 
@@ -42,6 +74,7 @@
   import Bar from '../atoms/Bar'
   import Button from '../atoms/Button'
   import ThumbBar from '../molecules/ThumbBar'
+  import ThumbSelect from '../molecules/ThumbSelect'
   import RadialProgress from '../atoms/RadialProgess'
 
   export default {
@@ -51,11 +84,16 @@
       Bar,
       Button,
       ThumbBar,
+      ThumbSelect,
       RadialProgress
     },
     methods: {
       handleCompareClick (state) {
-        this.$store.commit(types.RECEIVE_COMPARE, {active: state, first: this.candidate})
+        this.$store.commit(types.RECEIVE_COMPARE, {
+          active: state,
+          first: this.candidate,
+          second: null
+        })
       }
     },
     computed: {
@@ -70,7 +108,21 @@
         return this.$route.params.uid
       },
       data () {
-        return this.$store.getters.getMaquinaria(this.candidate.name)
+        return this.$store.getters.getGastados(this.candidate.name)
+      },
+      compareFirst () {
+        return this.$store.getters.isComparing('first')
+      },
+      compareSecond () {
+        return this.$store.getters.isComparing('second')
+      },
+      dataFirst () {
+        return this.$store.getters.getMaquinaria(this.compareFirst.name)
+      },
+      dataSecond () {
+        if (this.compareSecond) {
+          return this.$store.getters.getMaquinaria(this.compareSecond.name)
+        }
       }
     },
     data () {
@@ -166,4 +218,14 @@
       margin-top: 10px;
     }
   }
+
+  .Proposal {
+    &__left {
+      border-right: 1px solid #fff;
+    }
+    &__right {
+      border-left: 1px solid #fff;
+    }
+  }
+
 </style>
