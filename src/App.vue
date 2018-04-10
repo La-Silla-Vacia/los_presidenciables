@@ -1,8 +1,20 @@
 <template>
   <div :class="[$style.container, {[$style.loading]: loading}]">
-    <LoadScreen v-if="loading" />
-    <Header v-else />
-    <router-view v-if="!loading" :key="$route.path" />
+    <LoadScreen v-if="loading"/>
+    <Header v-else/>
+    <router-view v-if="!loading" :key="$route.path"/>
+    <div :class="$style.credits">
+      <div>
+        <span>Diseño</span>
+        <img src="http://bestiario.org/themes/default/bestiario_logo.svg" alt="Bestiario"/>
+      </div>
+      <div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Logo_Bancolombia.svg" alt="Bancolombia"/>
+        <p>apoyó esta herramienta educativa para que los ciudadanos voten informados. Ésta no representa una
+          posición institucional
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -21,8 +33,7 @@
       Header
     },
     data () {
-      return {
-      }
+      return {}
     },
     beforeCreate () {
       this.$store.commit(types.RECEIVE_SETTINGS, {settings: window.los_presidenciables__data})
@@ -140,5 +151,53 @@
 
   .loading {
     background-color: #fff;
+  }
+
+  .credits {
+    width: 32em;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    text-align: center;
+    float: right;
+  }
+
+  .credits img {
+    width: 50%;
+    display: block;
+  }
+
+  .credits div {
+    width: 45%;
+    font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+  }
+
+  .credits > div:first-child {
+    padding-top: 0.5em;
+    text-align: left;
+
+    img {
+      width: 80%;
+    }
+  }
+
+  .credits > div:last-child {
+    width: 100%;
+    border-left: 1px solid #C1C1C1;
+    display: flex;
+    align-items: center;
+    padding: 0 1em 0 2em;
+    margin-top: 1em;
+  }
+
+  .credits span {
+    font-size: 12px;
+  }
+
+  .credits p {
+    font-size: 10px !important;
+    margin: 0.5em 0 0 1em;
+    line-height: 1;
+    text-align: left;
   }
 </style>
