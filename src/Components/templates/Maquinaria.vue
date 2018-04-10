@@ -156,6 +156,7 @@
     }
   }
 
+  .content .highlight,
   .highlight {
     color: $color__primary--base;
     font-family: $font__family--sans--especial;
