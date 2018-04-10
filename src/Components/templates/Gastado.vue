@@ -24,6 +24,11 @@
             <RadialProgress percentage="0" title="Viajes" />
           </div>
         </div>
+
+        <div :class="$style.cta">
+          ¿Tiene información sobre los gastos?
+          <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSd3U9MTHvM5olE4s_oEOKsqaBeQuZloVnWPys6EEcvuuj6IHQ/viewform">Ayúdenos a reportarlos aquí</a>
+        </div>
       </div>
 
     </Container>
@@ -78,7 +83,7 @@
   @import '../../assets/styles/base';
 
   .content {
-    width: calc(100% - 6em);
+    width: calc(100% - 15em);
     margin: 4em 0 0 2em;
 
     p {
@@ -138,5 +143,27 @@
     height: 100%;
     background-color: $color__primary--base;
     border-radius: 5px;
+  }
+
+  .cta {
+    width: 180px;
+    padding: 15px;
+    color: #fff;
+    background-color: $color__primary--base;
+    position: absolute;
+    right: 0;
+    top: 64px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: $font__family--sans--especial;
+    text-align: center;
+
+    & a {
+      color: #fff;
+      font-size: 12px;
+      font-weight: normal;
+      text-decoration: underline;
+      margin-top: 10px;
+    }
   }
 </style>
