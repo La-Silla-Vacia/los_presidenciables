@@ -28,7 +28,7 @@ export default new Router({
     },
     {
       path: '/la-maquinaria',
-      name: 'LA MAQUINARIA QUE TIENEN',
+      name: 'LOS APOYOS POLÍTICOS',
       component: Maquinaria
     },
     {

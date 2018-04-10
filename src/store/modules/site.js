@@ -23,7 +23,7 @@ const getters = {
   getChapters: () => () => {
     return [
       {text: 'LO QUE PROPONEN'},
-      {text: 'LA MAQUINARIA QUE TIENEN'},
+      {text: 'LOS APOYOS POLÍTICOS'},
       {text: 'LO QUE HAN GASTADO'},
       {text: 'CÓMO LOS BUSCAN'},
       {text: 'TEST DE CARACTER'}

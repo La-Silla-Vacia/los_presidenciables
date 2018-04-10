@@ -22,5 +22,13 @@ export default [
   {
     name: 'Polo Democrático',
     color: '#f0dc00'
+  },
+  {
+    name: 'Centro Democrático',
+    color: '#4ad4ed'
+  },
+  {
+    name: 'Opción Ciudadana',
+    color: '#bb9c3c'
   }
 ]
