@@ -16,12 +16,12 @@
           </div>
 
           <div :class="[$style.bar, $style['bar--details']]">
-            <RadialProgress percentage="0" title="Valla" />
-            <RadialProgress percentage="0" title="Publicidad en radio nacional" />
-            <RadialProgress percentage="0" title="Publicidad en TV nacional" />
-            <RadialProgress percentage="0" title="Publicidad en prensa nacional" />
-            <RadialProgress percentage="0" title="Publicidad en prensa local" />
-            <RadialProgress percentage="0" title="Viaje interno (con 2 acompañantes)" />
+            <RadialProgress percentage="0" title="Vallas" />
+            <RadialProgress percentage="0" title="Propagandas en radio nacional" />
+            <RadialProgress percentage="0" title="Propagandas en TV nacional" />
+            <RadialProgress percentage="0" title="Propagandas en prensa nacional" />
+            <RadialProgress percentage="0" title="Propagandas en prensa local" />
+            <RadialProgress percentage="0" title="Viajes" />
           </div>
         </div>
       </div>

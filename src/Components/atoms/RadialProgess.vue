@@ -67,6 +67,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     line-height: 1;
-    max-width: 56px;
+    max-width: 70px;
   }
 </style>

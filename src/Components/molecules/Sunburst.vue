@@ -35,11 +35,11 @@
       <div v-for="item in children" :class="$style.detail_table__row">
         <div :class="$style.mark" :style="{backgroundColor: getColor(item.name)}"></div>
         <div :class="$style.partido">{{item.name}}</div>
-        <div :class="$style.num">{{item.value}}</div>
+        <div :class="$style.num">{{toNiceNumber(item.value)}}</div>
       </div>
       <div :class="[$style.detail_table__row, $style.detail_table__row__total]">
         <div :class="$style.partido">POSIBLES VOTOS</div>
-        <div :class="$style.num">{{data.total}}</div>
+        <div :class="$style.num">{{toNiceNumber(data.total)}}</div>
       </div>
     </div>
   </div>
@@ -66,6 +66,9 @@
         const dataString = JSON.stringify(this.data)
         const data = JSON.parse(dataString)
         return data
+      },
+      toNiceNumber (n) {
+        return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").replace('.00', '');
       },
       getColor (name) {
         const colorFunc = d3.scale.category20c()
@@ -225,9 +228,10 @@
     },
     watch: {
       data (oldData, newData) {
-        if (oldData !== newData) {
-          // this.$refs.el.innerHTML = ''
-          // this.create()
+        if (oldData.name !== newData.name) {
+          console.log(oldData, newData)
+          this.$refs.el.innerHTML = ''
+          this.create()
         }
       }
     },
