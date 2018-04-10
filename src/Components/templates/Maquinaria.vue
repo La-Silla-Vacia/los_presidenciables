@@ -12,7 +12,7 @@
 
       <div :class="$style.container" v-if="isSingle && !comparing">
         <Sunburst v-if="data" :data="data" :ratio="1"/>
-        <h2 v-else>No data</h2>
+        <h2 :class="$style.highlight" style="font-size: 18px" v-else>Hasta ahora no tiene apoyos políticos sustanciales y medibles</h2>
       </div>
 
       <div v-if="!isSingle" :class="$style.content">
@@ -154,15 +154,15 @@
       margin: 0 0 0.5em 0;
       font-size: 18px;
     }
+  }
 
-    .highlight {
-      color: $color__primary--base;
-      font-family: $font__family--sans--especial;
-      font-size: 12px;
-      letter-spacing: 0.035em;
-      font-weight: bold;
-      margin-top: 2em;
-    }
+  .highlight {
+    color: $color__primary--base;
+    font-family: $font__family--sans--especial;
+    font-size: 12px;
+    letter-spacing: 0.035em;
+    font-weight: bold;
+    margin-top: 2em;
   }
 
   .Proposal {
