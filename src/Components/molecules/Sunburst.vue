@@ -229,7 +229,12 @@
     watch: {
       data (oldData, newData) {
         if (oldData.name !== newData.name) {
-          console.log(oldData, newData)
+          this.$refs.el.innerHTML = ''
+          this.create()
+        }
+      },
+      ratio (oldData, newData) {
+        if (oldData !== newData) {
           this.$refs.el.innerHTML = ''
           this.create()
         }
