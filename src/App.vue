@@ -159,7 +159,9 @@
     justify-content: space-between;
     align-items: flex-start;
     text-align: center;
-    float: right;
+    justify-self: flex-end;
+    margin-left: auto;
+    margin-bottom: 3em;
   }
 
   .credits img {
