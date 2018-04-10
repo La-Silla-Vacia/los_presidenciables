@@ -59,10 +59,24 @@
     },
     computed: {
       candidates () {
-        return this.$store.getters.getCandidates()
+        const candidates = this.$store.getters.getCandidates()
+        const filtered = candidates.filter(item => {
+          if (this.other) {
+            if (item.name !== this.other.name) {
+              return true
+            }
+          }
+        })
+
+        return filtered
       },
       current () {
+      console.log(this.$store.getters.isComparing(this.which), this.which)
         return this.$store.getters.isComparing(this.which)
+      },
+      other () {
+        const which = this.which === 'first' ? 'second' : 'first'
+        return this.$store.getters.isComparing(which)
       }
     },
     data () {
