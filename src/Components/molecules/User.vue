@@ -4,11 +4,11 @@
       :class="$style.avatar"
       :style="{ backgroundImage: `url(${photo})` }"
     ></figure>
-    <div>
+    <div v-if="!isSmallScreen || size !== 'compact'">
       <div :class="$style.name">{{name}}</div>
       <div :class="$style.partido">{{partido}}</div>
     </div>
-    <slot />
+    <slot/>
   </div>
 </template>
 
@@ -28,6 +28,11 @@
       },
       label: {},
       size: {}
+    },
+    computed: {
+      isSmallScreen () {
+        return this.$store.getters.isTablet()
+      }
     }
   }
 </script>
@@ -74,6 +79,13 @@
 
     .partido {
       font-size: 8px;
+    }
+
+    @media only screen and (max-width: 992px) {
+      .avatar {
+        width: 40px;
+        height: 40px;
+      }
     }
   }
 

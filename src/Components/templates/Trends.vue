@@ -179,7 +179,11 @@
           return item.name
         })
         const events = this.$store.getters.getTrendEvents(names)
-        this.chunckedEvents = events.chunk(3)
+        if (this.isSmallScreen) {
+          this.chunckedEvents = events.chunk(1)
+        } else {
+          this.chunckedEvents = events.chunk(3)
+        }
         return this.chunckedEvents[this.currentI]
       },
       comparisonItems () {
@@ -199,6 +203,9 @@
           }
         })
         return result
+      },
+      isSmallScreen () {
+        return this.$store.getters.isTablet()
       }
     },
     data () {
@@ -243,17 +250,13 @@
     grid-gap: 1em;
   }
 
-  .buttons {
-    margin-left: auto;
-  }
-
   .footer {
     margin-top: 15px;
     padding: 15px 40px 0;
     height: 140px;
     border-top: 1px solid rgba(148, 152, 154, .25);
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
     grid-gap: 2em;
     position: relative;
   }

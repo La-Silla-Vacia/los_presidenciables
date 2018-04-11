@@ -100,6 +100,14 @@
       border-left: 3px solid $color__primary--base;
       padding-left: 18px;
       text-decoration: none;
+
+      @media only screen and (max-width: 992px) {
+        padding-left: 13px;
+      }
+    }
+
+    @media only screen and (max-width: 992px) {
+      padding: 15px 10px 15px 15px;
     }
   }
 
@@ -108,6 +116,10 @@
     padding-left: 18px;
     background-color: #fff;
     opacity: 1;
+
+    @media only screen and (max-width: 992px) {
+      padding-left: 13px;
+    }
 
     &[data-active-index="1"] figure {
       border: 2px solid rgb(33, 150, 243);

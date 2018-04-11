@@ -27,10 +27,10 @@
   }
 
   .root p {
-    font-size: 13px;
+    font-size: 13px !important;
     color: #000;
     font-family: $font__family--sans--especial;
-    line-height: 1.46;
+    line-height: 1.46 !important;
     font-weight: normal;
     margin: 0 0 8px;
   }

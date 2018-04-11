@@ -1,8 +1,8 @@
 <template>
   <div>
     <Bar title="¿Quien le pone los votos?">
-      <Button v-if="!comparing && isSingle" :absolute="true" @click="handleCompareClick(true)">COMPARAR</Button>
-      <Button v-else-if="isSingle" type="ghost" :absolute="true" @click="handleCompareClick(false)">
+      <Button v-if="!comparing && isSingle && !isSmallScreen" :absolute="true" @click="handleCompareClick(true)">COMPARAR</Button>
+      <Button v-else-if="isSingle && !isSmallScreen" type="ghost" :absolute="true" @click="handleCompareClick(false)">
         <img src="../../assets/images/close.svg" width="8"/>
         CLOSE
       </Button>
@@ -134,6 +134,9 @@
       },
       comparing () {
         return this.$store.getters.isComparing()
+      },
+      isSmallScreen () {
+        return this.$store.getters.isTablet()
       }
     },
     data () {
@@ -152,7 +155,11 @@
     p {
       font-family: $font__family--serif--especial;
       margin: 0 0 0.5em 0;
-      font-size: 18px;
+      font-size: 18px !important;
+    }
+
+    @media only screen and (max-width: 992px) {
+      margin: 1em 0
     }
   }
 

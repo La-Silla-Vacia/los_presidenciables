@@ -35,6 +35,7 @@
     background: transparent;
     padding: 1rem 0;
     position: relative;
+    text-align: center;
 
     small {
       font-size: 1em;

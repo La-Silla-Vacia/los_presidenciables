@@ -1,8 +1,10 @@
 <template>
   <div>
     <Bar title="¿Cómo gastan el presupuesto los candidatos?">
-      <Button v-if="!comparing && isSingle" :absolute="true" @click="handleCompareClick(true)">COMPARAR</Button>
-      <Button v-else-if="isSingle" type="ghost" :absolute="true" @click="handleCompareClick(false)">
+      <Button v-if="!comparing && isSingle && !isSmallScreen" :absolute="true" @click="handleCompareClick(true)">
+        COMPARAR
+      </Button>
+      <Button v-else-if="isSingle && !isSmallScreen" type="ghost" :absolute="true" @click="handleCompareClick(false)">
         <img src="../../assets/images/close.svg" width="8"/>
         CLOSE
       </Button>
@@ -31,7 +33,7 @@
           </div>
         </div>
 
-        <div :class="$style.cta">
+        <div v-if="!isSmallScreen" :class="$style.cta">
           ¿Tiene información sobre los gastos?
           <a target="_blank"
              href="https://docs.google.com/forms/d/e/1FAIpQLSd3U9MTHvM5olE4s_oEOKsqaBeQuZloVnWPys6EEcvuuj6IHQ/viewform">Ayúdenos
@@ -123,6 +125,9 @@
         if (this.compareSecond) {
           return this.$store.getters.getMaquinaria(this.compareSecond.name)
         }
+      },
+      isSmallScreen () {
+        return this.$store.getters.isTablet()
       }
     },
     data () {
@@ -135,8 +140,13 @@
   @import '../../assets/styles/base';
 
   .content {
-    width: calc(100% - 15em);
-    margin: 4em 0 0 2em;
+    width: calc(100% - 1em);
+    margin: 1em 0 0 0;
+
+    @media only screen and (min-width: 992px) {
+      width: calc(100% - 15em);
+      margin: 4em 0 0 2em;
+    }
 
     p {
       font-family: $font__family--serif--especial;
@@ -165,6 +175,7 @@
     align-items: center;
     color: #000;
     padding: 24px 30px;
+    flex-wrap: wrap;
   }
 
   .bar--details {
@@ -227,5 +238,4 @@
       border-left: 1px solid #fff;
     }
   }
-
 </style>

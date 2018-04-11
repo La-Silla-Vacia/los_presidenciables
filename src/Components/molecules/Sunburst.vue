@@ -1,5 +1,16 @@
 <template>
   <div :class="[$style.root, {[$style[`comparing--${this.compare}`]]: this.compare}]">
+    <div :class="$style.detail_table">
+      <div v-for="item in children" :class="$style.detail_table__row">
+        <div :class="$style.mark" :style="{backgroundColor: getColor(item.name)}"></div>
+        <div :class="$style.partido">{{item.name}}</div>
+        <div :class="$style.num">{{toNiceNumber(item.value)}}</div>
+      </div>
+      <div :class="[$style.detail_table__row, $style.detail_table__row__total]">
+        <div :class="$style.partido">POSIBLES VOTOS</div>
+        <div :class="$style.num">{{toNiceNumber(data.total)}}</div>
+      </div>
+    </div>
     <div :class="$style.el" ref="el">
       <transition name="fade">
         <div
@@ -30,17 +41,6 @@
           </div>
         </div>
       </transition>
-    </div>
-    <div :class="$style.detail_table">
-      <div v-for="item in children" :class="$style.detail_table__row">
-        <div :class="$style.mark" :style="{backgroundColor: getColor(item.name)}"></div>
-        <div :class="$style.partido">{{item.name}}</div>
-        <div :class="$style.num">{{toNiceNumber(item.value)}}</div>
-      </div>
-      <div :class="[$style.detail_table__row, $style.detail_table__row__total]">
-        <div :class="$style.partido">POSIBLES VOTOS</div>
-        <div :class="$style.num">{{toNiceNumber(data.total)}}</div>
-      </div>
     </div>
   </div>
 </template>
@@ -84,7 +84,8 @@
       create () {
         const data = this.createData()
         const width = this.$refs.el.offsetWidth
-        const height = this.$refs.el.offsetHeight * 0.8
+        let height = this.$refs.el.offsetHeight * 0.8
+        if (!height) height = width
         const radius = ((Math.min(width, height) / 2) - 10) * this.ratio
 
         const x = d3.scale.linear()
@@ -264,11 +265,14 @@
 
   .root,
   .el {
-    height: 100%;
     position: relative;
-    display: flex;
-    align-items: center;
     width: 100%;
+
+    @media only screen and (min-width: 992px) {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
   }
 
   .el svg {
@@ -356,12 +360,18 @@
   }
 
   .detail_table {
-    width: 190px;
+    width: calc(100% - 1em);
     border-top: 1px solid rgba(149, 152, 154, 0.25);
-    margin-top: 3em;
-    position: absolute;
+    margin-top: 1em;
     top: 0;
     left: 2em;
+
+    @media only screen and (min-width: 992px) {
+      width: 190px;
+      position: absolute;
+      z-index: 10;
+      margin-top: 3em;
+    }
   }
 
   .comparing--right .detail_table {

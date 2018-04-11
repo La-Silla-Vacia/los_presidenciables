@@ -1,8 +1,8 @@
 <template>
   <div>
     <SelectBar :items="themes">
-      <Button v-if="!comparing" :absolute="true" @click="handleCompareClick(true)">COMPARAR</Button>
-      <Button v-else type="ghost" :absolute="true" @click="handleCompareClick(false)">
+      <Button :class="$style.compareButton" v-if="!comparing && !isSmallScreen" :absolute="true" @click="handleCompareClick(true)">COMPARAR</Button>
+      <Button v-else-if="!isSmallScreen" type="ghost" :absolute="true" @click="handleCompareClick(false)">
         <img src="../../assets/images/close.svg" width="8"/>
         CLOSE
       </Button>
@@ -97,6 +97,9 @@
         if (candidateAnswers) {
           return candidateAnswers.link
         }
+      },
+      isSmallScreen () {
+        return this.$store.getters.isTablet()
       }
     }
   }

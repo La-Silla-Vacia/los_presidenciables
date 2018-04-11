@@ -12,6 +12,9 @@ const getters = {
   },
   isMobile () {
     return state.mobile
+  },
+  isSmallScreen: (getters) => {
+    if (getters.isTablet || getters.isMobile) return true
   }
 }
 
