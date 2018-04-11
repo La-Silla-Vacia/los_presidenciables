@@ -53,4 +53,8 @@
       grid-template-columns: 1fr;
     }
   }
+
+  .full {
+    grid-template-columns: 1fr;
+  }
 </style>

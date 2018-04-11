@@ -38,7 +38,6 @@ export default new Router({
     },
     {
       path: '/gastado',
-      redirect: '/gastado/ivan-duque',
       name: 'LO QUE HAN GASTADO',
       component: Gastado
     },

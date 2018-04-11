@@ -9,29 +9,16 @@
         CLOSE
       </Button>
     </Bar>
-    <Container :type="comparing ? 'comparing' : 'sidebar'">
-      <ThumbBar v-if="!comparing" routeBase="/gastado/"/>
-
-      <div v-if="!comparing" :class="$style.content">
-        <div :class="$style.row">
-          <div :class="$style.bar">
-            <div :class="$style.num">$0</div>
-            <div :class="$style.percentage">0%</div>
-            <div :class="$style.line">
-              <div :class="$style.line__inner" style="width: 0%"></div>
-            </div>
-            <div :class="$style.num">$?</div>
-          </div>
-
-          <div :class="[$style.bar, $style['bar--details']]">
-            <RadialProgress
-              v-for="item in data"
-              :key="item.tipoDeGasto"
-              percentage="0"
-              :title="item.tipoDeGasto"
-            ></RadialProgress>
-          </div>
-        </div>
+    <Container type="full">
+      <div
+        v-if="!comparing"
+        :class="$style.content"
+      >
+        <SpendingsRow
+          v-for="candidate in candidates"
+          :class="$style.row"
+          :candidate="candidate"
+        ></SpendingsRow>
 
         <div v-if="!isSmallScreen" :class="$style.cta">
           ¿Tiene información sobre los gastos?
@@ -46,7 +33,7 @@
         <ThumbSelect which="first"></ThumbSelect>
         <div :class="[$style.bar, $style['bar--details']]" style="background-color: #fff; margin: 1em 0">
           <RadialProgress
-            v-for="item in data"
+            v-for="item in data(candidate.name)"
             :key="item.tipoDeGasto"
             percentage="0"
             :title="item.tipoDeGasto"
@@ -57,7 +44,7 @@
         <ThumbSelect which="second"></ThumbSelect>
         <div :class="[$style.bar, $style['bar--details']]" style="background-color: #fff; margin: 1em 0">
           <RadialProgress
-            v-for="item in data"
+            v-for="item in data(candidate.name)"
             :key="item.tipoDeGasto"
             percentage="0"
             :title="item.tipoDeGasto"
@@ -78,6 +65,7 @@
   import ThumbBar from '../molecules/ThumbBar'
   import ThumbSelect from '../molecules/ThumbSelect'
   import RadialProgress from '../atoms/RadialProgess'
+  import SpendingsRow from '../molecules/SpendingsRow'
 
   export default {
     name: 'Gastado',
@@ -87,7 +75,8 @@
       Button,
       ThumbBar,
       ThumbSelect,
-      RadialProgress
+      RadialProgress,
+      SpendingsRow
     },
     methods: {
       handleCompareClick (state) {
@@ -103,14 +92,14 @@
         const candidate = this.$route.params.uid
         return this.$store.getters.getCandidateByUid(candidate)
       },
+      candidates () {
+        return this.$store.getters.getCandidates()
+      },
       comparing () {
         return this.$store.getters.isComparing()
       },
       isSingle () {
         return this.$route.params.uid
-      },
-      data () {
-        return this.$store.getters.getGastados(this.candidate.name)
       },
       compareFirst () {
         return this.$store.getters.isComparing('first')
@@ -145,7 +134,7 @@
 
     @media only screen and (min-width: 992px) {
       width: calc(100% - 15em);
-      margin: 4em 0 0 2em;
+      margin: 0 0 0 2em;
     }
 
     p {
@@ -164,50 +153,6 @@
     }
   }
 
-  .row {
-    background-color: #fff;
-    width: 100%;
-  }
-
-  .bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #000;
-    padding: 24px 30px;
-    flex-wrap: wrap;
-  }
-
-  .bar--details {
-    border-top: 3px solid #f6f6f6;
-  }
-
-  .num {
-    font-size: 12px;
-  }
-
-  .percentage {
-    margin-left: 1em;
-    color: $color__primary--base;
-    font-size: 12px;
-    padding: 7px 5px;
-    background-color: rgba(68, 165, 219, .2)
-  }
-
-  .line {
-    height: 10px;
-    background-color: #ECEEEF;
-    border-radius: 5px;
-    flex-grow: 1;
-    margin: 0 1em;
-  }
-
-  .line__inner {
-    height: 100%;
-    background-color: $color__primary--base;
-    border-radius: 5px;
-  }
-
   .cta {
     width: 180px;
     padding: 15px;
@@ -215,7 +160,7 @@
     background-color: $color__primary--base;
     position: absolute;
     right: 0;
-    top: 64px;
+    top: 40px;
     font-size: 14px;
     font-weight: 600;
     font-family: $font__family--sans--especial;

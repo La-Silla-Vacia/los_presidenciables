@@ -262,8 +262,8 @@
     },
     data () {
       return {
-        questionIndex: 13,
-        answers: [0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1],
+        questionIndex: null,
+        answers: [],
         showResults: false
       }
     }
