@@ -30,8 +30,8 @@
           <div :class="[$style.title, $style.result]">{{result[result.length - 1].name}}</div>
 
           <div :class="$style.buttons">
-            <Button :class="$style.button" type="ghost--bordered">Uy, no</Button>
-            <Button :class="$style.button" type="ghost--bordered">¡Me gusta!</Button>
+            <Button :class="$style.button" to="https://www.facebook.com/sharer/sharer.php?u=http://lasillavacia.com/elecciones2018" type="ghost--bordered">Uy, no</Button>
+            <Button :class="$style.button" to="https://www.facebook.com/sharer/sharer.php?u=http://lasillavacia.com/elecciones2018" type="ghost--bordered">¡Me gusta!</Button>
           </div>
         </div>
 

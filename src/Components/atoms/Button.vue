@@ -1,5 +1,6 @@
 <template>
   <button
+    v-if="!to"
     @click.prevent="handleClick"
     :class="[
       $style.root,
@@ -8,8 +9,21 @@
       {[$style[type]]: type}
     ]"
   >
-    <slot />
+    <slot/>
   </button>
+  <a
+    v-else
+    :href="to"
+    target="_blank"
+    :class="[
+      $style.root,
+      {[$style.absolute]: absolute},
+      {[$style.large]: large},
+      {[$style[type]]: type}
+    ]"
+  >
+    <slot/>
+  </a>
 </template>
 
 <script>
@@ -18,10 +32,11 @@
     props: [
       'absolute',
       'large',
-      'type'
+      'type',
+      'to'
     ],
     methods: {
-      handleClick() {
+      handleClick () {
         this.$emit('click')
       }
     }
