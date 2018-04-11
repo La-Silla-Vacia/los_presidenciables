@@ -10,7 +10,7 @@
       <div :class="$style.line">
         <div :class="$style.line__inner" style="width: 0%"></div>
       </div>
-      <div :class="$style.num">$?</div>
+      <div :class="$style.num">$24.235 millones</div>
     </button>
 
     <div

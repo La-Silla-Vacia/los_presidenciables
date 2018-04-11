@@ -21,6 +21,9 @@
 
       <div :class="$style.content">
         <div :class="$style.graph" ref="container"></div>
+        <small>Google toma como 100 el día con más interés por un candidato. Gradúa los demás días y candidatos en
+          proporción a ese punto máximo; si dice 10, es una décima parte de las búsquedas de ese <récord></récord>
+        </small>
 
         <div :class="$style.footer">
           <button
@@ -65,7 +68,9 @@
   Object.defineProperty(Array.prototype, 'chunk', {
     value: function (chunkSize) {
       var R = []
-      for (var i = 0; i < this.length; i += chunkSize) { R.push(this.slice(i, i + chunkSize)) }
+      for (var i = 0; i < this.length; i += chunkSize) {
+        R.push(this.slice(i, i + chunkSize))
+      }
       return R
     }
   })

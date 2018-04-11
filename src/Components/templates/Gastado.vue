@@ -21,10 +21,15 @@
         ></SpendingsRow>
 
         <div v-if="!isSmallScreen" :class="$style.cta">
-          ¿Tiene información sobre los gastos?
-          <a target="_blank"
-             href="https://docs.google.com/forms/d/e/1FAIpQLSd3U9MTHvM5olE4s_oEOKsqaBeQuZloVnWPys6EEcvuuj6IHQ/viewform">Ayúdenos
-            a reportarlos aquí</a>
+          <small>Acá iremos sumando los gastos con la información que ustedes nos envíen, para hacerle una veeduría a
+            las campañas
+          </small>
+          <div :class="$style.cta__inner">
+            ¿Tiene información sobre los gastos?
+            <a target="_blank"
+               href="https://docs.google.com/forms/d/e/1FAIpQLSd3U9MTHvM5olE4s_oEOKsqaBeQuZloVnWPys6EEcvuuj6IHQ/viewform">Ayúdenos
+              a reportarlos aquí</a>
+          </div>
         </div>
       </div>
 
@@ -154,17 +159,13 @@
   }
 
   .cta {
-    width: 180px;
-    padding: 15px;
-    color: #fff;
-    background-color: $color__primary--base;
+    width: 218px;
     position: absolute;
     right: 0;
     top: 40px;
     font-size: 14px;
     font-weight: 600;
     font-family: $font__family--sans--especial;
-    text-align: center;
 
     & a {
       color: #fff;
@@ -172,6 +173,14 @@
       font-weight: normal;
       text-decoration: underline;
       margin-top: 10px;
+    }
+
+    .cta__inner {
+      padding: 15px;
+      color: #fff;
+      background-color: $color__primary--base;
+      text-align: center;
+      margin-top: 1em;
     }
   }
 

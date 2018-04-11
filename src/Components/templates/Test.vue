@@ -31,17 +31,17 @@
 
           <div :class="$style.buttons">
             <Button :class="$style.button"
-                    to="https://www.facebook.com/sharer/sharer.php?u=http://lasillavacia.com/elecciones2018"
+                    to="https://www.facebook.com/sharer/sharer.php?u=http://lasillavacia.com/elecciones2018&quote=Encontré el candidato que tiene el carácter que más me gusta. Busca el tuyo también"
                     type="ghost--bordered">Uy, no
             </Button>
             <Button :class="$style.button"
-                    to="https://www.facebook.com/sharer/sharer.php?u=http://lasillavacia.com/elecciones2018"
+                    to="https://www.facebook.com/sharer/sharer.php?u=http://lasillavacia.com/elecciones2018&quote=Encontré el candidato que tiene el carácter que más me gusta. Busca el tuyo también"
                     type="ghost--bordered">¡Me gusta!
             </Button>
           </div>
 
-          <Button :class="$style.button" type="small" @click="showResults = !showResults">{{showResults
-            ?'OCULTAR' : 'VER' }} COMO VAN LOS DEMÁS RESULTADOS
+          <Button :class="$style.button" type="small" @click="showResults = !showResults">
+            Sus respuestas vs. las del candidato
           </Button>
           <table v-if="showResults" style="text-align: left; margin-bottom: 4em">
             <thead>
