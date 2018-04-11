@@ -1,7 +1,9 @@
 <template>
   <div>
     <Bar title="¿Quien le pone los votos?">
-      <Button v-if="!comparing && isSingle && !isSmallScreen" :absolute="true" @click="handleCompareClick(true)">COMPARAR</Button>
+      <Button v-if="!comparing && isSingle && !isSmallScreen" :absolute="true" @click="handleCompareClick(true)">
+        COMPARAR
+      </Button>
       <Button v-else-if="isSingle && !isSmallScreen" type="ghost" :absolute="true" @click="handleCompareClick(false)">
         <img src="../../assets/images/close.svg" width="8"/>
         CLOSE
@@ -12,7 +14,8 @@
 
       <div :class="$style.container" v-if="isSingle && !comparing">
         <Sunburst v-if="data" :data="data" :ratio="1"/>
-        <h2 :class="$style.highlight" style="font-size: 18px" v-else>Hasta ahora no tiene apoyos políticos sustanciales y medibles</h2>
+        <h2 :class="$style.highlight" style="font-size: 18px" v-else>Hasta ahora no tiene apoyos políticos sustanciales
+          y medibles</h2>
       </div>
 
       <div v-if="!isSingle" :class="$style.content">
@@ -22,9 +25,9 @@
           contienda entre los candidatos que se apoyan en ellas.</p>
 
         <p>Para entender qué fuerza electoral tienen los apoyos políticos que han recibido los candidatos, revisamos a
-          quién apoyan los congresistas, sindicatos y otros grupos organizados. A cada uno le damos un peso según sus
-          resultados electorales o cantidad de afiliados, cifras que si bien no necesariamente significan que pongan de
-          manera mecánica esos votos, sí ayudan a entender el paso de cada apoyo.</p>
+          quién apoyan los congresistas y partidos. A cada uno le damos un peso según sus resultados electorales, cifras
+          que si bien no necesariamente significan que pongan de manera mecánica esos votos, sí ayudan a entender el
+          paso de cada apoyo.</p>
 
         <p>Iremos actualizando este ese ejercicio a medida que vayan variando esos apoyos.</p>
 
