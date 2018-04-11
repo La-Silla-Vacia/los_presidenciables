@@ -246,8 +246,11 @@
 
   .graph {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-gap: 1em;
+
+    @media (min-width: 992px) {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
   }
 
   .footer {
