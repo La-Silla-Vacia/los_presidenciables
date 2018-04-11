@@ -30,9 +30,33 @@
           <div :class="[$style.title, $style.result]">{{result[result.length - 1].name}}</div>
 
           <div :class="$style.buttons">
-            <Button :class="$style.button" to="https://www.facebook.com/sharer/sharer.php?u=http://lasillavacia.com/elecciones2018" type="ghost--bordered">Uy, no</Button>
-            <Button :class="$style.button" to="https://www.facebook.com/sharer/sharer.php?u=http://lasillavacia.com/elecciones2018" type="ghost--bordered">¡Me gusta!</Button>
+            <Button :class="$style.button"
+                    to="https://www.facebook.com/sharer/sharer.php?u=http://lasillavacia.com/elecciones2018"
+                    type="ghost--bordered">Uy, no
+            </Button>
+            <Button :class="$style.button"
+                    to="https://www.facebook.com/sharer/sharer.php?u=http://lasillavacia.com/elecciones2018"
+                    type="ghost--bordered">¡Me gusta!
+            </Button>
           </div>
+
+          <Button :class="$style.button" type="small" @click="showResults = !showResults">{{showResults
+            ?'OCULTAR' : 'VER' }} COMO VAN LOS DEMÁS RESULTADOS
+          </Button>
+          <table v-if="showResults" style="text-align: left; margin-bottom: 4em">
+            <thead>
+            <tr>
+              <th>Posición</th>
+              <th>Tu elección</th>
+              <th>{{result[result.length - 1].name}}</th>
+            </tr>
+            </thead>
+            <tr v-for="(answer, index) in answers">
+              <td>{{test[index].question}}</td>
+              <td>{{test[index].answers[answer].answer}}</td>
+              <td><img :src="getResultImage(index, answer)" width="20"/></td>
+            </tr>
+          </table>
         </div>
 
         <div :class="$style.question" v-else>
@@ -155,6 +179,10 @@
         } else {
           this.questionIndex += 1
         }
+      },
+      getResultImage (index, answer) {
+        const isInArray = this.test[index].answers[answer].who.indexOf(this.result[this.result.length - 1].name) !== -1
+        return isInArray ? require('../../assets/images/check.svg') : require('../../assets/images/close.svg')
       }
     },
     computed: {
@@ -234,8 +262,9 @@
     },
     data () {
       return {
-        questionIndex: null,
-        answers: []
+        questionIndex: 13,
+        answers: [0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1],
+        showResults: false
       }
     }
   }
@@ -296,6 +325,11 @@
   .result {
     font-size: 40px;
     margin-bottom: 0;
+  }
+
+  .buttons {
+    display: flex;
+    align-items: center;
   }
 
   .button {
