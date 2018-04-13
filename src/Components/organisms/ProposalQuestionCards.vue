@@ -2,6 +2,12 @@
   <div :class="$style.root">
     <SelectBar :with-question="true" :items="themes">
       <!--<Button :absolute="true" @click="handleCompareClick">COMPARAR</Button>-->
+      <div :class="$style.credits">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Logo_Bancolombia.svg" alt="Bancolombia"/>
+        <p>apoyó esta herramienta educativa para que los ciudadanos voten informados. Ésta no representa una
+          posición institucional
+        </p>
+      </div>
     </SelectBar>
     <Container>
       <AnswerCard
@@ -54,5 +60,46 @@
     width: 100%;
     height: 100%;
     position: relative;
+  }
+
+  .credits {
+    width: 20em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    justify-self: flex-end;
+    margin-left: auto;
+    position: absolute;
+    right: 15px;
+  }
+
+  .credits img {
+    width: 128px;
+    display: block;
+  }
+
+  .credits p {
+    font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+    font-size: 10px !important;
+    margin: 0.5em 0 0 1em;
+    line-height: 1;
+    text-align: left;
+  }
+
+  @media screen and (max-width: 1180px) {
+    .credits {
+      position: relative;
+    }
+  }
+
+  @media screen and (max-width: 930px) {
+    .credits {
+      width: 98%;
+      right: inherit;
+      margin-bottom: .25em;
+      max-width: 20em;
+      margin-right: auto;
+    }
   }
 </style>

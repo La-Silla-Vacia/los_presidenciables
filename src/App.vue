@@ -8,12 +8,6 @@
         <span>Diseño</span>
         <img src="http://bestiario.org/themes/default/bestiario_logo.svg" alt="Bestiario"/>
       </div>
-      <div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Logo_Bancolombia.svg" alt="Bancolombia"/>
-        <p>apoyó esta herramienta educativa para que los ciudadanos voten informados. Ésta no representa una
-          posición institucional
-        </p>
-      </div>
     </div>
   </div>
 </template>
@@ -154,7 +148,6 @@
   }
 
   .credits {
-    width: 32em;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -165,13 +158,14 @@
   }
 
   .credits img {
-    width: 50%;
+    width: 40%;
     display: block;
   }
 
   .credits div {
-    width: 45%;
+    margin-left: auto;
     font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+    margin-right: 40px;
   }
 
   .credits > div:first-child {
@@ -179,17 +173,8 @@
     text-align: left;
 
     img {
-      width: 80%;
+      width: 93px;
     }
-  }
-
-  .credits > div:last-child {
-    width: 100%;
-    border-left: 1px solid #C1C1C1;
-    display: flex;
-    align-items: center;
-    padding: 0 1em 0 2em;
-    margin-top: 1em;
   }
 
   .credits span {

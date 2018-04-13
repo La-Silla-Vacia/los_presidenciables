@@ -65,6 +65,7 @@
       createData () {
         const dataString = JSON.stringify(this.data)
         const data = JSON.parse(dataString)
+        console.log(JSON.parse(dataString))
         return data
       },
       toNiceNumber (n) {
