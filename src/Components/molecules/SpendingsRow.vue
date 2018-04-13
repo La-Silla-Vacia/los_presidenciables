@@ -82,6 +82,7 @@
     width: 100%;
     border: 0;
     flex-wrap: wrap;
+    background-color: #fff;
 
     &:focus {
       border-left: 1px solid $color__primary--base;

@@ -14,13 +14,7 @@
         v-if="!comparing"
         :class="$style.content"
       >
-        <SpendingsRow
-          v-for="candidate in candidates"
-          :class="$style.row"
-          :candidate="candidate"
-        ></SpendingsRow>
-
-        <div v-if="!isSmallScreen" :class="$style.cta">
+        <div :class="$style.cta">
           <small>Acá iremos sumando los gastos con la información que ustedes nos envíen, para hacerle una veeduría a
             las campañas
           </small>
@@ -31,6 +25,12 @@
               a reportarlos aquí</a>
           </div>
         </div>
+
+        <SpendingsRow
+          v-for="candidate in candidates"
+          :class="$style.row"
+          :candidate="candidate"
+        ></SpendingsRow>
       </div>
 
 
@@ -181,6 +181,15 @@
       background-color: $color__primary--base;
       text-align: center;
       margin-top: 1em;
+    }
+
+    @media only screen and (max-width: 992px) {
+      width: 100%;
+      max-width: 300px;
+      position: relative;
+      top: inherit;
+      margin-bottom: 1.5em;
+      margin-left: auto;
     }
   }
 
