@@ -28,6 +28,7 @@
 
         <SpendingsRow
           v-for="candidate in candidates"
+          :key="candidate"
           :class="$style.row"
           :candidate="candidate"
         ></SpendingsRow>
