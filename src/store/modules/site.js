@@ -25,7 +25,6 @@ const getters = {
     return [
       {text: 'LO QUE PROPONEN'},
       {text: 'LOS APOYOS POLÍTICOS'},
-      {text: 'LO QUE HAN GASTADO'},
       {text: 'CÓMO LOS BUSCAN'},
       {text: 'TEST DE CARÁCTER'}
     ]
