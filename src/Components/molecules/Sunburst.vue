@@ -11,10 +11,38 @@
         <div :class="$style.num">{{toNiceNumber(data.total)}}</div>
       </div>
     </div>
+    <button v-if="!acceptsHover" :class="$style.buttonScale" @click="handleOpen"></button>
+    <div v-if="open" :class="$style.overlay">
+      <button :class="[$style.buttonScale, $style.buttonHide]" @click="open = false"></button>
+      <div ref="thumb"></div>
+      <div
+        v-if="current"
+        :class="[$style.tooltip, $style.tooltipThumb]"
+      >
+        <header :class="$style.header">
+          <div :class="$style.partido">
+            {{current.data.name}}
+          </div>
+          <div :class="$style.votes">
+            <span>VOTOS</span>
+            {{current.data.value}}
+          </div>
+        </header>
+        <div :class="$style.content">
+          {{current.data.explicacion}}
+        </div>
+        <div :class="$style.table" v-if="current.data.children">
+          <div v-for="row in current.data.children" :class="$style.row">
+            <span>{{row.name}}</span>
+            {{row.value}}
+          </div>
+        </div>
+      </div>
+    </div>
     <div :class="$style.el" ref="el">
       <transition name="fade">
         <div
-          v-if="current"
+          v-if="current && acceptsHover && !open"
           :class="$style.tooltip"
           :style="{
           left: current.x + 10 + 'px',
@@ -65,11 +93,10 @@
       createData () {
         const dataString = JSON.stringify(this.data)
         const data = JSON.parse(dataString)
-        console.log(JSON.parse(dataString))
         return data
       },
       toNiceNumber (n) {
-        return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").replace('.00', '');
+        return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace('.00', '')
       },
       getColor (name) {
         const colorFunc = d3.scale.category20c()
@@ -82,10 +109,17 @@
           return colorFunc(name)
         }
       },
-      create () {
+      handleOpen () {
+        this.open = true
+        setTimeout(() => {
+          this.create(this.$refs.thumb)
+        }, 50)
+      },
+      create (el) {
         const data = this.createData()
-        const width = this.$refs.el.offsetWidth
-        let height = this.$refs.el.offsetHeight * 0.8
+        const element = el || this.$refs.el
+        const width = element.offsetWidth
+        let height = element.offsetHeight * 0.8
         if (!height) height = width
         const radius = ((Math.min(width, height) / 2) - 10) * this.ratio
 
@@ -137,7 +171,7 @@
           })
 
         const xOffset = this.compare === 'right' ? 0 : height / 2
-        const svg = d3.select(this.$refs.el).append('svg')
+        const svg = d3.select(element).append('svg')
           .attr('width', this.compare ? height / 2 : height)
           .attr('height', height)
           .append('g')
@@ -177,33 +211,21 @@
             }
           })
           .on('mouseout', () => {
-            this.current = null
+            if (!this.open) {
+              this.current = null
+            }
+          })
+          .on('.click', (d) => {
+            this.current = {
+              data: d
+            }
           })
 
         this.children = data.children
-        // function click (d) {
-        //   svg.transition()
-        //     .duration(750)
-        //     .tween('scale', function () {
-        //       const xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx])
-        //       const yd = d3.interpolate(y.domain(), [d.y, 1])
-        //       const yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius])
-        //       return function (t) {
-        //         x.domain(xd(t))
-        //         y.domain(yd(t)).range(yr(t))
-        //       }
-        //     })
-        //     .selectAll('path')
-        //     .attrTween('d', function (d) {
-        //       return function () {
-        //         return arc(d)
-        //       }
-        //     })
-        // }
 
         d3.select(self.frameElement).style('height', height + 'px')
 
-        const avatarPath = this.$refs.el.querySelector('path')
+        const avatarPath = element.querySelector('path')
         if (this.compare) {
           avatarPath.style.fill = 'transparent'
           return
@@ -248,6 +270,10 @@
       },
       candidatePhoto () {
         return this.candidate.foto || photo
+      },
+      acceptsHover () {
+        if (this.open) return true
+        return !(this.$store.getters.isTablet() && !this.open)
       }
     },
     data () {
@@ -255,7 +281,8 @@
         current: null,
         avatarPathWidth: 230,
         avatarCoords: {x: 0, y: 0},
-        children: []
+        children: [],
+        open: false
       }
     }
   }
@@ -299,6 +326,16 @@
       transform: translateX(-50%) rotate(45deg);
       background: rgba(255, 255, 255, 0.9);
       top: 2em;
+    }
+  }
+
+  .tooltipThumb {
+    position: relative;
+    width: 90%;
+    margin: -1em auto 1em;
+
+    &::before {
+      display: none;
     }
   }
 
@@ -428,5 +465,32 @@
     .num {
       color: #fff;
     }
+  }
+
+  .buttonScale {
+    background: url("../../assets/images/scale_button.svg");
+    border-radius: 0;
+    border: 0;
+    width: 29px;
+    height: 28px;
+    transform: translateY(100%);
+    z-index: 5;
+    float: right;
+    margin-right: 15px;
+    position: relative;
+  }
+
+  .buttonHide {
+    background: url("../../assets/images/close_button.svg")
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(255, 255, 255, .95);
+    z-index: 6;
   }
 </style>
