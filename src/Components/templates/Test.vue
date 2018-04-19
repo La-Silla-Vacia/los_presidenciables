@@ -43,6 +43,11 @@
           <Button :class="$style.button" type="small" @click="showResults = !showResults">
             Sus respuestas vs. las del candidato
           </Button>
+
+          <Button :class="$style.button" type="small"
+                  to="https://docs.google.com/spreadsheets/d/1ncXMEzQDv_qlBnSsVdF9wmPiYBivP-tS1k8HunvGmR4/edit?usp=sharing">
+            Vea las respuestas de todos los candidatos
+          </Button>
           <table v-if="showResults" style="text-align: left; margin-bottom: 4em">
             <thead>
             <tr>
@@ -275,6 +280,10 @@
 
   .content {
     padding: 45px 25px 0 65px;
+
+    @media (max-width: 525px) {
+      padding-left: 25px;
+    }
   }
 
   .intro,
@@ -316,6 +325,10 @@
   .title {
     font-size: 30px;
     margin: 40px 0 30px;
+
+    @media (max-width: 525px) {
+      margin-top: 20px;
+    }
   }
 
   .introduction {
@@ -333,7 +346,7 @@
   }
 
   .button {
-    margin: 30px 10px;
+    margin: 20px 10px 10px;
     padding: 0.75em 3em;
   }
 
@@ -435,5 +448,15 @@
     position: absolute;
     bottom: -50px;
     padding-left: 21px;
+  }
+
+  .buttonText {
+    text-align: center;
+    text-transform: uppercase;
+    margin: 10px;
+    font-family: Lato, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.5);
   }
 </style>
