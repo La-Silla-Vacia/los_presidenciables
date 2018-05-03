@@ -1,8 +1,8 @@
 <template>
-  <div :class="[$style.container, {[$style.loading]: loading}]">
+  <div ref="el" :class="[$style.container, {[$style.loading]: loading}]">
     <LoadScreen v-if="loading"/>
-    <Header v-else/>
-    <router-view v-if="!loading" :key="$route.path"/>
+    <Header v-else-if="!single"/>
+    <router-view v-if="!loading" :name="single" :key="$route.path"/>
     <div :class="$style.credits">
       <div>
         <span>Diseño</span>
@@ -26,6 +26,9 @@
       LoadScreen,
       Header
     },
+    props: [
+      'single'
+    ],
     data () {
       return {}
     },
@@ -49,6 +52,9 @@
       loading () {
         return !this.$store.getters.isLoaded()
       }
+    },
+    mounted () {
+      this.$router.push({name: this.single})
     },
     methods: {
       onResize (event) {

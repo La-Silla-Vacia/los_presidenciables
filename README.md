@@ -37,6 +37,7 @@ To embed on a webpage use this code:
 <script type="text/javascript">
   window.los_presidenciables__data = {
     "dataUri": "https://lsv-candidatos-congreso-2018.firebaseio.com/comparacion.json"
+      
   }
 </script>
 <div class="lsv-interactive" id="los_presidenciables">

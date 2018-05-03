@@ -9,41 +9,111 @@ import Test from '@/components/templates/Test'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'hash',
+  mode: window.los_presidenciables__data.singles ? 'abstract' : 'hash',
   routes: [
     {
       path: '/',
+      name: 'proposals',
       redirect: '/proposals'
     },
     {
       path: '/proposals',
       name: 'LO QUE PROPONEN',
-      component: ProposalQuestionCards
+      components: {
+        default: ProposalQuestionCards,
+        proposals: ProposalQuestionCards,
+        'la-maquinaria': Maquinaria,
+        'como-los-buscan': Trends,
+        'test-de-caracter': Test
+      }
     },
     {
       path: '/proposals/:uid',
       name: 'proposal',
-      component: Proposals
+      components: {
+        default: Proposals,
+        proposals: Proposals,
+        'la-maquinaria': Maquinaria,
+        'como-los-buscan': Trends,
+        'test-de-caracter': Test
+      }
     },
     {
       path: '/la-maquinaria',
       name: 'LOS APOYOS POLÍTICOS',
-      component: Maquinaria
+      components: {
+        default: Maquinaria,
+        proposals: ProposalQuestionCards,
+        'la-maquinaria': Maquinaria,
+        'como-los-buscan': Trends,
+        'test-de-caracter': Test
+      }
+    },
+    {
+      path: '/la-maquinaria',
+      name: 'la-maquinaria',
+      components: {
+        default: Maquinaria,
+        proposals: ProposalQuestionCards,
+        'la-maquinaria': Maquinaria,
+        'como-los-buscan': Trends,
+        'test-de-caracter': Test
+      }
     },
     {
       path: '/la-maquinaria/:uid',
       name: 'LA MAQUINARIA QUE TIENEN single',
-      component: Maquinaria
+      components: {
+        default: Maquinaria,
+        proposals: ProposalQuestionCards,
+        'la-maquinaria': Maquinaria,
+        'como-los-buscan': Trends,
+        'test-de-caracter': Test
+      }
     },
     {
       path: '/como-los-buscan',
       name: 'CÓMO LOS BUSCAN',
-      component: Trends
+      components: {
+        default: Trends,
+        proposals: ProposalQuestionCards,
+        'la-maquinaria': Maquinaria,
+        'como-los-buscan': Trends,
+        'test-de-caracter': Test
+      }
+    },
+    {
+      path: '/como-los-buscan',
+      name: 'como-los-buscan',
+      components: {
+        default: Trends,
+        proposals: ProposalQuestionCards,
+        'la-maquinaria': Maquinaria,
+        'como-los-buscan': Trends,
+        'test-de-caracter': Test
+      }
     },
     {
       path: '/test-de-caracter',
       name: 'TEST DE CARÁCTER',
-      component: Test
+      components: {
+        default: Test,
+        proposals: ProposalQuestionCards,
+        'la-maquinaria': Maquinaria,
+        'como-los-buscan': Trends,
+        'test-de-caracter': Test
+      }
+    },
+    {
+      path: '/test-de-caracter',
+      name: 'test-de-caracter',
+      components: {
+        default: Test,
+        proposals: ProposalQuestionCards,
+        'la-maquinaria': Maquinaria,
+        'como-los-buscan': Trends,
+        'test-de-caracter': Test
+      }
     },
     {
       path: '*',
