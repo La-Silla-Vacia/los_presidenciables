@@ -8,7 +8,7 @@ Source files for los_presidenciables
 ![](https://raw.githubusercontent.com/la-silla-vacia/los_presidenciables/master/dev/screenshot.png)
 
 ## Data
-Please link to any external data used, as well as scripts for cleaning and analyzing that data, all of which should live in the `/data` directory.
+The data is loaded from a Google Firebase and defined in de dataUri tag in the embed code
 
 ## Installation
 First, make sure you have [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/en/) installed on your operating system.
