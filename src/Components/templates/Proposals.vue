@@ -1,6 +1,7 @@
 <template>
   <div>
     <SelectBar :items="themes">
+      <Button @click="$router.push('/proposals')" v-if="!isSmallScreen" :class="$style.compareButton" style="right: 10em" :absolute="true">¿Qué proponen?</Button>
       <Button :class="$style.compareButton" v-if="!comparing && !isSmallScreen" :absolute="true" @click="handleCompareClick(true)">COMPARAR</Button>
       <Button v-else-if="!isSmallScreen" type="ghost" :absolute="true" @click="handleCompareClick(false)">
         <img src="../../assets/images/close.svg" width="8"/>

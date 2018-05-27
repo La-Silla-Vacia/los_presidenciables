@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Bar>
+    <Bar title="Cómo los buscan">
       <div :class="$style.buttons">
         <Button type="ghost" @click="handleModeChange(false)">
           <img v-if="!single" src="../../assets/images/icon_graph--active.svg"/>
