@@ -24,6 +24,7 @@
     display: flex;
     flex-direction: column;
     flex: 0 1 auto;
+    max-height: 18em;
   }
 
   .root p {

@@ -1,6 +1,6 @@
 <template>
   <div :class="[$style.root, {[$style.open]: !current || open}]">
-    <button :class="$style.button" @click="open = !open">
+    <div :class="$style.button">
       <User
         v-if="current"
         :name="current.name"
@@ -9,17 +9,16 @@
         size="compact"
       />
       <span v-else :class="$style.select">Seleccione un candidato</span>
-    </button>
+    </div>
 
     <slot />
 
     <transition name="fade">
       <nav :class="$style.slide" v-if="!current || open">
-        <button
+        <div
           v-for="candidate in candidates"
           :class="[$style.button, $style.noPadding]"
           :key="candidate.id"
-          @click="handleSelect(candidate)"
         >
           <User
             :name="candidate.name"
@@ -27,7 +26,7 @@
             :photo="candidate.foto"
             size="small"
           />
-        </button>
+        </div>
       </nav>
     </transition>
   </div>
@@ -71,7 +70,6 @@
         return filtered
       },
       current () {
-      console.log(this.$store.getters.isComparing(this.which), this.which)
         return this.$store.getters.isComparing(this.which)
       },
       other () {
@@ -127,17 +125,17 @@
     min-height: 65px;
     z-index: 1;
 
-    &::after {
-      content: '';
-      width: 14px;
-      height: 7px;
-      background-image: url(../../assets/images/caret_down.svg);
-      position: absolute;
-      right: 0;
-      top: 50%;
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
+    /*&::after {*/
+      /*content: '';*/
+      /*width: 14px;*/
+      /*height: 7px;*/
+      /*background-image: url(../../assets/images/caret_down.svg);*/
+      /*position: absolute;*/
+      /*right: 0;*/
+      /*top: 50%;*/
+      /*background-size: contain;*/
+      /*background-repeat: no-repeat;*/
+    /*}*/
   }
 
   .noPadding {

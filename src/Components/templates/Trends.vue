@@ -155,10 +155,7 @@
         if (!this.single) {
           this.filter = [
             {name: 'Iván Duque', id: this.$store.getters.getCandidateByName('Iván Duque').trendsId},
-            {name: 'Humberto de la Calle', id: this.$store.getters.getCandidateByName('Humberto de la Calle').trendsId},
-            {name: 'Gustavo Petro', id: this.$store.getters.getCandidateByName('Gustavo Petro').trendsId},
-            {name: 'Sergio Fajardo', id: this.$store.getters.getCandidateByName('Sergio Fajardo').trendsId},
-            {name: 'Germán Vargas Lleras', id: this.$store.getters.getCandidateByName('Germán Vargas Lleras').trendsId}
+            {name: 'Gustavo Petro', id: this.$store.getters.getCandidateByName('Gustavo Petro').trendsId}
           ]
         } else {
           this.filter = [{name: 'Iván Duque', id: this.$store.getters.getCandidateByName('Iván Duque').trendsId}]

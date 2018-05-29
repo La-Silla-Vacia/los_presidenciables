@@ -1,13 +1,13 @@
 <template>
   <div>
     <Bar title="¿Quien le pone los votos?">
-      <Button v-if="!comparing && isSingle && !isSmallScreen" :absolute="true" @click="handleCompareClick(true)">
-        COMPARAR
-      </Button>
-      <Button v-else-if="isSingle && !isSmallScreen" type="ghost" :absolute="true" @click="handleCompareClick(false)">
-        <img src="../../assets/images/close.svg" width="8"/>
-        CLOSE
-      </Button>
+      <!--<Button v-if="!comparing && isSingle && !isSmallScreen" :absolute="true" @click="handleCompareClick(true)">-->
+      <!--COMPARAR-->
+      <!--</Button>-->
+      <!--<Button v-else-if="isSingle && !isSmallScreen" type="ghost" :absolute="true" @click="handleCompareClick(false)">-->
+      <!--<img src="../../assets/images/close.svg" width="8"/>-->
+      <!--CLOSE-->
+      <!--</Button>-->
     </Bar>
     <Container :type="comparing ? 'comparing' : 'sidebar'">
       <ThumbBar v-if="!comparing" routeBase="/la-maquinaria/"/>
@@ -100,15 +100,18 @@
       }
     },
     mounted () {
-      this.$store.commit(types.RECEIVE_COMPARE, {active: false, first: this.candidate, second: null})
+      const firstCandidate = this.$store.getters.getCandidateByUid('ivan-duque')
+      const secondCandidate = this.$store.getters.getCandidateByUid('gustavo-petro')
+      this.$store.commit(types.RECEIVE_COMPARE, {active: true, first: firstCandidate, second: secondCandidate})
     },
     computed: {
       candidate () {
-        const candidate = this.$route.params.uid
+        const candidate = 'ivan-duque'
         return this.$store.getters.getCandidateByUid(candidate)
       },
       isSingle () {
-        return this.$route.params.uid
+        // return this.$route.params.uid
+        return true
       },
       data () {
         return this.$store.getters.getMaquinaria(this.candidate.name)
@@ -120,7 +123,9 @@
         return this.$store.getters.isComparing('second')
       },
       dataFirst () {
-        return this.$store.getters.getMaquinaria(this.compareFirst.name)
+        if (this.compareFirst) {
+          return this.$store.getters.getMaquinaria(this.compareFirst.name)
+        }
       },
       dataSecond () {
         if (this.compareSecond) {
